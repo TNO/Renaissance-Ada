@@ -3,6 +3,7 @@
 --  Our philosophy is 
 --  1. to check as much as possible automatically.
 --  2. to use standard options whenever possible.
+--  3. to treat warnings as errors.
 
 abstract project Standard_Options is
 
