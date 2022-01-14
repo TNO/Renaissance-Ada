@@ -1,0 +1,65 @@
+--  This project is introduced to let all Ada projects within Renaissance-Ada use the same options.
+--
+--  Our philosophy is 
+--  1. to check as much as possible automatically.
+--  2. to use standard options whenever possible.
+
+abstract project Standard_Options is
+
+   package Ide is
+      for Vcs_Kind use "Git";
+      for Vcs_Repository_Root use "..";
+   end Ide;
+
+   type Mode_Type is ("debug", "release");
+   Mode : Mode_Type := external ("Mode", "debug");
+
+   package Builder is
+      --  see https://docs.adacore.com/gnat_ugn-docs/html/gnat_ugn/gnat_ugn/building_executable_programs_with_gnat.html for more info on the build switches
+      for Default_Switches ("Ada") use
+        ( "-s"                            --  Recompile if compiler switches have changed since last compilation.
+        , "-j0"                           --  Use the maximum number of parallel compilations processes to carry out the (re)compilations.
+        );
+      
+      case Mode is
+      when "debug" =>
+          for Default_Switches ("ada") use Builder'Default_Switches ("ada") &
+            ( "-g"                        --  Enable debugging. This switch is simply passed to the compiler and to the linker.
+            );
+      when "release" =>
+          null;
+      end case;
+   end Builder;
+
+   package Compiler is
+      --  see https://docs.adacore.com/gnat_ugn-docs/html/gnat_ugn/gnat_ugn/building_executable_programs_with_gnat.html for more info on the compiler switches
+      for Default_Switches ("ada") use
+        ( "-gnat2012"                      --  Allow full Ada 2012 features (same as -gnat12)
+        , "-fstack-check"                  --  Activates stack checking.
+        , "-gnata"                         --  Assertions enabled.
+        , "-gnatwa"                        --  Activate most optional warnings.
+        , "-gnatyy"                        --  Enable built-in style checks (Set all standard style check options)
+        , "-Wall"                          --  This switch enables most warnings from the GCC back end. 
+        , "-Werror"                        --  This switch causes warnings from the GCC back end to be treated as errors.
+        );
+
+      case Mode is
+      when "debug" =>
+         for Default_Switches ("ada") use Compiler'Default_Switches ("ada") &
+           ( "-gnateE"                     --  Generate extra information in exception messages.
+           , "-g"                          --  Generate debugging information.
+                                           --  TODO: is flag needed? See same flag in Builder which is passed on to the compiler.
+           );
+      when "release" =>
+         for Default_Switches ("ada") use Compiler'Default_Switches ("ada") &
+           ("-O3" );
+      end case;
+   end Compiler;
+
+   package Binder is
+      for Default_Switches ("Ada") use 
+      ( "-E"                               --  Currently the same as -Ea: 
+                                           --  Store tracebacks in exception occurrences when the target supports it. The “a” is for hexadecimal “address”.
+      );
+   end Binder;
+end Standard_Options;
