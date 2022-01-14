@@ -7,4 +7,4 @@ Tooling for [ESI](https://esi.nl)'s Renaissance approach to legacy [Ada](https:/
 
 ## Related technologies
 * [HayStack-Ada](https://github.com/BurritoZz/Haystack-Ada) is a GNATStudio plug-in for AST-based Find and Replace. 
-HayStack-Ada uses a re-implementation of the rejuvenation library in python.
+[HayStack-Ada](https://github.com/BurritoZz/Haystack-Ada) uses a re-implementation of the rejuvenation library in python.
