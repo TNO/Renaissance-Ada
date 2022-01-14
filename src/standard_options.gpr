@@ -37,7 +37,8 @@ abstract project Standard_Options is
         ( "-gnat2012"                      --  Allow full Ada 2012 features (same as -gnat12)
         , "-fstack-check"                  --  Activates stack checking.
         , "-gnata"                         --  Assertions enabled.
-        , "-gnatwa"                        --  Activate most optional warnings.
+        , "-gnatwae"                       --  a - Activate most optional warnings. 
+                                           --  e - Treat warnings and style checks as errors.
         , "-gnatyy"                        --  Enable built-in style checks (Set all standard style check options)
         , "-Wall"                          --  This switch enables most warnings from the GCC back end. 
         , "-Werror"                        --  This switch causes warnings from the GCC back end to be treated as errors.
