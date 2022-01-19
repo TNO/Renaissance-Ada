@@ -1,0 +1,26 @@
+When upgrading LibAdaLang a new version for Match Pattern has to be made.
+
+1. Remove in Match Patterns (in rejuvenation library) 
+all code between
+         -- Begin of generated fragment using Rejuvenation_Lib_Generator --------
+and
+         -- End of generated fragment --------
+
+2. In generator.ads (in this package)
+update Filename_LAL_Ads and Filename_LALCO_Ads
+to point to correct / new LibAdaLang version
+
+3. Run program
+
+4. copy output in Match Pattern (in rejuvenation library) 
+between
+         -- Begin of generated fragment using Rejuvenation_Lib_Generator --------
+and
+         -- End of generated fragment --------
+         
+use Code > Format Selection
+or  Copde > Format file
+ on added / all code 
+(if desired / required to adhere to specific style)
+
+5. rebuild rejuvenation library
