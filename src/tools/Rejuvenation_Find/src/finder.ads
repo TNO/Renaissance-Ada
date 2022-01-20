@@ -7,6 +7,7 @@ package Finder is
    function Find (Node : Ada_Node'Class;
                   P    : Pattern)
                   return Match_Pattern_List.Vector;
-   -- Return all recursively nested nodes from the AST instance that fully match the AST pattern.
+   --  Return all recursively nested nodes from the AST instance
+   --  that fully match the AST pattern.
 
 end Finder;
