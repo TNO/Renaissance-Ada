@@ -1,0 +1,3 @@
+separate(Basic_Declaration)
+protected body Protected_Body_Stub_Name is
+end Protected_Body_Stub_Name;
