@@ -1,5 +1,5 @@
 with Ada.Containers.Indefinite_Hashed_Maps;
-with Ada.Strings;                            use Ada.Strings;
+with Ada.Strings; use Ada.Strings;
 with Ada.Strings.Hash;
 
 package Rejuvenation.Match_Patterns is
@@ -51,9 +51,9 @@ package Rejuvenation.Match_Patterns is
       Instance :     Ada_Node_Array; Instance_Start_Index : Integer)
       return Boolean with
       Pre => Instance_Start_Index in Instance'Range;
-   --  Return whether the node-array AST pattern matches
-   --  a prefix of the node-array AST instance.
-   --  If succesful, then the match attributes can afterwards be inspected.
+      --  Return whether the node-array AST pattern matches
+      --  a prefix of the node-array AST instance.
+      --  If succesful, then the match attributes can afterwards be inspected.
 
    function Are_Identical
      (Node1 : Ada_Node'Class; Node2 : Ada_Node'Class) return Boolean;
@@ -74,13 +74,13 @@ package Rejuvenation.Match_Patterns is
    function Get_Single_As_Node
      (MP : Match_Pattern; Placeholder_Name : String) return Ada_Node with
       Pre => Has_Single (MP, Placeholder_Name);
-   --  Return the mapped AST node from the AST instance
-   --  for the given "single" placeholder name.
+      --  Return the mapped AST node from the AST instance
+      --  for the given "single" placeholder name.
    function Get_Single_As_Raw_Signature
      (MP : Match_Pattern; Placeholder_Name : String) return String with
       Pre => Has_Single (MP, Placeholder_Name);
-   --  Return the mapped raw signature from the AST instance
-   --  for the given "single" placeholder name.
+      --  Return the mapped raw signature from the AST instance
+      --  for the given "single" placeholder name.
 
    function Has_Multiple
      (MP : Match_Pattern; Placeholder_Name : String) return Boolean;
@@ -90,8 +90,8 @@ package Rejuvenation.Match_Patterns is
      (MP : Match_Pattern; Placeholder_Name : String)
       return Node_List.Vector with
       Pre => Has_Multiple (MP, Placeholder_Name);
-   --  Return the mapped AST nodes from the AST instance
-   --  for the given "multiple" placeholder name.
+      --  Return the mapped AST nodes from the AST instance
+      --  for the given "multiple" placeholder name.
    function Get_Multiple_As_Raw_Signature
      (MP : Match_Pattern; Placeholder_Name : String) return String with
       Pre => Has_Multiple (MP, Placeholder_Name);
@@ -124,7 +124,8 @@ private
       Instance :        Ada_Node_Array; Instance_Start_Index : Integer;
       Pattern_Must_Cover_End_Of_Instance :    Boolean; Store_Nodes : Boolean)
       return Boolean with
-      Pre => Instance_Start_Index in Instance'Range;
+      Pre => Instance'Last < Instance'First
+      or else Instance_Start_Index in Instance'Range;
    function Match_Multiple_Placeholder
      (MP       : in out Match_Pattern; Pattern : Ada_Node'Class;
       Instance :        Ada_Node'Class) return Boolean;
@@ -144,9 +145,8 @@ private
    function Equivalent_Element (Left, Right : Node_List.Vector) return Boolean;
 
    package Mapping_Single_Map is new Indefinite_Hashed_Maps
-     (Key_Type => String, Element_Type => Ada_Node,
-      Hash     => Ada.Strings.Hash, Equivalent_Keys => Equivalent_Key,
-      "="      => Equivalent_Element);
+     (Key_Type => String, Element_Type => Ada_Node, Hash => Ada.Strings.Hash,
+      Equivalent_Keys => Equivalent_Key, "=" => Equivalent_Element);
 
    package Mapping_Multiple_Map is new Indefinite_Hashed_Maps
      (Key_Type => String, Element_Type => Node_List.Vector,
@@ -163,8 +163,8 @@ private
    end record;
 
    type Multiple_Placeholder_Status is record
-      Ongoing_Multiple           : Boolean         := False;
-      Multiple_PlaceHolder_Name  : Ada_Node        := No_Ada_Node;
+      Ongoing_Multiple          : Boolean  := False;
+      Multiple_PlaceHolder_Name : Ada_Node := No_Ada_Node;
       --  TODO: Why called name and not node?
       Multiple_Placeholder_Nodes : Node_List.Vector;
 
