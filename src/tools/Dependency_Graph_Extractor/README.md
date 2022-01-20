@@ -14,7 +14,12 @@ The following tools are required for building the extractor:
 
 ## Building
 
-To build the Dependency Graph Extractor, we first need to build the Ada components of langkit and libadalang. This requires obtaining the langkit and libadalang source code, where it should be ensured that the original line endings are maintained. The latter can be done by setting git's `core.autocrlf` property to `false` before cloning the repositories. See see [this Github page](https://docs.github.com/en/github/using-git/configuring-git-to-handle-line-endings) for more information.
+To build the Dependency Graph Extractor, we need the Ada components, langkit and libadalang.
+AdaCore provides installers for these components to their customers.
+Otherwise, you need to build these Ada components. 
+This requires obtaining the langkit and libadalang source code, where it should be ensured that the original line endings are maintained. 
+The latter can be done by setting git's `core.autocrlf` property to `false` before cloning the repositories. 
+See [this Github page](https://docs.github.com/en/github/using-git/configuring-git-to-handle-line-endings) for more information.
 
 > **NOTE**: Ensure to restore the original value of `core.autocrlf` once all steps below have been completed.
 
