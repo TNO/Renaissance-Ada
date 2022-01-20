@@ -1,0 +1,5 @@
+aggregate project Renaissance_Ada is
+
+   for Project_Files use ("**/*.gpr");
+
+end Renaissance_Ada;
