@@ -11,6 +11,7 @@ pragma Unreferenced (Prefix_Notation);
 procedure Rejuvenation_Workshop is
 begin
    --  This project contains the code examples to analyse and transform
-   --  See the test cases for the answers to the assignments in the workshop,
+   --  in the assignments of the workshop.
+   --  See the test cases for the answers to the assignments of the workshop.
    null;
 end Rejuvenation_Workshop;
