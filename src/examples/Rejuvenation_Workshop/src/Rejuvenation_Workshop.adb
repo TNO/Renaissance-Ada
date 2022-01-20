@@ -8,7 +8,9 @@ pragma Unreferenced (Default_Value);
 pragma Unreferenced (Mismatch);
 pragma Unreferenced (Prefix_Notation);
 
-procedure Main is
+procedure Rejuvenation_Workshop is
 begin
-  null;
-end Main;
+   --  This project contains the code examples to analyse and transform
+   --  See the test cases for the answers to the assignments in the workshop,
+   null;
+end Rejuvenation_Workshop;
