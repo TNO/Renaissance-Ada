@@ -1,0 +1,998 @@
+Renaissance-Ada\src\examples\Rejuvenation_Examples\obj\rejuvenation_examples.exe
+=== Examples of Factory =======
+
+--- Example of parsing full text -------
+
+CompilationUnit[1:1-1:39]
+|f_prelude:
+|  AdaNodeList[1:1-1:1]: <empty list>
+|f_body:
+|  LibraryItem[1:1-1:39]
+|  |f_has_private:
+|  |  PrivateAbsent[1:1-1:1]
+|  |f_item:
+|  |  SubpBody[1:1-1:39]
+|  |  |f_overriding:
+|  |  |  OverridingUnspecified[1:1-1:1]
+|  |  |f_subp_spec:
+|  |  |  SubpSpec[1:1-1:15]
+|  |  |  |f_subp_kind:
+|  |  |  |  SubpKindProcedure[1:1-1:10]
+|  |  |  |f_subp_name:
+|  |  |  |  DefiningName[1:11-1:15]
+|  |  |  |  |f_name:
+|  |  |  |  |  Id[1:11-1:15]: Test
+|  |  |  |f_subp_params: <null>
+|  |  |  |f_subp_returns: <null>
+|  |  |f_aspects: <null>
+|  |  |f_decls:
+|  |  |  DeclarativePart[1:18-1:19]
+|  |  |  |f_decls:
+|  |  |  |  AdaNodeList[1:18-1:18]: <empty list>
+|  |  |f_stmts:
+|  |  |  HandledStmts[1:24-1:35]
+|  |  |  |f_stmts:
+|  |  |  |  StmtList[1:25-1:34]
+|  |  |  |  |  CallStmt[1:25-1:34]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  Id[1:25-1:33]: New_Line
+|  |  |  |f_exceptions:
+|  |  |  |  AdaNodeList[1:33-1:33]: <empty list>
+|  |  |f_end_name: <null>
+|f_pragmas:
+|  PragmaNodeList[1:39-1:39]: <empty list>
+
+--- Example of parsing partial text -------
+
+AssignStmt[1:1-1:8]
+|f_dest:
+|  Id[1:1-1:2]: x
+|f_expr:
+|  Int[1:6-1:7]: 4
+
+--- Example of parsing file outside project context -------
+
+CompilationUnit[1:1-29:27]
+|f_prelude:
+|  AdaNodeList[1:1-7:23]
+|  |  WithClause[1:1-1:19]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[1:1-1:1]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[1:1-1:1]
+|  |  |f_packages:
+|  |  |  NameList[1:6-1:18]
+|  |  |  |  DottedName[1:6-1:18]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[1:6-1:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[1:15-1:18]: Ast
+|  |  WithClause[2:1-2:23]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[1:19-1:19]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[1:19-1:19]
+|  |  |f_packages:
+|  |  |  NameList[2:6-2:22]
+|  |  |  |  DottedName[2:6-2:22]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[2:6-2:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[2:15-2:22]: Factory
+|  |  WithClause[3:1-3:22]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[2:23-2:23]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[2:23-2:23]
+|  |  |f_packages:
+|  |  |  NameList[3:6-3:21]
+|  |  |  |  DottedName[3:6-3:21]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[3:6-3:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[3:15-3:21]: Finder
+|  |  WithClause[4:1-4:30]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[3:22-3:22]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[3:22-3:22]
+|  |  |f_packages:
+|  |  |  NameList[4:6-4:29]
+|  |  |  |  DottedName[4:6-4:29]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[4:6-4:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[4:15-4:29]: Match_Patterns
+|  |  WithClause[5:1-5:26]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[4:30-4:30]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[4:30-4:30]
+|  |  |f_packages:
+|  |  |  NameList[5:6-5:25]
+|  |  |  |  DottedName[5:6-5:25]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[5:6-5:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[5:15-5:25]: Navigation
+|  |  WithClause[6:1-6:29]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[5:26-5:26]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[5:26-5:26]
+|  |  |f_packages:
+|  |  |  NameList[6:6-6:28]
+|  |  |  |  DottedName[6:6-6:28]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[6:6-6:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[6:15-6:28]: Text_Rewrites
+|  |  WithClause[7:1-7:23]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[6:29-6:29]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[6:29-6:29]
+|  |  |f_packages:
+|  |  |  NameList[7:6-7:22]
+|  |  |  |  DottedName[7:6-7:22]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[7:6-7:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[7:15-7:22]: Visitor
+|f_body:
+|  LibraryItem[9:1-29:27]
+|  |f_has_private:
+|  |  PrivateAbsent[7:23-7:23]
+|  |f_item:
+|  |  SubpBody[9:1-29:27]
+|  |  |f_overriding:
+|  |  |  OverridingUnspecified[7:23-7:23]
+|  |  |f_subp_spec:
+|  |  |  SubpSpec[9:1-9:32]
+|  |  |  |f_subp_kind:
+|  |  |  |  SubpKindProcedure[9:1-9:10]
+|  |  |  |f_subp_name:
+|  |  |  |  DefiningName[9:11-9:32]
+|  |  |  |  |f_name:
+|  |  |  |  |  Id[9:11-9:32]: Rejuvenation_Examples
+|  |  |  |f_subp_params: <null>
+|  |  |  |f_subp_returns: <null>
+|  |  |f_aspects: <null>
+|  |  |f_decls:
+|  |  |  DeclarativePart[9:35-14:1]
+|  |  |  |f_decls:
+|  |  |  |  AdaNodeList[10:4-13:52]
+|  |  |  |  |  ObjectDecl[10:4-10:41]
+|  |  |  |  |  |f_ids:
+|  |  |  |  |  |  DefiningNameList[10:4-10:15]
+|  |  |  |  |  |  |  DefiningName[10:4-10:15]
+|  |  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  |  Id[10:4-10:15]: Root_Folder
+|  |  |  |  |  |f_has_aliased:
+|  |  |  |  |  |  AliasedAbsent[10:18-10:18]
+|  |  |  |  |  |f_has_constant:
+|  |  |  |  |  |  ConstantPresent[10:19-10:27]
+|  |  |  |  |  |f_mode:
+|  |  |  |  |  |  ModeDefault[10:27-10:27]
+|  |  |  |  |  |f_type_expr:
+|  |  |  |  |  |  SubtypeIndication[10:28-10:34]
+|  |  |  |  |  |  |f_has_not_null:
+|  |  |  |  |  |  |  NotNullAbsent[10:27-10:27]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  Id[10:28-10:34]: String
+|  |  |  |  |  |  |f_constraint: <null>
+|  |  |  |  |  |f_default_expr:
+|  |  |  |  |  |  Str[10:38-10:40]: ""
+|  |  |  |  |  |f_renaming_clause: <null>
+|  |  |  |  |  |f_aspects: <null>
+|  |  |  |  |  ObjectDecl[11:4-11:80]
+|  |  |  |  |  |f_ids:
+|  |  |  |  |  |  DefiningNameList[11:4-11:16]
+|  |  |  |  |  |  |  DefiningName[11:4-11:16]
+|  |  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  |  Id[11:4-11:16]: Project_Name
+|  |  |  |  |  |f_has_aliased:
+|  |  |  |  |  |  AliasedAbsent[11:18-11:18]
+|  |  |  |  |  |f_has_constant:
+|  |  |  |  |  |  ConstantPresent[11:19-11:27]
+|  |  |  |  |  |f_mode:
+|  |  |  |  |  |  ModeDefault[11:27-11:27]
+|  |  |  |  |  |f_type_expr:
+|  |  |  |  |  |  SubtypeIndication[11:28-11:34]
+|  |  |  |  |  |  |f_has_not_null:
+|  |  |  |  |  |  |  NotNullAbsent[11:27-11:27]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  Id[11:28-11:34]: String
+|  |  |  |  |  |  |f_constraint: <null>
+|  |  |  |  |  |f_default_expr:
+|  |  |  |  |  |  BinOp[11:38-11:79]
+|  |  |  |  |  |  |f_left:
+|  |  |  |  |  |  |  Id[11:38-11:49]: Root_Folder
+|  |  |  |  |  |  |f_op:
+|  |  |  |  |  |  |  OpConcat[11:50-11:51]
+|  |  |  |  |  |  |f_right:
+|  |  |  |  |  |  |  Str[11:52-11:79]: "rejuvenation_examples.gpr"
+|  |  |  |  |  |f_renaming_clause: <null>
+|  |  |  |  |  |f_aspects: <null>
+|  |  |  |  |  ObjectDecl[12:4-13:52]
+|  |  |  |  |  |f_ids:
+|  |  |  |  |  |  DefiningNameList[12:4-12:13]
+|  |  |  |  |  |  |  DefiningName[12:4-12:13]
+|  |  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  |  Id[12:4-12:13]: File_Name
+|  |  |  |  |  |f_has_aliased:
+|  |  |  |  |  |  AliasedAbsent[12:18-12:18]
+|  |  |  |  |  |f_has_constant:
+|  |  |  |  |  |  ConstantPresent[12:19-12:27]
+|  |  |  |  |  |f_mode:
+|  |  |  |  |  |  ModeDefault[12:27-12:27]
+|  |  |  |  |  |f_type_expr:
+|  |  |  |  |  |  SubtypeIndication[12:28-12:34]
+|  |  |  |  |  |  |f_has_not_null:
+|  |  |  |  |  |  |  NotNullAbsent[12:27-12:27]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  Id[12:28-12:34]: String
+|  |  |  |  |  |  |f_constraint: <null>
+|  |  |  |  |  |f_default_expr:
+|  |  |  |  |  |  BinOp[13:6-13:51]
+|  |  |  |  |  |  |f_left:
+|  |  |  |  |  |  |  Id[13:6-13:17]: Root_Folder
+|  |  |  |  |  |  |f_op:
+|  |  |  |  |  |  |  OpConcat[13:18-13:19]
+|  |  |  |  |  |  |f_right:
+|  |  |  |  |  |  |  Str[13:20-13:51]: "src/rejuvenation_examples.adb"
+|  |  |  |  |  |f_renaming_clause: <null>
+|  |  |  |  |  |f_aspects: <null>
+|  |  |f_stmts:
+|  |  |  HandledStmts[14:6-29:1]
+|  |  |  |f_stmts:
+|  |  |  |  StmtList[17:4-27:44]
+|  |  |  |  |  CallStmt[17:4-17:52]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  CallExpr[17:4-17:51]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  DottedName[17:4-17:25]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  DottedName[17:4-17:20]
+|  |  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  |  Id[17:4-17:12]: Examples
+|  |  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  |  Id[17:13-17:20]: Factory
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[17:21-17:25]: Demo
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  AssocList[17:27-17:50]
+|  |  |  |  |  |  |  |  ParamAssoc[17:27-17:39]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[17:27-17:39]: Project_Name
+|  |  |  |  |  |  |  |  ParamAssoc[17:41-17:50]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[17:41-17:50]: File_Name
+|  |  |  |  |  CallStmt[20:4-20:48]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  CallExpr[20:4-20:47]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  DottedName[20:4-20:21]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  DottedName[20:4-20:16]
+|  |  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  |  Id[20:4-20:12]: Examples
+|  |  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  |  Id[20:13-20:16]: Ast
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[20:17-20:21]: Demo
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  AssocList[20:23-20:46]
+|  |  |  |  |  |  |  |  ParamAssoc[20:23-20:35]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[20:23-20:35]: Project_Name
+|  |  |  |  |  |  |  |  ParamAssoc[20:37-20:46]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[20:37-20:46]: File_Name
+|  |  |  |  |  CallStmt[21:4-21:38]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  CallExpr[21:4-21:37]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  DottedName[21:4-21:25]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  DottedName[21:4-21:20]
+|  |  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  |  Id[21:4-21:12]: Examples
+|  |  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  |  Id[21:13-21:20]: Visitor
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[21:21-21:25]: Demo
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  AssocList[21:27-21:36]
+|  |  |  |  |  |  |  |  ParamAssoc[21:27-21:36]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[21:27-21:36]: File_Name
+|  |  |  |  |  CallStmt[22:4-22:33]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  DottedName[22:4-22:32]
+|  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  DottedName[22:4-22:27]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  Id[22:4-22:12]: Examples
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[22:13-22:27]: Match_Patterns
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  Id[22:28-22:32]: Demo
+|  |  |  |  |  CallStmt[23:4-23:37]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  CallExpr[23:4-23:36]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  DottedName[23:4-23:24]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  DottedName[23:4-23:19]
+|  |  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  |  Id[23:4-23:12]: Examples
+|  |  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  |  Id[23:13-23:19]: Finder
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[23:20-23:24]: Demo
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  AssocList[23:26-23:35]
+|  |  |  |  |  |  |  |  ParamAssoc[23:26-23:35]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[23:26-23:35]: File_Name
+|  |  |  |  |  CallStmt[24:4-24:41]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  CallExpr[24:4-24:40]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  DottedName[24:4-24:28]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  DottedName[24:4-24:23]
+|  |  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  |  Id[24:4-24:12]: Examples
+|  |  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  |  Id[24:13-24:23]: Navigation
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[24:24-24:28]: Demo
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  AssocList[24:30-24:39]
+|  |  |  |  |  |  |  |  ParamAssoc[24:30-24:39]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[24:30-24:39]: File_Name
+|  |  |  |  |  CallStmt[27:4-27:44]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  CallExpr[27:4-27:43]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  DottedName[27:4-27:31]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  DottedName[27:4-27:26]
+|  |  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  |  Id[27:4-27:12]: Examples
+|  |  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  |  Id[27:13-27:26]: Text_Rewrites
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[27:27-27:31]: Demo
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  AssocList[27:33-27:42]
+|  |  |  |  |  |  |  |  ParamAssoc[27:33-27:42]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[27:33-27:42]: File_Name
+|  |  |  |f_exceptions:
+|  |  |  |  AdaNodeList[27:43-27:43]: <empty list>
+|  |  |f_end_name:
+|  |  |  EndName[29:5-29:26]
+|  |  |  |f_name:
+|  |  |  |  Id[29:5-29:26]: Rejuvenation_Examples
+|f_pragmas:
+|  PragmaNodeList[29:27-29:27]: <empty list>
+
+--- Example of parsing file inside project context -------
+
+CompilationUnit[1:1-29:27]
+|f_prelude:
+|  AdaNodeList[1:1-7:23]
+|  |  WithClause[1:1-1:19]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[1:1-1:1]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[1:1-1:1]
+|  |  |f_packages:
+|  |  |  NameList[1:6-1:18]
+|  |  |  |  DottedName[1:6-1:18]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[1:6-1:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[1:15-1:18]: Ast
+|  |  WithClause[2:1-2:23]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[1:19-1:19]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[1:19-1:19]
+|  |  |f_packages:
+|  |  |  NameList[2:6-2:22]
+|  |  |  |  DottedName[2:6-2:22]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[2:6-2:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[2:15-2:22]: Factory
+|  |  WithClause[3:1-3:22]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[2:23-2:23]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[2:23-2:23]
+|  |  |f_packages:
+|  |  |  NameList[3:6-3:21]
+|  |  |  |  DottedName[3:6-3:21]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[3:6-3:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[3:15-3:21]: Finder
+|  |  WithClause[4:1-4:30]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[3:22-3:22]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[3:22-3:22]
+|  |  |f_packages:
+|  |  |  NameList[4:6-4:29]
+|  |  |  |  DottedName[4:6-4:29]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[4:6-4:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[4:15-4:29]: Match_Patterns
+|  |  WithClause[5:1-5:26]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[4:30-4:30]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[4:30-4:30]
+|  |  |f_packages:
+|  |  |  NameList[5:6-5:25]
+|  |  |  |  DottedName[5:6-5:25]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[5:6-5:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[5:15-5:25]: Navigation
+|  |  WithClause[6:1-6:29]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[5:26-5:26]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[5:26-5:26]
+|  |  |f_packages:
+|  |  |  NameList[6:6-6:28]
+|  |  |  |  DottedName[6:6-6:28]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[6:6-6:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[6:15-6:28]: Text_Rewrites
+|  |  WithClause[7:1-7:23]
+|  |  |f_has_limited:
+|  |  |  LimitedAbsent[6:29-6:29]
+|  |  |f_has_private:
+|  |  |  PrivateAbsent[6:29-6:29]
+|  |  |f_packages:
+|  |  |  NameList[7:6-7:22]
+|  |  |  |  DottedName[7:6-7:22]
+|  |  |  |  |f_prefix:
+|  |  |  |  |  Id[7:6-7:14]: Examples
+|  |  |  |  |f_suffix:
+|  |  |  |  |  Id[7:15-7:22]: Visitor
+|f_body:
+|  LibraryItem[9:1-29:27]
+|  |f_has_private:
+|  |  PrivateAbsent[7:23-7:23]
+|  |f_item:
+|  |  SubpBody[9:1-29:27]
+|  |  |f_overriding:
+|  |  |  OverridingUnspecified[7:23-7:23]
+|  |  |f_subp_spec:
+|  |  |  SubpSpec[9:1-9:32]
+|  |  |  |f_subp_kind:
+|  |  |  |  SubpKindProcedure[9:1-9:10]
+|  |  |  |f_subp_name:
+|  |  |  |  DefiningName[9:11-9:32]
+|  |  |  |  |f_name:
+|  |  |  |  |  Id[9:11-9:32]: Rejuvenation_Examples
+|  |  |  |f_subp_params: <null>
+|  |  |  |f_subp_returns: <null>
+|  |  |f_aspects: <null>
+|  |  |f_decls:
+|  |  |  DeclarativePart[9:35-14:1]
+|  |  |  |f_decls:
+|  |  |  |  AdaNodeList[10:4-13:52]
+|  |  |  |  |  ObjectDecl[10:4-10:41]
+|  |  |  |  |  |f_ids:
+|  |  |  |  |  |  DefiningNameList[10:4-10:15]
+|  |  |  |  |  |  |  DefiningName[10:4-10:15]
+|  |  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  |  Id[10:4-10:15]: Root_Folder
+|  |  |  |  |  |f_has_aliased:
+|  |  |  |  |  |  AliasedAbsent[10:18-10:18]
+|  |  |  |  |  |f_has_constant:
+|  |  |  |  |  |  ConstantPresent[10:19-10:27]
+|  |  |  |  |  |f_mode:
+|  |  |  |  |  |  ModeDefault[10:27-10:27]
+|  |  |  |  |  |f_type_expr:
+|  |  |  |  |  |  SubtypeIndication[10:28-10:34]
+|  |  |  |  |  |  |f_has_not_null:
+|  |  |  |  |  |  |  NotNullAbsent[10:27-10:27]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  Id[10:28-10:34]: String
+|  |  |  |  |  |  |f_constraint: <null>
+|  |  |  |  |  |f_default_expr:
+|  |  |  |  |  |  Str[10:38-10:40]: ""
+|  |  |  |  |  |f_renaming_clause: <null>
+|  |  |  |  |  |f_aspects: <null>
+|  |  |  |  |  ObjectDecl[11:4-11:80]
+|  |  |  |  |  |f_ids:
+|  |  |  |  |  |  DefiningNameList[11:4-11:16]
+|  |  |  |  |  |  |  DefiningName[11:4-11:16]
+|  |  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  |  Id[11:4-11:16]: Project_Name
+|  |  |  |  |  |f_has_aliased:
+|  |  |  |  |  |  AliasedAbsent[11:18-11:18]
+|  |  |  |  |  |f_has_constant:
+|  |  |  |  |  |  ConstantPresent[11:19-11:27]
+|  |  |  |  |  |f_mode:
+|  |  |  |  |  |  ModeDefault[11:27-11:27]
+|  |  |  |  |  |f_type_expr:
+|  |  |  |  |  |  SubtypeIndication[11:28-11:34]
+|  |  |  |  |  |  |f_has_not_null:
+|  |  |  |  |  |  |  NotNullAbsent[11:27-11:27]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  Id[11:28-11:34]: String
+|  |  |  |  |  |  |f_constraint: <null>
+|  |  |  |  |  |f_default_expr:
+|  |  |  |  |  |  BinOp[11:38-11:79]
+|  |  |  |  |  |  |f_left:
+|  |  |  |  |  |  |  Id[11:38-11:49]: Root_Folder
+|  |  |  |  |  |  |f_op:
+|  |  |  |  |  |  |  OpConcat[11:50-11:51]
+|  |  |  |  |  |  |f_right:
+|  |  |  |  |  |  |  Str[11:52-11:79]: "rejuvenation_examples.gpr"
+|  |  |  |  |  |f_renaming_clause: <null>
+|  |  |  |  |  |f_aspects: <null>
+|  |  |  |  |  ObjectDecl[12:4-13:52]
+|  |  |  |  |  |f_ids:
+|  |  |  |  |  |  DefiningNameList[12:4-12:13]
+|  |  |  |  |  |  |  DefiningName[12:4-12:13]
+|  |  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  |  Id[12:4-12:13]: File_Name
+|  |  |  |  |  |f_has_aliased:
+|  |  |  |  |  |  AliasedAbsent[12:18-12:18]
+|  |  |  |  |  |f_has_constant:
+|  |  |  |  |  |  ConstantPresent[12:19-12:27]
+|  |  |  |  |  |f_mode:
+|  |  |  |  |  |  ModeDefault[12:27-12:27]
+|  |  |  |  |  |f_type_expr:
+|  |  |  |  |  |  SubtypeIndication[12:28-12:34]
+|  |  |  |  |  |  |f_has_not_null:
+|  |  |  |  |  |  |  NotNullAbsent[12:27-12:27]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  Id[12:28-12:34]: String
+|  |  |  |  |  |  |f_constraint: <null>
+|  |  |  |  |  |f_default_expr:
+|  |  |  |  |  |  BinOp[13:6-13:51]
+|  |  |  |  |  |  |f_left:
+|  |  |  |  |  |  |  Id[13:6-13:17]: Root_Folder
+|  |  |  |  |  |  |f_op:
+|  |  |  |  |  |  |  OpConcat[13:18-13:19]
+|  |  |  |  |  |  |f_right:
+|  |  |  |  |  |  |  Str[13:20-13:51]: "src/rejuvenation_examples.adb"
+|  |  |  |  |  |f_renaming_clause: <null>
+|  |  |  |  |  |f_aspects: <null>
+|  |  |f_stmts:
+|  |  |  HandledStmts[14:6-29:1]
+|  |  |  |f_stmts:
+|  |  |  |  StmtList[17:4-27:44]
+|  |  |  |  |  CallStmt[17:4-17:52]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  CallExpr[17:4-17:51]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  DottedName[17:4-17:25]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  DottedName[17:4-17:20]
+|  |  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  |  Id[17:4-17:12]: Examples
+|  |  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  |  Id[17:13-17:20]: Factory
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[17:21-17:25]: Demo
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  AssocList[17:27-17:50]
+|  |  |  |  |  |  |  |  ParamAssoc[17:27-17:39]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[17:27-17:39]: Project_Name
+|  |  |  |  |  |  |  |  ParamAssoc[17:41-17:50]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[17:41-17:50]: File_Name
+|  |  |  |  |  CallStmt[20:4-20:48]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  CallExpr[20:4-20:47]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  DottedName[20:4-20:21]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  DottedName[20:4-20:16]
+|  |  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  |  Id[20:4-20:12]: Examples
+|  |  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  |  Id[20:13-20:16]: Ast
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[20:17-20:21]: Demo
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  AssocList[20:23-20:46]
+|  |  |  |  |  |  |  |  ParamAssoc[20:23-20:35]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[20:23-20:35]: Project_Name
+|  |  |  |  |  |  |  |  ParamAssoc[20:37-20:46]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[20:37-20:46]: File_Name
+|  |  |  |  |  CallStmt[21:4-21:38]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  CallExpr[21:4-21:37]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  DottedName[21:4-21:25]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  DottedName[21:4-21:20]
+|  |  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  |  Id[21:4-21:12]: Examples
+|  |  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  |  Id[21:13-21:20]: Visitor
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[21:21-21:25]: Demo
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  AssocList[21:27-21:36]
+|  |  |  |  |  |  |  |  ParamAssoc[21:27-21:36]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[21:27-21:36]: File_Name
+|  |  |  |  |  CallStmt[22:4-22:33]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  DottedName[22:4-22:32]
+|  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  DottedName[22:4-22:27]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  Id[22:4-22:12]: Examples
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[22:13-22:27]: Match_Patterns
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  Id[22:28-22:32]: Demo
+|  |  |  |  |  CallStmt[23:4-23:37]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  CallExpr[23:4-23:36]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  DottedName[23:4-23:24]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  DottedName[23:4-23:19]
+|  |  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  |  Id[23:4-23:12]: Examples
+|  |  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  |  Id[23:13-23:19]: Finder
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[23:20-23:24]: Demo
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  AssocList[23:26-23:35]
+|  |  |  |  |  |  |  |  ParamAssoc[23:26-23:35]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[23:26-23:35]: File_Name
+|  |  |  |  |  CallStmt[24:4-24:41]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  CallExpr[24:4-24:40]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  DottedName[24:4-24:28]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  DottedName[24:4-24:23]
+|  |  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  |  Id[24:4-24:12]: Examples
+|  |  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  |  Id[24:13-24:23]: Navigation
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[24:24-24:28]: Demo
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  AssocList[24:30-24:39]
+|  |  |  |  |  |  |  |  ParamAssoc[24:30-24:39]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[24:30-24:39]: File_Name
+|  |  |  |  |  CallStmt[27:4-27:44]
+|  |  |  |  |  |f_call:
+|  |  |  |  |  |  CallExpr[27:4-27:43]
+|  |  |  |  |  |  |f_name:
+|  |  |  |  |  |  |  DottedName[27:4-27:31]
+|  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  DottedName[27:4-27:26]
+|  |  |  |  |  |  |  |  |f_prefix:
+|  |  |  |  |  |  |  |  |  Id[27:4-27:12]: Examples
+|  |  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  |  Id[27:13-27:26]: Text_Rewrites
+|  |  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  |  Id[27:27-27:31]: Demo
+|  |  |  |  |  |  |f_suffix:
+|  |  |  |  |  |  |  AssocList[27:33-27:42]
+|  |  |  |  |  |  |  |  ParamAssoc[27:33-27:42]
+|  |  |  |  |  |  |  |  |f_designator: <null>
+|  |  |  |  |  |  |  |  |f_r_expr:
+|  |  |  |  |  |  |  |  |  Id[27:33-27:42]: File_Name
+|  |  |  |f_exceptions:
+|  |  |  |  AdaNodeList[27:43-27:43]: <empty list>
+|  |  |f_end_name:
+|  |  |  EndName[29:5-29:26]
+|  |  |  |f_name:
+|  |  |  |  Id[29:5-29:26]: Rejuvenation_Examples
+|f_pragmas:
+|  PragmaNodeList[29:27-29:27]: <empty list>
+
+=== Examples of AST accessors =======
+
+--- Example of syntactic F fields -------
+
+Declarations:
+
+ObjectDecl[10:4-10:41]
+|f_ids:
+|  DefiningNameList[10:4-10:15]
+|  |  DefiningName[10:4-10:15]
+|  |  |f_name:
+|  |  |  Id[10:4-10:15]: Root_Folder
+|f_has_aliased:
+|  AliasedAbsent[10:18-10:18]
+|f_has_constant:
+|  ConstantPresent[10:19-10:27]
+|f_mode:
+|  ModeDefault[10:27-10:27]
+|f_type_expr:
+|  SubtypeIndication[10:28-10:34]
+|  |f_has_not_null:
+|  |  NotNullAbsent[10:27-10:27]
+|  |f_name:
+|  |  Id[10:28-10:34]: String
+|  |f_constraint: <null>
+|f_default_expr:
+|  Str[10:38-10:40]: ""
+|f_renaming_clause: <null>
+|f_aspects: <null>
+
+ObjectDecl[11:4-11:80]
+|f_ids:
+|  DefiningNameList[11:4-11:16]
+|  |  DefiningName[11:4-11:16]
+|  |  |f_name:
+|  |  |  Id[11:4-11:16]: Project_Name
+|f_has_aliased:
+|  AliasedAbsent[11:18-11:18]
+|f_has_constant:
+|  ConstantPresent[11:19-11:27]
+|f_mode:
+|  ModeDefault[11:27-11:27]
+|f_type_expr:
+|  SubtypeIndication[11:28-11:34]
+|  |f_has_not_null:
+|  |  NotNullAbsent[11:27-11:27]
+|  |f_name:
+|  |  Id[11:28-11:34]: String
+|  |f_constraint: <null>
+|f_default_expr:
+|  BinOp[11:38-11:79]
+|  |f_left:
+|  |  Id[11:38-11:49]: Root_Folder
+|  |f_op:
+|  |  OpConcat[11:50-11:51]
+|  |f_right:
+|  |  Str[11:52-11:79]: "rejuvenation_examples.gpr"
+|f_renaming_clause: <null>
+|f_aspects: <null>
+
+ObjectDecl[12:4-13:52]
+|f_ids:
+|  DefiningNameList[12:4-12:13]
+|  |  DefiningName[12:4-12:13]
+|  |  |f_name:
+|  |  |  Id[12:4-12:13]: File_Name
+|f_has_aliased:
+|  AliasedAbsent[12:18-12:18]
+|f_has_constant:
+|  ConstantPresent[12:19-12:27]
+|f_mode:
+|  ModeDefault[12:27-12:27]
+|f_type_expr:
+|  SubtypeIndication[12:28-12:34]
+|  |f_has_not_null:
+|  |  NotNullAbsent[12:27-12:27]
+|  |f_name:
+|  |  Id[12:28-12:34]: String
+|  |f_constraint: <null>
+|f_default_expr:
+|  BinOp[13:6-13:51]
+|  |f_left:
+|  |  Id[13:6-13:17]: Root_Folder
+|  |f_op:
+|  |  OpConcat[13:18-13:19]
+|  |f_right:
+|  |  Str[13:20-13:51]: "src/rejuvenation_examples.adb"
+|f_renaming_clause: <null>
+|f_aspects: <null>
+
+--- Example of semantic P properties -------
+
+Call: <CallExpr rejuvenation_examples.adb:17:4-17:51> from C:\bright\Renaissance-Ada\src\examples\Rejuvenation_Examples\src\rejuvenation_examples.adb
+  --> Declaration: <SubpDecl ["Demo"] examples-factory.ads:3:4-3:63> from C:\bright\Renaissance-Ada\src\examples\Rejuvenation_Examples\src\examples-factory.ads
+Call: <CallExpr rejuvenation_examples.adb:20:4-20:47> from C:\bright\Renaissance-Ada\src\examples\Rejuvenation_Examples\src\rejuvenation_examples.adb
+  --> Declaration: <SubpDecl ["Demo"] examples-ast.ads:3:4-3:63> from C:\bright\Renaissance-Ada\src\examples\Rejuvenation_Examples\src\examples-ast.ads
+Call: <CallExpr rejuvenation_examples.adb:21:4-21:37> from C:\bright\Renaissance-Ada\src\examples\Rejuvenation_Examples\src\rejuvenation_examples.adb
+  --> Declaration: <SubpDecl ["Demo"] examples-visitor.ads:3:4-3:40> from C:\bright\Renaissance-Ada\src\examples\Rejuvenation_Examples\src\examples-visitor.ads
+Call: <CallExpr rejuvenation_examples.adb:23:4-23:36> from C:\bright\Renaissance-Ada\src\examples\Rejuvenation_Examples\src\rejuvenation_examples.adb
+  --> Declaration: <SubpDecl ["Demo"] examples-finder.ads:3:4-3:40> from C:\bright\Renaissance-Ada\src\examples\Rejuvenation_Examples\src\examples-finder.ads
+Call: <CallExpr rejuvenation_examples.adb:24:4-24:40> from C:\bright\Renaissance-Ada\src\examples\Rejuvenation_Examples\src\rejuvenation_examples.adb
+  --> Declaration: <SubpDecl ["Demo"] examples-navigation.ads:3:4-3:40> from C:\bright\Renaissance-Ada\src\examples\Rejuvenation_Examples\src\examples-navigation.ads
+Call: <CallExpr rejuvenation_examples.adb:27:4-27:43> from C:\bright\Renaissance-Ada\src\examples\Rejuvenation_Examples\src\rejuvenation_examples.adb
+  --> Declaration: <SubpDecl ["Demo"] examples-text_rewrites.ads:3:4-3:40> from C:\bright\Renaissance-Ada\src\examples\Rejuvenation_Examples\src\examples-text_rewrites.ads
+
+=== Examples of Visitor =======
+
+<CallExpr rejuvenation_examples.adb:17:4-17:51>
+<CallExpr rejuvenation_examples.adb:20:4-20:47>
+<CallExpr rejuvenation_examples.adb:21:4-21:37>
+<CallExpr rejuvenation_examples.adb:23:4-23:36>
+<CallExpr rejuvenation_examples.adb:24:4-24:40>
+<CallExpr rejuvenation_examples.adb:27:4-27:43>
+
+=== Examples of Match_Pattern =======
+
+--- Examples without placeholders (success) -------
+
+TRUE
+
+--- Examples without placeholders (failure) -------
+
+Incompatible pattern and instance of the same kind:
+* Pattern <Int Fragment:1:6-1:8>: 21
+* Instance <Int Fragment:1:6-1:8>: 42
+Incompatible pattern and instance of the same kind:
+* Pattern <AssignStmt Fragment:1:1-1:9>: x := 21;
+* Instance <AssignStmt Fragment:1:1-1:9>: x := 42;
+FALSE
+
+--- Examples with single placeholders (success: single occurence) -------
+
+TRUE TRUE <Int Fragment:1:6-1:8> 42
+
+--- Examples with single placeholders (success: consistent occurences) -------
+
+TRUE TRUE <Int Fragment:1:6-1:8> 42
+
+--- Examples with single placeholders (failure: inconsistent occurences) -------
+
+FALSE FALSE
+
+--- Examples with single placeholders (success: consistent complex occurences) -------
+
+TRUE TRUE <ParenExpr Fragment:1:6-1:15> (f(a)+12)
+
+--- Examples with multiple placeholders (success: single occurence) -------
+
+TRUE TRUE  1 <Int Fragment:1:6-1:8>
+
+--- Examples with multiple placeholders (success: consistent occurences) -------
+
+TRUE TRUE  1 <Int Fragment:1:6-1:8>
+
+--- Examples with multiple placeholders (failure: inconsistent occurences) -------
+
+FALSE FALSE
+
+--- Examples with single and multiple placeholders (success) -------
+
+TRUE TRUE <Int Fragment:1:6-1:8> 42 TRUE  2 <AssignStmt Fragment:1:10-1:18> x := 21; <AssignStmt Fragment:1:19-1:27> y := 22;
+
+--- Examples with single and multiple placeholders (failure) -------
+
+Derived placeholder values:
+* $S_value: 42
+* $M_stats: [ 3]
+  - y := 21;
+  - y := 21;
+  - x := 43;
+Superfluous node in pattern:
+* Pattern <AssignStmt Fragment:1:26-1:40>: x := $S_value;
+Incompatible pattern and instance of the same kind:
+* Pattern <StmtList Fragment:1:1-1:40>: x := $S_value; $M_stats; x := $S_value;
+* Instance <StmtList Fragment:1:1-1:36>: x := 42; y := 21; y := 21; x := 43;
+FALSE FALSE FALSE
+
+=== Examples of Finder =======
+
+--- Example to find node kind -------
+
+<ObjectDecl ["Root_Folder"] rejuvenation_examples.adb:10:4-10:41>
+<ObjectDecl ["Project_Name"] rejuvenation_examples.adb:11:4-11:80>
+<ObjectDecl ["File_Name"] rejuvenation_examples.adb:12:4-13:52>
+
+--- Example to find pattern -------
+
+ 1 <CallStmt rejuvenation_examples.adb:17:4-17:52> Examples.Factory.Demo (Project_Name, File_Name);
+ 1 <CallStmt rejuvenation_examples.adb:20:4-20:48> Examples.Ast.Demo (Project_Name, File_Name);
+ 1 <CallStmt rejuvenation_examples.adb:21:4-21:38> Examples.Visitor.Demo (File_Name);
+ 1 <CallStmt rejuvenation_examples.adb:23:4-23:37> Examples.Finder.Demo (File_Name);
+ 1 <CallStmt rejuvenation_examples.adb:24:4-24:41> Examples.Navigation.Demo (File_Name);
+ 1 <CallStmt rejuvenation_examples.adb:27:4-27:44> Examples.Text_Rewrites.Demo (File_Name);
+
+--- Example to find sublist pattern -------
+
+Mutex: lock_x
+* x := 2;
+* y := 3;
+Mutex: lock_y
+* c := 10;
+* d := 12;
+
+=== Examples of Navigation =======
+
+--- Example to navigate between nodes -------
+
+Call_Expr <CallExpr rejuvenation_examples.adb:17:4-17:51> inside Call_Stmt <CallStmt rejuvenation_examples.adb:17:4-17:52>
+Call_Expr <CallExpr rejuvenation_examples.adb:20:4-20:47> inside Call_Stmt <CallStmt rejuvenation_examples.adb:20:4-20:48>
+Call_Expr <CallExpr rejuvenation_examples.adb:21:4-21:37> inside Call_Stmt <CallStmt rejuvenation_examples.adb:21:4-21:38>
+Call_Expr <CallExpr rejuvenation_examples.adb:23:4-23:36> inside Call_Stmt <CallStmt rejuvenation_examples.adb:23:4-23:37>
+Call_Expr <CallExpr rejuvenation_examples.adb:24:4-24:40> inside Call_Stmt <CallStmt rejuvenation_examples.adb:24:4-24:41>
+Call_Expr <CallExpr rejuvenation_examples.adb:27:4-27:43> inside Call_Stmt <CallStmt rejuvenation_examples.adb:27:4-27:44>
+
+=== Examples of Text_Rewrite =======
+
+--- Example insert comment (before + after Call Statement) -------
+
+with Examples.Ast;
+with Examples.Factory;
+with Examples.Finder;
+with Examples.Match_Patterns;
+with Examples.Navigation;
+with Examples.Text_Rewrites;
+with Examples.Visitor;
+
+procedure Rejuvenation_Examples is
+   Root_Folder  : constant String := "";
+   Project_Name : constant String := Root_Folder & "rejuvenation_examples.gpr";
+   File_Name    : constant String :=
+     Root_Folder & "src/rejuvenation_examples.adb";
+begin
+
+   -- Parsing --------
+   --  inserted comment before <CallStmt rejuvenation_examples.adb:17:4-17:52> / Examples.Factory.Demo (Project_Name, File_Name);
+   Examples.Factory.Demo (Project_Name, File_Name);
+   --  inserted comment after <CallStmt rejuvenation_examples.adb:17:4-17:52> / Examples.Factory.Demo (Project_Name, File_Name);
+
+
+   -- Code analysis --------
+   --  inserted comment before <CallStmt rejuvenation_examples.adb:20:4-20:48> / Examples.Ast.Demo (Project_Name, File_Name);
+   Examples.Ast.Demo (Project_Name, File_Name);
+   --  inserted comment after <CallStmt rejuvenation_examples.adb:20:4-20:48> / Examples.Ast.Demo (Project_Name, File_Name);
+
+   --  inserted comment before <CallStmt rejuvenation_examples.adb:21:4-21:38> / Examples.Visitor.Demo (File_Name);
+   Examples.Visitor.Demo (File_Name);
+   --  inserted comment after <CallStmt rejuvenation_examples.adb:21:4-21:38> / Examples.Visitor.Demo (File_Name);
+
+   --  inserted comment before <CallStmt rejuvenation_examples.adb:22:4-22:33> / Examples.Match_Patterns.Demo;
+   Examples.Match_Patterns.Demo;
+   --  inserted comment after <CallStmt rejuvenation_examples.adb:22:4-22:33> / Examples.Match_Patterns.Demo;
+
+   --  inserted comment before <CallStmt rejuvenation_examples.adb:23:4-23:37> / Examples.Finder.Demo (File_Name);
+   Examples.Finder.Demo (File_Name);
+   --  inserted comment after <CallStmt rejuvenation_examples.adb:23:4-23:37> / Examples.Finder.Demo (File_Name);
+
+   --  inserted comment before <CallStmt rejuvenation_examples.adb:24:4-24:41> / Examples.Navigation.Demo (File_Name);
+   Examples.Navigation.Demo (File_Name);
+   --  inserted comment after <CallStmt rejuvenation_examples.adb:24:4-24:41> / Examples.Navigation.Demo (File_Name);
+
+
+   -- Code manipulation --------
+   --  inserted comment before <CallStmt rejuvenation_examples.adb:27:4-27:44> / Examples.Text_Rewrites.Demo (File_Name);
+   Examples.Text_Rewrites.Demo (File_Name);
+   --  inserted comment after <CallStmt rejuvenation_examples.adb:27:4-27:44> / Examples.Text_Rewrites.Demo (File_Name);
+
+
+end Rejuvenation_Examples;

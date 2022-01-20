@@ -1,4 +1,4 @@
-with "..\..\misc\Standard_Options\standard_options.gpr";
+with "..\Standard_Options\standard_options.gpr";
 with "aunit.gpr";
 with "..\Missing\missing.gpr";
 with "libadalang.gpr";
