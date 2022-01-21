@@ -1,5 +1,4 @@
 with Libadalang.Analysis;            use Libadalang.Analysis;
-with Libadalang.Common;              use Libadalang.Common;
 with Rejuvenation.Find_And_Replacer; use Rejuvenation.Find_And_Replacer;
 with Rejuvenation.Navigation;        use Rejuvenation.Navigation;
 with Rejuvenation.Patterns;          use Rejuvenation.Patterns;
@@ -31,7 +30,7 @@ package Rewriters_Find_And_Replace is
       Accept_Match : Match_Accepter            := Accept_All_Matches'Access;
       Rewriters : Rewriters_Sequence.Vector := Rewriters_Sequence.Empty_Vector)
       return Rewriter_Find_And_Replace;
-   -- TODO: Enforce compatibility between find and replace pattern
+   --  TODO: Enforce compatibility between find and replace pattern
 
 private
 
