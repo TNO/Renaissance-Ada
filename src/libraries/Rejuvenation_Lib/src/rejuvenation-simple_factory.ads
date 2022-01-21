@@ -75,9 +75,9 @@ package Rejuvenation.Simple_Factory is
    --  create one context per aggregated project and run your analysis on all
    --  of them. This specific case is illustrated in our documentation with
    --  an example: see
-   --  <https://docs.adacore.com/live/wave/libadalang/html/libadalang_ug/examples/
-   --   aggregate_projects.html
-   --  #creating-one-provide-context-for-each-aggregated-project>.
+   --  <https://docs.adacore.com/live/wave/libadalang/html/libadalang_ug/
+   --   examples/aggregate_projects.html
+   --   #creating-one-provide-context-for-each-aggregated-project>.
    --
    --  Note that because of the semantics of aggregate projects, it would
    --  make no sense for a single Libadalang context to see units from all

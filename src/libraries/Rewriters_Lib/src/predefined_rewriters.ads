@@ -33,7 +33,8 @@ package Predefined_Rewriters is
         Make_Pattern ("true", Expr_Rule));
    --  TODO check for side effects in $S_Expr to ensure rewrite is identical
 
-   Rewriter_Definition_Different : aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_Definition_Different :
+   aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr /= $S_Expr", Expr_Rule),
         Make_Pattern ("false", Expr_Rule));
@@ -59,7 +60,8 @@ package Predefined_Rewriters is
         Make_Pattern ("0", Expr_Rule));
    --  TODO check for side effects in $S_Expr to ensure rewrite is identical
 
-   Rewriter_Definition_Remainder : aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_Definition_Remainder :
+   aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr rem $S_Expr", Expr_Rule),
         Make_Pattern ("0", Expr_Rule));

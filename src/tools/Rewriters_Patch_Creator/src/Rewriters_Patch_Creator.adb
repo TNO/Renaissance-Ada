@@ -2,7 +2,6 @@
 --  Performance can be limited by speed of virus scanner ;-(
 --                         running in a single thread...
 
-
 with Ada.Containers;    use Ada.Containers;
 with Ada.Containers.Indefinite_Ordered_Maps;
 with Ada.Directories;   use Ada.Directories;
@@ -41,10 +40,11 @@ procedure Rewriters_Patch_Creator is
 
    Source_Directory : constant String :=
    --  "C:\directory\of\your\sources";
-     "C:\bright\Renaissance-Ada\";
+   "C:\bright\Renaissance-Ada\";
 
    Project_Filename : constant String :=
-         Source_Directory &  -- "relative\path\to\your.gpr";
+     Source_Directory &  -- "relative\path\to\your.gpr";
+
      "src\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
 
    Clean_Codebase_Command : constant String := "echo none";
@@ -57,7 +57,6 @@ procedure Rewriters_Patch_Creator is
    --  Verify changed code (build, test, etc.)
    --  "set PATH=C:\GNATPRO\21.2\bin;%PATH% & cd """ & Source_Directory
    --  & """ & make update=no all";
-
 
    Invocation_Exception : exception;
 
@@ -255,17 +254,26 @@ procedure Rewriters_Patch_Creator is
       --  Name_To_Rewriter_Map.Include
       --    ("Minimal_Parentheses", RMP);
 
-      Name_To_Rewriter_Map.Include ("Definition_Equal", Rewriter_Definition_Equal);
-      Name_To_Rewriter_Map.Include ("Definition_Different", Rewriter_Definition_Different);
-      Name_To_Rewriter_Map.Include ("Definition_Minus", Rewriter_Definition_Minus);
-      Name_To_Rewriter_Map.Include ("Definition_Divide", Rewriter_Definition_Divide);
-      Name_To_Rewriter_Map.Include ("Definition_Modulo", Rewriter_Definition_Modulo);
-      Name_To_Rewriter_Map.Include ("Definition_Remainder", Rewriter_Definition_Remainder);
+      Name_To_Rewriter_Map.Include
+        ("Definition_Equal", Rewriter_Definition_Equal);
+      Name_To_Rewriter_Map.Include
+        ("Definition_Different", Rewriter_Definition_Different);
+      Name_To_Rewriter_Map.Include
+        ("Definition_Minus", Rewriter_Definition_Minus);
+      Name_To_Rewriter_Map.Include
+        ("Definition_Divide", Rewriter_Definition_Divide);
+      Name_To_Rewriter_Map.Include
+        ("Definition_Modulo", Rewriter_Definition_Modulo);
+      Name_To_Rewriter_Map.Include
+        ("Definition_Remainder", Rewriter_Definition_Remainder);
 
-      Name_To_Rewriter_Map.Include ("Idempotence_And", Rewriter_Idempotence_And);
+      Name_To_Rewriter_Map.Include
+        ("Idempotence_And", Rewriter_Idempotence_And);
       Name_To_Rewriter_Map.Include ("Idempotence_Or", Rewriter_Idempotence_Or);
-      Name_To_Rewriter_Map.Include ("Complementation_And", Rewriter_Complementation_And);
-      Name_To_Rewriter_Map.Include ("Complementation_Or", Rewriter_Complementation_Or);
+      Name_To_Rewriter_Map.Include
+        ("Complementation_And", Rewriter_Complementation_And);
+      Name_To_Rewriter_Map.Include
+        ("Complementation_Or", Rewriter_Complementation_Or);
 
       Name_To_Rewriter_Map.Include ("Not_Not", Rewriter_Not_Not);
       Name_To_Rewriter_Map.Include ("Not_Equal", Rewriter_Not_Equal);
