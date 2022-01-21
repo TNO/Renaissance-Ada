@@ -1,8 +1,8 @@
 # Renaissance-Ada
-Tooling for [ESI](esi.nl)'s Renaissance approach to legacy [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software
+Tooling for [ESI](https://esi.nl)'s Renaissance approach to legacy [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software
 
 ## Used by Industry
-[Nexperia](https://www.nexperia.com) described during [the AdaCore Tech Days](https://events.adacore.com/eutechday2021) 
+[Nexperia](https://nexperia.com) described during [the AdaCore Tech Days](https://events.adacore.com/eutechday2021) 
 [how they benefit from one of the Renaissance libraries: the rejuvenation library.](https://www.youtube.com/watch?v=EHrd-9wgALM) 
 
 ## Related technologies
@@ -11,9 +11,9 @@ Tooling for [ESI](esi.nl)'s Renaissance approach to legacy [Ada](https://en.wiki
 
 ## History
 The Renaissance approach was initially developed by [ESI](https://esi.nl)
-in public-private research projects together with [Thermo Fisher](thermofisher.com) and [Philips](philips.com).
+in public-private research projects together with [Thermo Fisher](https://thermofisher.com) and [Philips](http://philips.com).
 For more info, see e.g. this 
 [Bits & Chips article](https://bits-chips.nl/artikel/esi-helps-thermo-fisher-and-philips-grease-their-software-machines).
 The Renaissance tooling to target [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software
 was developed in Bright, 
-a public-private research project together with [ITEC](itecequipment.com), an independent subsidiary of [Nexperia](nexperia.com).
+a public-private research project together with [ITEC](https://itecequipment.com), an independent subsidiary of [Nexperia](https://nexperia.com).
