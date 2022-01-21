@@ -455,7 +455,8 @@ package Predefined_Rewriters is
           ("if $S_A /= $S_B then $M_Stmts_True; "
            & "else $S_Stmt_False; $M_Stmts_False; end if;",
            If_Stmt_Rule),
-        Make_Pattern ("", If_Stmt_Rule));
+        Make_Pattern ("if $S_A = $S_B then $S_Stmt_False; $M_Stmts_False; "
+           & "else $M_Stmts_True; end if;", If_Stmt_Rule));
 
    --  Rewrite only when else branch is NOT empty
    Rewriter_If_Not_Condition_Stmt :
