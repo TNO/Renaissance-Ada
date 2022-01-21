@@ -489,7 +489,12 @@ package Predefined_Rewriters is
    --
    --  Note that the order of evaluation of parameters is NOT specified in Ada
    --  see e.g. http://www.ada-auth.org/standards/12rat/html/Rat12-4-2.html
-   --  hence also $M_Args_After might be effected!
+   --  hence also $M_Args_After might be effected and might have an effect!
+   --
+   --  Note that current implementation doesn't handle pattern as expected.
+   --  We have no backtracking implemented yet.
+   --  So, any match in the curent implementation will have
+   --  an empty list for $M_Args_Before.
    Rewriter_If_Argument_Stmt : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
