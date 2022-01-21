@@ -2,6 +2,7 @@ with Ada.Containers;                 use Ada.Containers;
 with Ada.Exceptions;                 use Ada.Exceptions;
 with Ada.Text_IO;                    use Ada.Text_IO;
 with Langkit_Support.Text;           use Langkit_Support.Text;
+with Libadalang.Common;              use Libadalang.Common;
 with Rejuvenation;                   use Rejuvenation;
 with Rejuvenation.Finder;            use Rejuvenation.Finder;
 with Rejuvenation.Node_Locations;    use Rejuvenation.Node_Locations;
