@@ -30,8 +30,8 @@ package Rewriters_Find_And_Replace is
      (Find_Pattern, Replace_Pattern : Pattern;
       Accept_Match : Match_Accepter            := Accept_All_Matches'Access;
       Rewriters : Rewriters_Sequence.Vector := Rewriters_Sequence.Empty_Vector)
-      return Rewriter_Find_And_Replace with
-      Pre => Find_Pattern.Get_Rule = Replace_Pattern.Get_Rule;
+      return Rewriter_Find_And_Replace;
+   -- TODO: Enforce compatibility between find and replace pattern
 
 private
 
