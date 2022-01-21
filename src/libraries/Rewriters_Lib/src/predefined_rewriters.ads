@@ -7,6 +7,33 @@ with Rewriters_Minimal_Parentheses; use Rewriters_Minimal_Parentheses;
 with Rewriters_Find_And_Replace;    use Rewriters_Find_And_Replace;
 with Rewriters_Sequence;            use Rewriters_Sequence;
 
+--  Our experience so far is that you don't want to apply
+--  any patch without reviewing.
+--  Some rewrite opportunities are caused by
+--  programmer errors, such as copy, paste, not modified errors.
+--  By making the change, one loses the ability to spot the
+--  real error, and make the necessary, correct change.
+
+--  TODO What to do with the following rewrite patterns?
+--  Note: you need to check on side effects for the rewrites
+--  to be identical.
+--  for terminology see https://en.wikipedia.org/wiki/Boolean_algebra
+--
+--  A = A => True
+--  A /= A => False
+--  A and then A => A            -- idempotence of and
+--  A or else A => A             -- idempotence of or
+--  A - A => 0
+--  A / A => 1
+--  A % A => 0
+--  A and then not A => False     -- complementation of and
+--  A or else not A => True       -- complementation of or
+--       possibly include variants of last two patterns with
+--            * swapped order of A and not A
+--            * parenthesis around not argument
+--              (only needed when additional parenthesis 
+--               are allowed, e.g. for readability)
+
 --  TODO: make smart rewrite - e.g. only RMP once
 --  So rewriters is minimal required / rewriters can be removed
 --  if they will be called anyway!
@@ -24,6 +51,7 @@ package Predefined_Rewriters is
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not (not $S_Cond)", Expr_Rule),
         Make_Pattern ("$S_Cond", Expr_Rule));
+   --  also known as "Double negation"
 
    Rewriter_Not_Equal : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
