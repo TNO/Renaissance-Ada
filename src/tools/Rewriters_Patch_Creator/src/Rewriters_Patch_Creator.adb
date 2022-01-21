@@ -38,14 +38,12 @@ procedure Rewriters_Patch_Creator is
    type Version_Control_Kind is (GIT, SVN);
    Source_Version_Control : constant Version_Control_Kind := GIT;
 
-   Source_Directory : constant String :=
-   --  "C:\directory\of\your\sources";
-   "C:\bright\Renaissance-Ada\";
+   Source_Directory : constant String := "C:\directory\of\your\sources";
+   --  e.g. "C:\bright\Renaissance-Ada\";
 
    Project_Filename : constant String :=
-     Source_Directory &  -- "relative\path\to\your.gpr";
-
-     "src\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
+     Source_Directory & "relative\path\to\your.gpr";
+   --  e.g. "src\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
 
    Clean_Codebase_Command : constant String := "echo none";
    --  Clean command
@@ -112,9 +110,11 @@ procedure Rewriters_Patch_Creator is
    procedure Create_Patch (patch : String);
    procedure Create_Patch (patch : String) is
       File_Name : constant String :=
-        Compose ("C:\temp\patches", patch, "patch");
+        Compose ("C:\path\to\patches",
+      --  e.g. "C:\temp\patches",
       --  Note: path must exist
       --  Path is NOT created by this program!
+      patch, "patch");
    begin
       case Source_Version_Control is
          when SVN =>
