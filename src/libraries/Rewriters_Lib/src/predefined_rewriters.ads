@@ -14,26 +14,6 @@ with Rewriters_Sequence;            use Rewriters_Sequence;
 --  By making the change, one loses the ability to spot the
 --  real error, and make the necessary, correct change.
 
---  TODO What to do with the following rewrite patterns?
---  Note: you need to check on side effects for the rewrites
---  to be identical.
---  for terminology see https://en.wikipedia.org/wiki/Boolean_algebra
---
---  A = A => True
---  A /= A => False
---  A and then A => A            -- idempotence of and
---  A or else A => A             -- idempotence of or
---  A - A => 0
---  A / A => 1
---  A % A => 0
---  A and then not A => False     -- complementation of and
---  A or else not A => True       -- complementation of or
---       possibly include variants of last two patterns with
---            * swapped order of A and not A
---            * parenthesis around not argument
---              (only needed when additional parenthesis 
---               are allowed, e.g. for readability)
-
 --  TODO: make smart rewrite - e.g. only RMP once
 --  So rewriters is minimal required / rewriters can be removed
 --  if they will be called anyway!
@@ -46,6 +26,78 @@ package Predefined_Rewriters is
 
    RMP : aliased constant Rewriter_Minimal_Parentheses :=
      Make_Rewriter_Minimal_Parentheses;
+
+   Rewriter_Definition_Equal : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr = $S_Expr", Expr_Rule),
+        Make_Pattern ("true", Expr_Rule));
+   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+
+   Rewriter_Definition_Different : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr /= $S_Expr", Expr_Rule),
+        Make_Pattern ("false", Expr_Rule));
+   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+
+   Rewriter_Definition_Minus : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr - $S_Expr", Expr_Rule),
+        Make_Pattern ("0", Expr_Rule));
+   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+   --  TODO can it be correct for integers & float at the same time?
+
+   Rewriter_Definition_Divide : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr / $S_Expr", Expr_Rule),
+        Make_Pattern ("1", Expr_Rule));
+   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+   --  TODO can it be correct for integers & float at the same time?
+
+   Rewriter_Definition_Modulo : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr mod $S_Expr", Expr_Rule),
+        Make_Pattern ("0", Expr_Rule));
+   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+
+   Rewriter_Definition_Remainder : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr rem $S_Expr", Expr_Rule),
+        Make_Pattern ("0", Expr_Rule));
+   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+
+   Rewriter_Idempotence_And : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr and then $S_Expr", Expr_Rule),
+        Make_Pattern ("$S_Expr", Expr_Rule));
+   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+
+   Rewriter_Idempotence_Or : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr or else $S_Expr", Expr_Rule),
+        Make_Pattern ("$S_Expr", Expr_Rule));
+   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+
+   Rewriter_Complementation_And : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr and then not $S_Expr", Expr_Rule),
+        Make_Pattern ("false", Expr_Rule));
+   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+   --  TODO include variants with
+   --            * swapped order of A and not A
+   --            * parenthesis around not argument
+   --              (only needed when additional parenthesis
+   --               are allowed, e.g. for readability)
+
+   Rewriter_Complementation_Or : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr or else not $S_Expr", Expr_Rule),
+        Make_Pattern ("true", Expr_Rule));
+   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+   --  TODO include variants with
+   --            * swapped order of A and not A
+   --            * parenthesis around not argument
+   --              (only needed when additional parenthesis
+   --               are allowed, e.g. for readability)
 
    Rewriter_Not_Not : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
