@@ -9,7 +9,8 @@ Tooling for [ESI](https://esi.nl)'s Renaissance approach to legacy [Ada](https:/
 The Renaissance approach was initially developed by [ESI](https://esi.nl)
 in public-private research projects together with [Thermo Fisher](https://thermofisher.com) and [Philips](http://philips.com).
 For more info, see e.g. this 
-[Bits & Chips article](https://bits-chips.nl/artikel/esi-helps-thermo-fisher-and-philips-grease-their-software-machines).
+[Bits & Chips article](https://bits-chips.nl/artikel/esi-helps-thermo-fisher-and-philips-grease-their-software-machines)
+and [Model-based software transformation](https://esi.nl/research/output/methods/model-based-software-transformation).
 The Renaissance tooling to target [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software
 was developed in Bright, 
 a public-private research project together with [ITEC](https://itecequipment.com), an independent subsidiary of [Nexperia](https://nexperia.com).
