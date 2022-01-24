@@ -38,6 +38,9 @@ package body Test_Match_Patterns is
            "Instance doesn't match pattern unexpectedly." & ASCII.CR &
            ASCII.LF & "Instance = " & Instance_Str & ASCII.CR & ASCII.LF &
            "Pattern = " & Pattern_Str & ASCII.CR & ASCII.LF);
+      Assert
+        (Condition => not MP.Get_Nodes.Is_Empty,
+         Message   => "Match so nodes expected");
    end Assert_Match_Full;
 
    procedure Assert_Mismatch_Full
@@ -58,6 +61,9 @@ package body Test_Match_Patterns is
            "Instance matches pattern unexpectedly." & ASCII.CR & ASCII.LF &
            "Instance = " & Instance_Str & ASCII.CR & ASCII.LF & "Pattern = " &
            Pattern_Str & ASCII.CR & ASCII.LF);
+      Assert
+        (Expected => 0, Actual => MP.Get_Nodes.Length,
+         Message  => "No match so no nodes expected");
    end Assert_Mismatch_Full;
 
    procedure Assert_Match_Full (G : Generator);
@@ -141,6 +147,9 @@ package body Test_Match_Patterns is
                        "Representations mismatch unexpectedly." & ASCII.CR &
                        ASCII.LF & "Repr1 = " & Image (Repr1.Text) & ASCII.CR &
                        ASCII.LF & "Repr2 = " & Image (Repr2.Text));
+                  Assert
+                    (MP.Get_Nodes.Length > 0,
+                     Message => "Match so positive nrof nodes expected");
                end;
             end loop;
          end loop;
@@ -362,9 +371,12 @@ package body Test_Match_Patterns is
      (Args : String_Vectors.Vector) return String is
      (Make_Procedure_Call_Statement (Actual_Parameter_Part => "42" & Args));
 
+   procedure Test_Function_Call_Arguments_Tail (T : in out Test_Case'Class);
    procedure Test_Function_Call_Arguments_Tail (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
+      procedure Test_Function_Call_Arguments_Tail
+        (Values : String_Vectors.Vector);
       procedure Test_Function_Call_Arguments_Tail
         (Values : String_Vectors.Vector)
       is
@@ -387,9 +399,12 @@ package body Test_Match_Patterns is
      (Args : String_Vectors.Vector) return String is
      (Make_Procedure_Call_Statement (Actual_Parameter_Part => Args & "42"));
 
+   procedure Test_Function_Call_Arguments_Lead (T : in out Test_Case'Class);
    procedure Test_Function_Call_Arguments_Lead (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
+      procedure Test_Function_Call_Arguments_Lead
+        (Values : String_Vectors.Vector);
       procedure Test_Function_Call_Arguments_Lead
         (Values : String_Vectors.Vector)
       is
@@ -409,6 +424,8 @@ package body Test_Match_Patterns is
    end Test_Function_Call_Arguments_Lead;
 
    function Make_Object_Decl_From_Type
+     (S : String_Vectors.Vector) return String;
+   function Make_Object_Decl_From_Type
      (S : String_Vectors.Vector) return String
    is
    begin
@@ -418,9 +435,11 @@ package body Test_Match_Patterns is
           (Subtype_Indication => S.First_Element);
    end Make_Object_Decl_From_Type;
 
+   procedure Test_Object_Decl_Type (T : in out Test_Case'Class);
    procedure Test_Object_Decl_Type (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
+      procedure Test_Object_Decl (Value : String);
       procedure Test_Object_Decl (Value : String) is
          G : constant Generator :=
            Make_Generator
@@ -446,9 +465,11 @@ package body Test_Match_Patterns is
      (Make_Object_Declaration_Subtype_Indication
         (Defining_Identifier_List => Ids));
 
+   procedure Test_Object_Decl_Defining_Names (T : in out Test_Case'Class);
    procedure Test_Object_Decl_Defining_Names (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
+      procedure Test_Object_Decl (Values : String_Vectors.Vector);
       procedure Test_Object_Decl (Values : String_Vectors.Vector) is
          G : constant Generator :=
            Make_Generator
@@ -469,10 +490,13 @@ package body Test_Match_Patterns is
      (Make_Object_Declaration_Subtype_Indication
         (Defining_Identifier_List => "u" & Ids));
 
+   procedure Test_Object_Decl_Defining_Names_Tail
+     (T : in out Test_Case'Class);
    procedure Test_Object_Decl_Defining_Names_Tail (T : in out Test_Case'Class)
    is
       pragma Unreferenced (T);
 
+      procedure Test_Object_Decl (Values : String_Vectors.Vector);
       procedure Test_Object_Decl (Values : String_Vectors.Vector) is
          G : constant Generator :=
            Make_Generator
@@ -494,10 +518,13 @@ package body Test_Match_Patterns is
      (Make_Object_Declaration_Subtype_Indication
         (Defining_Identifier_List => Ids & "u"));
 
+   procedure Test_Object_Decl_Defining_Names_Lead
+     (T : in out Test_Case'Class);
    procedure Test_Object_Decl_Defining_Names_Lead (T : in out Test_Case'Class)
    is
       pragma Unreferenced (T);
 
+      procedure Test_Object_Decl (Values : String_Vectors.Vector);
       procedure Test_Object_Decl (Values : String_Vectors.Vector) is
          G : constant Generator :=
            Make_Generator
@@ -515,6 +542,8 @@ package body Test_Match_Patterns is
    end Test_Object_Decl_Defining_Names_Lead;
 
    function Make_Object_Decl_From_Default_Expression
+     (S : String_Vectors.Vector) return String;
+   function Make_Object_Decl_From_Default_Expression
      (S : String_Vectors.Vector) return String
    is
    begin
@@ -531,9 +560,12 @@ package body Test_Match_Patterns is
       end case;
    end Make_Object_Decl_From_Default_Expression;
 
+   procedure Test_Object_Default_Expression (T : in out Test_Case'Class);
    procedure Test_Object_Default_Expression (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
+      procedure Test_Object_Default_Expression
+        (Pattern : String; Expression : String_Vectors.Vector);
       procedure Test_Object_Default_Expression
         (Pattern : String; Expression : String_Vectors.Vector)
       is
@@ -554,6 +586,8 @@ package body Test_Match_Patterns is
    end Test_Object_Default_Expression;
 
    function Make_Object_Decl_From_Aspects
+     (Aspects : String_Vectors.Vector) return String;
+   function Make_Object_Decl_From_Aspects
      (Aspects : String_Vectors.Vector) return String
    is
    begin
@@ -561,9 +595,12 @@ package body Test_Match_Patterns is
         Make_Object_Declaration_Subtype_Indication (Aspect_List => Aspects);
    end Make_Object_Decl_From_Aspects;
 
+   procedure Test_Object_Aspects (T : in out Test_Case'Class);
    procedure Test_Object_Aspects (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
+      procedure Test_Object_Aspects
+        (Pattern : String; Aspects : String_Vectors.Vector);
       procedure Test_Object_Aspects
         (Pattern : String; Aspects : String_Vectors.Vector)
       is
@@ -593,10 +630,13 @@ package body Test_Match_Patterns is
            Make_Subtype_Indication_Index_Constraints
              (Index_Constraints => Ranges)));
 
+   procedure Test_Subtype_Indication_Decl_Ranges (T : in out Test_Case'Class);
    procedure Test_Subtype_Indication_Decl_Ranges (T : in out Test_Case'Class)
    is
       pragma Unreferenced (T);
 
+      procedure Test_Subtype_Indication_Decl_Ranges
+        (Values : String_Vectors.Vector);
       procedure Test_Subtype_Indication_Decl_Ranges
         (Values : String_Vectors.Vector)
       is
@@ -625,10 +665,14 @@ package body Test_Match_Patterns is
              (Index_Constraints => "1 .. 10" & Ranges)));
 
    procedure Test_Subtype_Indication_Decl_Ranges_Tail
+     (T : in out Test_Case'Class);
+   procedure Test_Subtype_Indication_Decl_Ranges_Tail
      (T : in out Test_Case'Class)
    is
       pragma Unreferenced (T);
 
+      procedure Test_Subtype_Indication_Decl_Ranges_Tail
+        (Values : String_Vectors.Vector);
       procedure Test_Subtype_Indication_Decl_Ranges_Tail
         (Values : String_Vectors.Vector)
       is
@@ -657,10 +701,14 @@ package body Test_Match_Patterns is
              (Index_Constraints => Ranges & "7..12")));
 
    procedure Test_Subtype_Indication_Decl_Ranges_Lead
+     (T : in out Test_Case'Class);
+   procedure Test_Subtype_Indication_Decl_Ranges_Lead
      (T : in out Test_Case'Class)
    is
       pragma Unreferenced (T);
 
+      procedure Test_Subtype_Indication_Decl_Ranges_Lead
+        (Values : String_Vectors.Vector);
       procedure Test_Subtype_Indication_Decl_Ranges_Lead
         (Values : String_Vectors.Vector)
       is
@@ -681,6 +729,7 @@ package body Test_Match_Patterns is
       Test_Subtype_Indication_Decl_Ranges_Lead ("4 .. 6" & "M .. N");
    end Test_Subtype_Indication_Decl_Ranges_Lead;
 
+   procedure Test_Subtype_Indication_Decl_Both (T : in out Test_Case'Class);
    procedure Test_Subtype_Indication_Decl_Both (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -746,6 +795,8 @@ package body Test_Match_Patterns is
    end Test_Subtype_Indication_Decl_Both;
 
    procedure Test_Subtype_Indication_Decl_Mismatch_Object_Decl
+     (T : in out Test_Case'Class);
+   procedure Test_Subtype_Indication_Decl_Mismatch_Object_Decl
      (T : in out Test_Case'Class)
    is
       pragma Unreferenced (T);
@@ -754,6 +805,7 @@ package body Test_Match_Patterns is
         (Object_Decl_Rule, "X : Integer ($M_Ranges);", "X : Integer;");
    end Test_Subtype_Indication_Decl_Mismatch_Object_Decl;
 
+   procedure Test_Stmt (T : in out Test_Case'Class);
    procedure Test_Stmt (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -777,6 +829,7 @@ package body Test_Match_Patterns is
          Expected => Instance_Str, Message => "Placeholder value differ");
    end Test_Stmt;
 
+   procedure Test_Label (T : in out Test_Case'Class);
    procedure Test_Label (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -810,6 +863,7 @@ package body Test_Match_Patterns is
       end loop;
    end Test_Label;
 
+   procedure Test_Pragma (T : in out Test_Case'Class);
    procedure Test_Pragma (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -843,6 +897,7 @@ package body Test_Match_Patterns is
       end loop;
    end Test_Pragma;
 
+   procedure Test_Stmts (T : in out Test_Case'Class);
    procedure Test_Stmts (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 

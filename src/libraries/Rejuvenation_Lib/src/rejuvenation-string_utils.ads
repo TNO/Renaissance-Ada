@@ -87,13 +87,13 @@ is
       Test_Case => ("Empty New Prefix and Remainder", Nominal),
       Test_Case => ("All Empty", Nominal),
       Test_Case => ("String not start with Prefix, "
-                    & "String length larger than Prefix length",
+                    & "Strlen larger than Prefix length",
                     Robustness),
       Test_Case => ("String not start with Prefix, "
-                    & "String length equal to Prefix length",
+                    & "Strlen equal to Prefix length",
                     Robustness),
       Test_Case => ("String not start with Prefix, "
-                    & "String length smaller than Prefix length",
+                    & "Strlen smaller than Prefix length",
                     Robustness);
       --  Replace 'Prefix' with 'New_Prefix' in 'String_With_Prefix'.
       --  @param String_With_Prefix String that starts with Prefix

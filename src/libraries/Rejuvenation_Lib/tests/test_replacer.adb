@@ -14,6 +14,7 @@ package body Test_Replacer is
 
    --  Test Functions
 
+   procedure Test_No_Replacement (T : in out Test_Case'Class);
    procedure Test_No_Replacement (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -27,6 +28,7 @@ package body Test_Replacer is
         (Expected, Actual, Rule, "No placeholders with empty replacment map");
    end Test_No_Replacement;
 
+   procedure Test_Placeholder_Replacements (T : in out Test_Case'Class);
    procedure Test_Placeholder_Replacements (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -53,6 +55,7 @@ package body Test_Replacer is
       end;
    end Test_Placeholder_Replacements;
 
+   procedure Test_Object_Decl_No_Defining_Names (T : in out Test_Case'Class);
    procedure Test_Object_Decl_No_Defining_Names (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -74,10 +77,12 @@ package body Test_Replacer is
          Assert
            (Actual  => Actual, Expected => Expected,
             Message =>
-              "When an object Declaration has no defining name, it should be removed.");
+              "When an object Declaration has no defining name, " &
+              "it should be removed.");
       end;
    end Test_Object_Decl_No_Defining_Names;
 
+   procedure Test_Object_Decl_No_Default_Expr (T : in out Test_Case'Class);
    procedure Test_Object_Decl_No_Default_Expr (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -104,6 +109,7 @@ package body Test_Replacer is
       end;
    end Test_Object_Decl_No_Default_Expr;
 
+   procedure Test_Object_Decl_No_Aspects (T : in out Test_Case'Class);
    procedure Test_Object_Decl_No_Aspects (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -130,6 +136,7 @@ package body Test_Replacer is
       end;
    end Test_Object_Decl_No_Aspects;
 
+   procedure Test_Object_Decl_Empty_Aspects (T : in out Test_Case'Class);
    procedure Test_Object_Decl_Empty_Aspects (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -159,6 +166,7 @@ package body Test_Replacer is
       end;
    end Test_Object_Decl_Empty_Aspects;
 
+   procedure Test_Object_Decl_Empty_Head_Aspects (T : in out Test_Case'Class);
    procedure Test_Object_Decl_Empty_Head_Aspects (T : in out Test_Case'Class)
    is
       pragma Unreferenced (T);
@@ -185,10 +193,12 @@ package body Test_Replacer is
            (Expected, Actual, Rule,
             Message =>
               "When an object Declaration has empty head in aspects," &
-              "the 'with' keyword should be present, yet the separator ',' must be absent.");
+              "the 'with' keyword should be present, " &
+              "yet the separator ',' must be absent.");
       end;
    end Test_Object_Decl_Empty_Head_Aspects;
 
+   procedure Test_Empty_Stmt_List (T : in out Test_Case'Class);
    procedure Test_Empty_Stmt_List (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -210,6 +220,7 @@ package body Test_Replacer is
       end;
    end Test_Empty_Stmt_List;
 
+   procedure Test_Empty_Param_Assoc (T : in out Test_Case'Class);
    procedure Test_Empty_Param_Assoc (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -235,6 +246,7 @@ package body Test_Replacer is
       end;
    end Test_Empty_Param_Assoc;
 
+   procedure Test_Param_Assoc_Empty_Name (T : in out Test_Case'Class);
    procedure Test_Param_Assoc_Empty_Name (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -263,6 +275,7 @@ package body Test_Replacer is
       end;
    end Test_Param_Assoc_Empty_Name;
 
+   procedure Test_Call_Expr_No_Arguments (T : in out Test_Case'Class);
    procedure Test_Call_Expr_No_Arguments (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -287,6 +300,7 @@ package body Test_Replacer is
       end;
    end Test_Call_Expr_No_Arguments;
 
+   procedure Test_If_Stmt_Empty_Else (T : in out Test_Case'Class);
    procedure Test_If_Stmt_Empty_Else (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -314,6 +328,8 @@ package body Test_Replacer is
    end Test_If_Stmt_Empty_Else;
 
    procedure Test_Block_Stmt_Empty_Declarative_Part
+     (T : in out Test_Case'Class);
+   procedure Test_Block_Stmt_Empty_Declarative_Part
      (T : in out Test_Case'Class)
    is
       pragma Unreferenced (T);
@@ -337,7 +353,8 @@ package body Test_Replacer is
       begin
          Assert_Equal_AST
            (Expected, Actual, Rule,
-            "Block statement with Empty Declarative Part: no 'declare' keyword.");
+            "Block statement with Empty Declarative Part: " &
+            "no 'declare' keyword.");
       end;
    end Test_Block_Stmt_Empty_Declarative_Part;
 

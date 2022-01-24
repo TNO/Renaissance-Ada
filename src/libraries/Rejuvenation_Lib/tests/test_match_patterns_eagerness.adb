@@ -142,6 +142,9 @@ package body Test_Match_Patterns_Eagerness is
          "Mismatch expected");
 
       Assert (Condition => not Actual, Message => "Mismatch expected");
+      Assert
+        (Expected => 0, Actual => MP.Get_Nodes.Length,
+         Message  => "No match implies no nodes");
    end Test_Limited_Match;
 
    procedure Test_Double_Match (T : in out Test_Case'Class);
@@ -176,6 +179,9 @@ package body Test_Match_Patterns_Eagerness is
       begin
          Assert
            (Condition => not Actual, Message => "No match expected for 1,1");
+         Assert
+           (Expected => 0, Actual => MP.Get_Nodes.Length,
+            Message  => "No match implies no nodes");
       end;
 
       declare
@@ -196,8 +202,62 @@ package body Test_Match_Patterns_Eagerness is
          Assert
            (Condition => not Actual,
             Message   => "No match expected for 1, 2, 1, 2");
+         Assert
+           (Expected => 0, Actual => MP.Get_Nodes.Length,
+            Message  => "No match implies no nodes");
       end;
    end Test_Double_Match;
+
+   procedure Test_Empty_List_Only (T : in out Test_Case'Class);
+   procedure Test_Empty_List_Only (T : in out Test_Case'Class) is
+      pragma Unreferenced (T);
+
+      Pattern : constant Analysis_Unit :=
+        Analyze_Fragment
+          ("if $S_Cond then $S_F ($M_Before, $S_True, $M_After);" &
+           "else $S_F ($M_Before, $S_False, $M_After);" & "end if;",
+           If_Stmt_Rule);
+   begin
+      declare
+         Instance_Match : constant Analysis_Unit :=
+           Analyze_Fragment
+             ("if Cond then My_F (X, 1, 2, 3);" & "else My_F (Y, 1, 2, 3);" &
+              "end if;",
+              If_Stmt_Rule);
+
+         MP     : Match_Pattern;
+         Actual : constant Boolean :=
+           Match_Full (MP, Pattern.Root, Instance_Match.Root);
+      begin
+         Assert
+           (Condition => Actual,
+            Message   => "Match expected for Instance_Match");
+         Assert
+           (Condition => not MP.Get_Nodes.Is_Empty,
+            Message   => "Match implies nodes");
+      end;
+
+      declare
+         Instance_No_Match : constant Analysis_Unit :=
+           Analyze_Fragment
+             ("if Cond then My_F (1, 2, 3, X);" & "else My_F (1, 2, 3, Y);" &
+              "end if;",
+              If_Stmt_Rule);
+         --  Correct Instance, yet no match
+         --  due to limitations of current implementation.
+
+         MP     : Match_Pattern;
+         Actual : constant Boolean :=
+           Match_Full (MP, Pattern.Root, Instance_No_Match.Root);
+      begin
+         Assert
+           (Condition => not Actual,
+            Message   => "No match expected for Instance_No_Match");
+         Assert
+           (Expected => 0, Actual => MP.Get_Nodes.Length,
+            Message  => "No match implies no nodes");
+      end;
+   end Test_Empty_List_Only;
 
    --  Test plumbing
 
@@ -223,6 +283,8 @@ package body Test_Match_Patterns_Eagerness is
          "Limited match capabilities due to eagerness");
       Registration.Register_Routine
         (T, Test_Double_Match'Access, "Double match capabilities");
+      Registration.Register_Routine
+        (T, Test_Empty_List_Only'Access, "Empty List only match");
    end Register_Tests;
 
 end Test_Match_Patterns_Eagerness;

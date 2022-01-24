@@ -21,6 +21,7 @@ package body Test_Placeholders is
 
    --  Test Functions
 
+   procedure Test_Defining_Name_Placeholder (T : in out Test_Case'Class);
    procedure Test_Defining_Name_Placeholder (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -39,7 +40,8 @@ package body Test_Placeholders is
       Assert
         (Condition => Is_Placeholder_Name (Placeholder_Name),
          Message   =>
-           "Precondition violated: Name is unexpectedly not a placeholder name");
+           "Precondition violated: "
+         & "Name is unexpectedly not a placeholder name");
       Assert
         (Actual  => Unit.Root.Kind, Expected => Ada_Object_Decl,
          Message => "Unexpected kind of 'Unit.Root'");
@@ -59,6 +61,7 @@ package body Test_Placeholders is
       end;
    end Test_Defining_Name_Placeholder;
 
+   procedure Test_Stmt_Placeholder (T : in out Test_Case'Class);
    procedure Test_Stmt_Placeholder (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -72,7 +75,8 @@ package body Test_Placeholders is
       Assert
         (Condition => Is_Placeholder_Name (Placeholder_Name),
          Message   =>
-           "Precondition violated: Name is unexpectedly not a placeholder name");
+           "Precondition violated: "
+         & "Name is unexpectedly not a placeholder name");
       Assert
         (Actual  => Unit.Root.Kind, Expected => Ada_Call_Stmt,
          Message => "Unexpected kind of 'Unit.Root'");
@@ -81,6 +85,8 @@ package body Test_Placeholders is
          Message   => "Unexpected not a placeholder");
    end Test_Stmt_Placeholder;
 
+   procedure Test_Subprogram_Identifier_Placeholder
+     (T : in out Test_Case'Class);
    procedure Test_Subprogram_Identifier_Placeholder
      (T : in out Test_Case'Class)
    is
@@ -98,7 +104,8 @@ package body Test_Placeholders is
       Assert
         (Condition => Is_Placeholder_Name (Placeholder_Name),
          Message   =>
-           "Precondition violated: Name is unexpectedly not a placeholder name");
+           "Precondition violated: "
+         & "Name is unexpectedly not a placeholder name");
       Assert
         (Actual  => Unit.Root.Kind, Expected => Ada_Call_Stmt,
          Message => "Unexpected kind of 'Unit.Root'");
@@ -122,6 +129,7 @@ package body Test_Placeholders is
       end;
    end Test_Subprogram_Identifier_Placeholder;
 
+   procedure Test_Enum_Literal_Decl_Placeholder (T : in out Test_Case'Class);
    procedure Test_Enum_Literal_Decl_Placeholder (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -135,7 +143,8 @@ package body Test_Placeholders is
       Assert
         (Condition => Is_Placeholder_Name (Placeholder_Name),
          Message   =>
-           "Precondition violated: Name is unexpectedly not a placeholder name");
+           "Precondition violated: "
+         & "Name is unexpectedly not a placeholder name");
       Assert
         (Actual  => Unit.Root.Kind, Expected => Ada_Enum_Type_Def,
          Message => "Unexpected kind of 'Unit.Root'");
@@ -158,6 +167,7 @@ package body Test_Placeholders is
       end;
    end Test_Enum_Literal_Decl_Placeholder;
 
+   procedure Test_Param_Assoc_Placeholder (T : in out Test_Case'Class);
    procedure Test_Param_Assoc_Placeholder (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
@@ -171,7 +181,8 @@ package body Test_Placeholders is
       Assert
         (Condition => Is_Placeholder_Name (Placeholder_Name),
          Message   =>
-           "Precondition violated: Name is unexpectedly not a placeholder name");
+           "Precondition violated: "
+         & "Name is unexpectedly not a placeholder name");
       Assert
         (Actual  => Unit.Root.Kind, Expected => Ada_Call_Expr,
          Message => "Unexpected kind of 'Unit.Root'");
@@ -198,6 +209,8 @@ package body Test_Placeholders is
       end;
    end Test_Param_Assoc_Placeholder;
 
+   procedure Assert_Nodes_In_Order
+     (Nodes : Node_List.Vector; Message : String);
    procedure Assert_Nodes_In_Order (Nodes : Node_List.Vector; Message : String)
    is
       Last_Position : Natural := 0;
@@ -217,9 +230,13 @@ package body Test_Placeholders is
       end loop;
    end Assert_Nodes_In_Order;
 
+   procedure Test_Placeholder_Nodes (T : in out Test_Case'Class);
    procedure Test_Placeholder_Nodes (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
+      procedure Test_Placeholder_Nodes
+        (Fragment          : String; Rule : Grammar_Rule;
+         NrOf_Placeholders : Count_Type);
       procedure Test_Placeholder_Nodes
         (Fragment          : String; Rule : Grammar_Rule;
          NrOf_Placeholders : Count_Type)
@@ -247,9 +264,12 @@ package body Test_Placeholders is
         ("my_Str : constant String := ""$S_Cond"";", Object_Decl_Rule, 0);
    end Test_Placeholder_Nodes;
 
+   procedure Test_Placeholder_Names (T : in out Test_Case'Class);
    procedure Test_Placeholder_Names (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
+      procedure Test_Placeholder_Names
+        (Fragment : String; Rule : Grammar_Rule; Expected : Set);
       procedure Test_Placeholder_Names
         (Fragment : String; Rule : Grammar_Rule; Expected : Set)
       is

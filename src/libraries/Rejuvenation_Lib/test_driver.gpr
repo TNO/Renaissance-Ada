@@ -4,7 +4,7 @@ with "..\Missing\missing.gpr";
 with "libadalang.gpr";
 with "rejuvenation_lib.gpr";
 
-project Test_Driver_Rejuvenation_Lib is
+project Test_Driver is
 
    for Origin_Project use "rejuvenation_lib.gpr";
    for Languages use ("Ada");
@@ -20,4 +20,4 @@ project Test_Driver_Rejuvenation_Lib is
    package CodePeer renames Standard_Options.CodePeer;
    package Pretty_Printer renames Standard_Options.Pretty_Printer;
 
-end Test_Driver_Rejuvenation_Lib;
+end Test_Driver;
