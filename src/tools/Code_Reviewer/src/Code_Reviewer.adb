@@ -273,6 +273,8 @@ procedure Code_Reviewer is
       Name_To_Rewriter_Map.Include ("Not_Less_Equal", Rewriter_Not_Less_Equal);
       Name_To_Rewriter_Map.Include ("Not_In", Rewriter_Not_In);
       Name_To_Rewriter_Map.Include ("Not_Not_In", Rewriter_Not_Not_In);
+      Name_To_Rewriter_Map.Include ("And_Then", Rewriter_And_Then);
+      Name_To_Rewriter_Map.Include ("Or_Else", Rewriter_Or_Else);
       Name_To_Rewriter_Map.Include ("Equal_True", Rewriter_Equal_True);
       Name_To_Rewriter_Map.Include ("Equal_False", Rewriter_Equal_False);
       Name_To_Rewriter_Map.Include ("Different_True", Rewriter_Different_True);

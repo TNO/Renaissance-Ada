@@ -182,6 +182,18 @@ package Predefined_Rewriters is
      Rewriter_Not_Less_Equal'Access & Rewriter_Not_In'Access &
      Rewriter_Not_Not_In'Access;
 
+   Rewriter_And_Then : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Left and $S_Right", Expr_Rule),
+        Make_Pattern ("$S_Left and then $S_Right", Expr_Rule));
+   --  TODO check for side effects in $S_Right to ensure rewrite is identical
+
+   Rewriter_Or_Else : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Left or $S_Right", Expr_Rule),
+        Make_Pattern ("$S_Left or else $S_Right", Expr_Rule));
+   --  TODO check for side effects in $S_Right to ensure rewrite is identical
+
    --  TODO: check True is a Boolean
    --  TODO: do we also need the symmetric variant: true = $S_Var?
    Rewriter_Equal_True : aliased constant Rewriter_Find_And_Replace :=
