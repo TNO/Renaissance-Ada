@@ -42,7 +42,7 @@ procedure Code_Reviewer is
    --  Example to review the code within Renaissance-Ada
 
    Project_Filename : constant String :=
-     Source_Directory & "src\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
+     Source_Directory & "\src\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
    --  Example to review the rejuvenation_lib project
    --  TODO: when aggregate projects are supported review all projects!
 
