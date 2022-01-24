@@ -1,5 +1,6 @@
-with "..\..\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
 with "libadalang.gpr";
+with "..\..\libraries\Standard_Options\standard_options.gpr";
+with "..\..\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
 
 project Rejuvenation_Find_And_Replace is
 
@@ -7,9 +8,12 @@ project Rejuvenation_Find_And_Replace is
    for Object_Dir use "obj";
    for Main use ("rejuvenation_find_and_replace.adb");
 
-   package Compiler is
-      for Switches ("ada") use ("-gnatf", "-O3", "-gnatwa");
-   end Compiler;
+   package Builder renames Standard_Options.Builder;
+   package Compiler renames Standard_Options.Compiler;
+   package Binder renames Standard_Options.Binder;
+   package Linker renames Standard_Options.Linker;
+   package Check renames Standard_Options.Check;
+   package CodePeer renames Standard_Options.CodePeer;
+   package Pretty_Printer renames Standard_Options.Pretty_Printer;
 
 end Rejuvenation_Find_And_Replace;
-

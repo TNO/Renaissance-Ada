@@ -10,7 +10,7 @@ procedure Rejuvenation_Find_And_Replace is
    Find_Pattern : constant Pattern :=
      Make_Pattern ("$S_F ($S_Arg1, $S_Arg2);", Call_Stmt_Rule);
 
-   -- Swap arguments - of course resulting in illegal program ;-)
+   --  Swap arguments - of course resulting in illegal program ;-)
    Replace_Pattern : constant Pattern :=
      Make_Pattern ("$S_F ($S_Arg2, $S_Arg1);", Call_Stmt_Rule);
 
