@@ -34,6 +34,7 @@ the term backreference is used to denote a wild card that reoccurs.
 ## wild cards in replace patterns
 
 A wild card in a replace pattern always refers to that wild card in the find pattern.
+A wild card in a replace pattern that not occurs in the find pattern is thus an error.
 The wild card in the replace pattern will be replaced by the value of that the wild card in the match of the find pattern.
 In analogy with [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expression), 
 all wild cards in a replace patterns can be called backreferences.
