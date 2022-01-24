@@ -60,7 +60,8 @@ package Rejuvenation.Pretty_Print is
 private
 
    Standard_Options_Project : constant String :=
-     Compose ("C:\bright\itecembed\Source", "standard_options", "gpr");
+     Compose ("C:\path\to\Renaissance-Ada\src\libraries\Standard_Options",
+              "standard_options", "gpr");
 
    Preemable : constant String := "--";
    Flag_On   : constant String := "!rej_on";

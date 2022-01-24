@@ -1,6 +1,6 @@
 --  This project is introduced to let all Ada projects within Renaissance-Ada use the same options.
 --
---  Our philosophy is 
+--  Our philosophy is
 --  1. to check as much as possible automatically.
 --  2. to use standard / default options whenever possible.
 --  3. to treat warnings as errors.
@@ -9,7 +9,7 @@ abstract project Standard_Options is
 
    package Ide is
       for Vcs_Kind use "Git";
-      for Vcs_Repository_Root use "../../..";
+      for Vcs_Repository_Root use "C:\path\to\Renaissance-Ada";
    end Ide;
 
    type Mode_Type is ("debug", "release");
@@ -21,7 +21,7 @@ abstract project Standard_Options is
         ( "-s"                            --  Recompile if compiler switches have changed since last compilation.
         , "-j0"                           --  Use the maximum number of parallel compilations processes to carry out the (re)compilations.
         );
-      
+
       case Mode is
       when "debug" =>
           for Default_Switches ("ada") use Builder'Default_Switches ("ada") &
@@ -38,10 +38,10 @@ abstract project Standard_Options is
         ( "-gnat2022"                      --  Allow full Ada 2022 features
         , "-fstack-check"                  --  Activates stack checking.
         , "-gnata"                         --  Assertions enabled.
-        , "-gnatwae"                       --  a - Activate most optional warnings. 
+        , "-gnatwae"                       --  a - Activate most optional warnings.
                                            --  e - Treat warnings and style checks as errors.
         , "-gnatyy"                        --  Enable built-in style checks (Set all standard style check options)
-        , "-Wall"                          --  This switch enables most warnings from the GCC back end. 
+        , "-Wall"                          --  This switch enables most warnings from the GCC back end.
         , "-Werror"                        --  This switch causes warnings from the GCC back end to be treated as errors.
         );
 
@@ -59,8 +59,8 @@ abstract project Standard_Options is
    end Compiler;
 
    package Binder is
-      for Default_Switches ("Ada") use 
-      ( "-E"                               --  Currently the same as -Ea: 
+      for Default_Switches ("Ada") use
+      ( "-E"                               --  Currently the same as -Ea:
                                            --  Store tracebacks in exception occurrences when the target supports it. The “a” is for hexadecimal “address”.
       );
    end Binder;
@@ -73,7 +73,7 @@ abstract project Standard_Options is
        --  see https://docs.adacore.com/live/wave/asis/html/gnatcheck_rm/gnatcheck_rm.html
        --  The default behavior is that all the rule checks are disabled.
        for Default_Switches ("Ada") use ("-rules" , "-from=../../Misc/Standard_Options/gnatcheck.rules");
-       
+
        --  TODO: use path from repository root (to be able to use standard options in project at different depth in the file system)
        --  Unfortunately, a rule file is not project-aware, and there is no way to do this directly.
        --  But you may try out the following workaround - specify Identifier_Casing rule not

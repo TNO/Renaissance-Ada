@@ -28,7 +28,7 @@ with Rewriters;                  use Rewriters;
 with Rewriters_Find_And_Replace; use Rewriters_Find_And_Replace;
 with Predefined_Rewriters;       use Predefined_Rewriters;
 
-procedure Rewriters_Patch_Creator is
+procedure Code_Reviewer is
 
    Error_Count : Natural := 0;
 
@@ -38,23 +38,13 @@ procedure Rewriters_Patch_Creator is
    type Version_Control_Kind is (GIT, SVN);
    Source_Version_Control : constant Version_Control_Kind := GIT;
 
-   Source_Directory : constant String := "C:\directory\of\your\sources";
-   --  e.g. "C:\bright\Renaissance-Ada\";
+   Source_Directory : constant String := "C:\path\to\Renaissance-Ada";
+   --  Example to review the code within Renaissance-Ada
 
    Project_Filename : constant String :=
-     Source_Directory & "relative\path\to\your.gpr";
-   --  e.g. "src\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
-
-   Clean_Codebase_Command : constant String := "echo none";
-   --  Clean command
-   --  to ensure correct verify / prevent analysis of wrong files
-   --  "cd """ & Source_Directory
-   --  & "\out"" & if exist win64\ rmdir /s /q win64";
-
-   Verify_Codebase_Command : constant String := "echo none";
-   --  Verify changed code (build, test, etc.)
-   --  "set PATH=C:\GNATPRO\21.2\bin;%PATH% & cd """ & Source_Directory
-   --  & """ & make update=no all";
+     Source_Directory & "src\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
+   --  Example to review the rejuvenation_lib project
+   --  TODO: when aggregate projects are supported review all projects!
 
    Invocation_Exception : exception;
 
@@ -111,7 +101,6 @@ procedure Rewriters_Patch_Creator is
    procedure Create_Patch (patch : String) is
       File_Name : constant String :=
         Compose ("C:\path\to\patches",
-      --  e.g. "C:\temp\patches",
       --  Note: path must exist
       --  Path is NOT created by this program!
       patch, "patch");
@@ -184,9 +173,7 @@ procedure Rewriters_Patch_Creator is
             Rewriter_Name : constant String := Name_To_Rewriter_Maps.Key (KE);
          begin
             Put_Line ("==== " & Rewriter_Name & " ====");
-            Execute_Command (Clean_Codebase_Command);
             Change_Files (Units, Name_To_Rewriter_Maps.Element (KE));
-            Execute_Command (Verify_Codebase_Command);
             Create_Patch (Rewriter_Name);
             Rewind_Not_Committed_Changes;
          end;
@@ -420,4 +407,4 @@ begin
    Rewind_Not_Committed_Changes;
    Report_Count_Instances (Units, Name_To_Rewriter_Map);
    Create_Patches (Units, Name_To_Rewriter_Map);
-end Rewriters_Patch_Creator;
+end Code_Reviewer;

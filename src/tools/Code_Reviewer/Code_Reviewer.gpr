@@ -3,11 +3,11 @@ with "..\..\libraries\Standard_Options\standard_options.gpr";
 with "..\..\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
 with "..\..\libraries\Rewriters_Lib\rewriters_lib.gpr";
 
-project Rewriters_Patch_Creator is
+project Code_Reviewer is
 
    for Source_Dirs use ("src");
    for Object_Dir use "obj";
-   for Main use ("Rewriters_Patch_Creator.adb");
+   for Main use ("Code_Reviewer.adb");
 
    package Builder renames Standard_Options.Builder;
    package Compiler renames Standard_Options.Compiler;
@@ -17,5 +17,5 @@ project Rewriters_Patch_Creator is
    package CodePeer renames Standard_Options.CodePeer;
    package Pretty_Printer renames Standard_Options.Pretty_Printer;
 
-end Rewriters_Patch_Creator;
+end Code_Reviewer;
 
