@@ -14,24 +14,25 @@ package body Extraction.File_System is
    is
       Result : VFS.File_Array_Access;
 
+      function Is_Hidden (File : VFS.Virtual_File) return Boolean
+        --  Linux-style hidden files and directories start with a '.'
+      is
+         Base_Name : constant String := + File.Base_Name;
+      begin
+         return Base_Name (Base_Name'First) = '.';
+      end Is_Hidden;
+
       procedure Internal (Directory : VFS.Virtual_File) is
          Files        : VFS.File_Array_Access := Directory.Read_Dir;
       begin
          for File of Files.all loop
-            if File.Is_Directory then
-               declare
-                  Base_Dir_Name : constant String := +File.Base_Dir_Name;
-               begin
-                  if Base_Dir_Name (Base_Dir_Name'First) = '.' then
-                     Ada.Text_IO.Put_Line ("Skipping " & Base_Dir_Name);
-                  else
-                     VFS.Append (Result, File);
-                     Internal (File);
-                  end if;
-               end;
+            if Is_Hidden (File) then
+               Ada.Text_IO.Put_Line ("Skipping " & (+File.Full_Name));
             else
-               --  No Filter on Files (yet)
                VFS.Append (Result, File);
+               if File.Is_Directory then
+                     Internal (File);
+               end if;
             end if;
          end loop;
 
