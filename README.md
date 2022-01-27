@@ -6,7 +6,7 @@ The Renaissance-Ada project builds on top of [LibAdalang](https://adaco.re/libad
 with e.g. [yEd](https://www.yworks.com/products/yed) and [Neo4J](https://neo4j.com/).
 * [Rejuvenation Library](/src/libraries/Rejuvenation_Lib) that 
 allow analysis and manipulation of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language))  code based on concrete patterns.
-* [Rewriters_Library](/src/libraries/Rewriters_Lib) that
+* [Rewriters Library](/src/libraries/Rewriters_Lib) that
 enables automatic rewriting of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) code based on concrete patterns.
 * [Code Reviewer](/src/tools/Code_Reviewer) that automatically reviews [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) code 
 based on a large list of rewrite rules.
