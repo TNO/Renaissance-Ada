@@ -1,5 +1,17 @@
 # Renaissance-Ada
-Tooling for [ESI](https://esi.nl)'s Renaissance approach to legacy [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software
+Tooling for [ESI](https://esi.nl)'s Renaissance approach to legacy [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software.
+
+The Renaissance-Ada project builds on top of [LibAdalang](https://adaco.re/libadalang) and includes the following functionality
+* [Dependency Graph Extractor](/src/tools/Dependency_Graph_Extractor) that produces a graphml file for visualization and querying 
+with e.g. [yEd](https://www.yworks.com/products/yed) and [Neo4J](https://neo4j.com/).
+* [Rejuvenation Library](/src/libraries/Rejuvenation_Lib) that allow analysis and manipulation of Ada code based on concrete patterns.
+* [Rewriters_Library](/src/libraries/Rewriters_Lib) that enables automatic rewriting of Ada code based on concrete patterns.
+
+
+The image below shows the depencies of Find-related functions of the Rejuvenation Library
+as extracted by the [Dependency Graph Extractor](/src/tools/Dependency_Graph_Extractor) and 
+visualized and queried using [Neo4J](https://neo4j.com/).
+![Dependencies of Find-related functions of the Rejuvenation Library](/doc/Relations_Of_Find.jpg)
 
 ## Used by Industry
 [Nexperia](https://nexperia.com) described during [the AdaCore Tech Days](https://events.adacore.com/eutechday2021) 
