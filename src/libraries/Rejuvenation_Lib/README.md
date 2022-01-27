@@ -35,8 +35,9 @@ In analogy with [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expr
 all wild cards in a replace pattern can be called backreferences.
 
 # Examples
-See the [test project](test_driver.gpr), the [examples](../../examples/Rejuvenation_Examples), 
-and the [workshop](../../examples/Rejuvenation_Workshop) for inspiration to use the Rejuvenation Library.
+See the [examples](../../examples/Rejuvenation_Examples), 
+the [workshop](../../examples/Rejuvenation_Workshop), and the test cases in the [test project](test_driver.gpr)
+for inspiration to use the Rejuvenation Library.
 
 # Tools made using Rejuvenation Library
 * [Rejuvenation Find](../../tools/Rejuvenation_Find) finds a pattern in a given project
