@@ -8,9 +8,10 @@ with e.g. [yEd](https://www.yworks.com/products/yed) and [Neo4J](https://neo4j.c
 * [Rewriters_Library](/src/libraries/Rewriters_Lib) that enables automatic rewriting of Ada code based on concrete patterns.
 
 
-The image below shows the depencies of Find-related functions of the Rejuvenation Library
+The image below shows the depencies of Find-related functions of 
+the [Rejuvenation Library](/src/libraries/Rejuvenation_Lib)
 as extracted by the [Dependency Graph Extractor](/src/tools/Dependency_Graph_Extractor) and 
-visualized and queried using [Neo4J](https://neo4j.com/).
+queried using [Neo4J](https://neo4j.com/).
 ![Dependencies of Find-related functions of the Rejuvenation Library](/doc/Relations_Of_Find.jpg)
 
 ## Used by Industry
