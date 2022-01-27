@@ -64,12 +64,13 @@ cd ..
 env\Scripts\Deactivate.bat
 
 :: Build the Dependency Graph Extractor
-cd C:\path\to\Dependency_Graph_Extractor
+cd C:\path\to\Renaissance-Ada\src\tools\Dependency_Graph_Extractor
 mkdir obj
 gprbuild -XLIBRARY_TYPE=static -Pdependency_graph_extractor.gpr
 ```
 
-The above steps result in the Dependency Graph Extractor being created as `dependency_graph_extractor.exe` in `C:\path\to\Dependency_Graph_Extractor\obj`.
+The above steps result in the Dependency Graph Extractor being created as `dependency_graph_extractor.exe` 
+in `cd C:\path\to\Renaissance-Ada\src\tools\Dependency_Graph_Extractor\obj`.
 
 If up-to-date copies of langkit and libadalang already occur in `C:\path\to\libadalang-install`, the following steps will suffice to build the extractor.
 
@@ -81,9 +82,9 @@ set PATH=%LAL_INSTALL%\bin;%PATH%
 set GPR_PROJECT_PATH=%LAL_INSTALL%\share\gpr;%GPR_PROJECT_PATH%
 
 :: Build the Dependency Graph Extractor
-cd C:\path\to\Dependency_Graph_Extractor
+cd C:\path\to\Renaissance-Ada\src\tools\Dependency_Graph_Extractor
 mkdir obj
-gprbuild -XLIBRARY_TYPE=static -Pdependency_graph_extractor.gpr
+gprbuild -XLIBRARY_TYPE=static -P dependency_graph_extractor.gpr
 ```
 ## Usage
 
@@ -101,14 +102,20 @@ The output GraphML file is required, as is at least one GPR file. If the output 
 
 Optionally, a directory prefix can be passed to the extractor using the `-p` option. When done so, the extractor removes the prefix from every filename in the generated GraphML file. Note that, if a filename does not start with the specified prefix, it wil occur in the GraphML file as-is.
 
+Note. Although Dependency Graph Extractor can analyse multiple projects, it can't analyze an aggregate project with more than one sub-project.
+
 ### Example
 
-Suppose we want to extract source code dependency information from a GPR project named `adat.gpr`, which is located in `C:\path\archive\Source`.
-Moreover, suppose we do not want have the `C:\path\archive` prefix occurring in the generated GraphML file.
+Suppose we want to extract source code dependency information from the GPR project named `rejuvenation_lib.gpr`, 
+which is located in `C:\path\to\Renaissance-Ada\src\libraries\Rejuvenation_Lib`.
+Moreover, suppose we do not want have the `C:\path\to\Renaissance-Ada\src\libraries\Rejuvenation_Lib` prefix occurring in the generated GraphML file.
 To achieve this, we can run the Dependency Graph Extractor as follows:
 
 ```cmd
-dependency_graph_extractor.exe -o adat.graphml -p C:\path\archive C:\path\archive\Source\adat.gpr
+dependency_graph_extractor.exe -o rejuvenation_lib.graphml -p C:\path\to\Renaissance-Ada\src\libraries\Rejuvenation_Lib C:\path\to\Renaissance-Ada\src\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr
 ```
 
-This will create the GraphML `adat.graphml` in the current directory.
+Note we assume that either `dependency_graph_extractor.exe` is on the system PATH 
+or the current directory is the `obj` directory of the Dependency_Graph_Extractor project.
+
+This will create the GraphML file `rejuvenation_lib.graphml` in the current directory.

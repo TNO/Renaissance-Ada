@@ -1,5 +1,6 @@
 with "aunit.gpr";
 with "libadalang.gpr";
+with "..\Standard_Options\standard_options.gpr";
 with "..\Rejuvenation_Lib\rejuvenation_lib.gpr";
 with "rewriters_lib.gpr";
 
