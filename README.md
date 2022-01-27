@@ -2,7 +2,7 @@
 Tooling for [ESI](https://esi.nl)'s Renaissance approach to legacy [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software.
 
 The Renaissance-Ada project builds on top of [LibAdalang](https://adaco.re/libadalang) and includes the following functionality
-* [Dependency Graph Extractor](/src/tools/Dependency_Graph_Extractor) that produces a graphml file for visualization and querying 
+* [Dependency Graph Extractor](/src/tools/Dependency_Graph_Extractor) that produces a [graphml](http://graphml.graphdrawing.org) file for visualization and querying 
 with e.g. [yEd](https://www.yworks.com/products/yed) and [Neo4J](https://neo4j.com/).
 * [Rejuvenation Library](/src/libraries/Rejuvenation_Lib) that 
 allow analysis and manipulation of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language))  code based on concrete patterns.
