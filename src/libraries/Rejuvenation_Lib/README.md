@@ -13,7 +13,11 @@ Any alphanumeric string is allowed to follow after those prefixes.
 "$S_" wildcards allow one to match a single AST node, be that a single expression, a single statement, a single argument, or anything else.
 As long as Ada parses it to a single AST node, the "$S_" wildcard can match it.
 
-"$M_" wildcards allow one to match a list of AST nodes, i.e., zero or more nodes. 
+"$M_" wildcards allow one to match a list of AST nodes, i.e., zero or more nodes.
+
+Note that the current implementation is greedy with respect to wild cards.
+Whenever one could proceed to the next placeholder this will happen.
+So all matches in the current implementation of `$M_X; $S_T;` will always have an empty list for `$M_X`.
 
 ### wild cards in find patterns
 
