@@ -11,8 +11,7 @@ For more info, see e.g. this
 and [ESI's research on model-based software transformation](https://esi.nl/research/output/methods/model-based-software-transformation).
 
 # Renaissance-Ada
-This repository contains the tooling for [ESI](https://esi.nl)'s Renaissance approach to [legacy software](https://en.wikipedia.org/wiki/Legacy_code) 
-targetting the [Ada programming language](https://en.wikipedia.org/wiki/Ada_(programming_language)).
+This repository contains the tooling for [ESI](https://esi.nl)'s Renaissance approach to [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) [legacy software](https://en.wikipedia.org/wiki/Legacy_code). 
 
 The Renaissance-Ada project builds on top of [LibAdalang](https://adaco.re/libadalang) and includes the following functionality
 * [Dependency Graph Extractor](/src/tools/Dependency_Graph_Extractor) that produces a [graphml](http://graphml.graphdrawing.org) file for visualization and querying 
