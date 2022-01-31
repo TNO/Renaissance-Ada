@@ -295,7 +295,8 @@ procedure Code_Reviewer is
       Name_To_Rewriter_Map.Include
         ("If_Different_Expression", Rewriter_If_Different_Expression);
       Name_To_Rewriter_Map.Include
-        ("If_Not_Condition_Expression", Rewriter_If_Not_Condition_Expression);
+        ("If_Not_Condition_Expression",
+         Rewriter_If_Not_Condition_Expression);
       Name_To_Rewriter_Map.Include
         ("If_Not_In_Expression", Rewriter_If_Not_In_Expression);
       Name_To_Rewriter_Map.Include
@@ -305,7 +306,8 @@ procedure Code_Reviewer is
         ("Boolean_If_Not_Condition_Expression",
          Rewriter_Boolean_If_Not_Condition_Expression);
       Name_To_Rewriter_Map.Include
-        ("Concat_Before_If_Expression", Rewriter_Concat_Before_If_Expression);
+        ("Concat_Before_If_Expression",
+         Rewriter_Concat_Before_If_Expression);
       Name_To_Rewriter_Map.Include
         ("Concat_After_If_Expression", Rewriter_Concat_After_If_Expression);
       Name_To_Rewriter_Map.Include
@@ -382,6 +384,14 @@ procedure Code_Reviewer is
         ("For_Some_Range_Return", Rewriter_For_Some_Range_Return);
       Name_To_Rewriter_Map.Include
         ("For_Some_Elements_Return", Rewriter_For_Some_Elements_Return);
+      Name_To_Rewriter_Map.Include
+        ("For_All_Range_All", Rewriter_For_All_Range_All);
+      Name_To_Rewriter_Map.Include
+        ("For_All_Elements_All", Rewriter_For_All_Elements_All);
+      Name_To_Rewriter_Map.Include
+        ("For_Some_Range_All", Rewriter_For_Some_Range_All);
+      Name_To_Rewriter_Map.Include
+        ("For_Some_Elements_All", Rewriter_For_Some_Elements_All);
 
       Name_To_Rewriter_Map.Include
         ("Declare_And_Overwrite", Rewriter_Declare_And_Overwrite);

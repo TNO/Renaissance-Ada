@@ -20,6 +20,10 @@ with Rewriters_Sequence;            use Rewriters_Sequence;
 
 package Predefined_Rewriters is
 
+   function Accept_No_Side_Effects
+     (Match : Match_Pattern) return Boolean is
+     (not Has_Side_Effect (Match, "$S_Expr"));
+
 ------------------------------------------------------------------------------
    --  Expressions
 ------------------------------------------------------------------------------
@@ -30,60 +34,60 @@ package Predefined_Rewriters is
    Rewriter_Definition_Equal : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr = $S_Expr", Expr_Rule),
-        Make_Pattern ("true", Expr_Rule));
-   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+        Make_Pattern ("true", Expr_Rule),
+        Accept_No_Side_Effects'Access);
 
    Rewriter_Definition_Different :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr /= $S_Expr", Expr_Rule),
-        Make_Pattern ("false", Expr_Rule));
-   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+        Make_Pattern ("false", Expr_Rule),
+        Accept_No_Side_Effects'Access);
 
    Rewriter_Definition_Minus : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr - $S_Expr", Expr_Rule),
-        Make_Pattern ("0", Expr_Rule));
-   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+        Make_Pattern ("0", Expr_Rule),
+        Accept_No_Side_Effects'Access);
    --  TODO can it be correct for integers & float at the same time?
 
    Rewriter_Definition_Divide : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr / $S_Expr", Expr_Rule),
-        Make_Pattern ("1", Expr_Rule));
-   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+        Make_Pattern ("1", Expr_Rule),
+        Accept_No_Side_Effects'Access);
    --  TODO can it be correct for integers & float at the same time?
 
    Rewriter_Definition_Modulo : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr mod $S_Expr", Expr_Rule),
-        Make_Pattern ("0", Expr_Rule));
-   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+        Make_Pattern ("0", Expr_Rule),
+        Accept_No_Side_Effects'Access);
 
    Rewriter_Definition_Remainder :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr rem $S_Expr", Expr_Rule),
-        Make_Pattern ("0", Expr_Rule));
-   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+        Make_Pattern ("0", Expr_Rule),
+        Accept_No_Side_Effects'Access);
 
    Rewriter_Idempotence_And : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr and then $S_Expr", Expr_Rule),
-        Make_Pattern ("$S_Expr", Expr_Rule));
-   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+        Make_Pattern ("$S_Expr", Expr_Rule),
+        Accept_No_Side_Effects'Access);
 
    Rewriter_Idempotence_Or : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr or else $S_Expr", Expr_Rule),
-        Make_Pattern ("$S_Expr", Expr_Rule));
-   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+        Make_Pattern ("$S_Expr", Expr_Rule),
+        Accept_No_Side_Effects'Access);
 
    Rewriter_Complementation_And : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr and then not $S_Expr", Expr_Rule),
-        Make_Pattern ("false", Expr_Rule));
-   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+        Make_Pattern ("false", Expr_Rule),
+        Accept_No_Side_Effects'Access);
    --  TODO include variants with
    --            * swapped order of A and not A
    --            * parenthesis around not argument
@@ -93,8 +97,8 @@ package Predefined_Rewriters is
    Rewriter_Complementation_Or : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr or else not $S_Expr", Expr_Rule),
-        Make_Pattern ("true", Expr_Rule));
-   --  TODO check for side effects in $S_Expr to ensure rewrite is identical
+        Make_Pattern ("true", Expr_Rule),
+        Accept_No_Side_Effects'Access);
    --  TODO include variants with
    --            * swapped order of A and not A
    --            * parenthesis around not argument
@@ -184,15 +188,19 @@ package Predefined_Rewriters is
 
    Rewriter_And_Then : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("$S_Left and $S_Right", Expr_Rule),
-        Make_Pattern ("$S_Left and then $S_Right", Expr_Rule));
-   --  TODO check for side effects in $S_Right to ensure rewrite is identical
+       (Make_Pattern ("$S_Left and $S_Expr", Expr_Rule),
+        Make_Pattern ("$S_Left and then $S_Expr", Expr_Rule),
+        Accept_No_Side_Effects'Access);
+   --  TODO: check Conditions / Expressions are booleans
+   --        ('and' is also bitwise operator)
 
    Rewriter_Or_Else : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("$S_Left or $S_Right", Expr_Rule),
-        Make_Pattern ("$S_Left or else $S_Right", Expr_Rule));
-   --  TODO check for side effects in $S_Right to ensure rewrite is identical
+       (Make_Pattern ("$S_Left or $S_Expr", Expr_Rule),
+        Make_Pattern ("$S_Left or else $S_Expr", Expr_Rule),
+        Accept_No_Side_Effects'Access);
+   --  TODO: check Conditions / Expressions are booleans
+   --        ('or' is also bitwise operator)
 
    --  TODO: check True is a Boolean
    --  TODO: do we also need the symmetric variant: true = $S_Var?
@@ -377,22 +385,19 @@ package Predefined_Rewriters is
    --
    --  * Case Single Expression
 
-   --  TODO:
-   --  replace constant check by the real check:
-   --       Check for side effects:
+   Rewriter_Double : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr + $S_Expr", Expr_Rule),
+        Make_Pattern ("2 * ($S_Expr)", Expr_Rule),
+        Accept_No_Side_Effects'Access,
+        Rewriters => To_Vector (RMP'Access, 1));
+   --  Check for side effects:
    --       f(3) + f(3) has side effects (in f) twice
    --       while 2 * (f(3)) has side effects only once
    --
    --      However how important is the side effect?
    --      Might be perfectly acceptable to log only once
    --      that f is entered, and f returns!
-
-   Rewriter_Double : aliased constant Rewriter_Find_And_Replace :=
-     Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("$S_Expr + $S_Expr", Expr_Rule),
-        Make_Pattern ("2 * ($S_Expr)", Expr_Rule),
-        Accept_Constant_Expression'Access,
-        Rewriters => To_Vector (RMP'Access, 1));
 
    Rewriter_Equals_To_In_Range : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
@@ -529,13 +534,11 @@ package Predefined_Rewriters is
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("if $S_Cond then $M_Stmts; else $M_Stmts; end if;", If_Stmt_Rule),
-        Make_Pattern
-          ("if $S_Cond then null; end if; "
-           & "--  TODO: remove previous if statement "
-                & "unless side effects are needed" &
-           ASCII.LF & "$M_Stmts;",
-           Stmts_Rule));
+          ("if $S_Expr then $M_Stmts; else $M_Stmts; end if;", If_Stmt_Rule),
+        Make_Pattern ("$M_Stmts;", Stmt_Rule),
+        Accept_No_Side_Effects'Access
+       );
+   --  We can't rewrite when $S_Expr has a side effect.
 
    Rewriter_If_Identical_Tails_Stmt :
    aliased constant Rewriter_Find_And_Replace :=
@@ -616,18 +619,14 @@ package Predefined_Rewriters is
        (Make_Pattern
           ("case $S_Expr is when $M_Values => $M_Stmts; end case;",
            Case_Stmt_Rule),
-        Make_Pattern
-          ("case $S_Expr is when $M_Values => null; end case; "
-           & "--  TODO: remove previous case statement "
-           & "unless side effects are needed" &
-           ASCII.LF & "$M_Stmts;",
-           Stmts_Rule));
+        Make_Pattern ("$M_Stmts;", Stmt_Rule),
+           Accept_No_Side_Effects'Access);
 --  In case of a case statement with a single alternative (single when branch),
 --  the condition "($S_Expr) in $M_Values" is True:
 --  Ada requires and the compiler enforces that
 --  all possible values are included in the set of alternatives.
---  However, the evaluation of the expression can have a side effect.
---  So we can't leave it out.
+--  When the evaluation of the expression has a side effect,
+--  we can't leave it out.
 --  Furthermore, we can't rewrite it to an if statement,
 --  since $M_Values can be equal to the others keyword,
 --  yet "($S_Expr) in others" is not a valid condition.
@@ -654,12 +653,9 @@ package Predefined_Rewriters is
           ("case $S_Expr is " & "when $M_1_Vals => $M_Stmts;" &
            "when $M_2_Vals => $M_Stmts;" & "end case;",
            Case_Stmt_Rule),
-        Make_Pattern
-          ("case $S_Expr is when $M_1_Vals | $M_2_Vals => null; end case; "
-           & "--  TODO: remove previous case statement "
-           & "unless side effects are needed" &
-           ASCII.LF & "$M_Stmts;",
-           Stmts_Rule));
+        Make_Pattern ("$M_Stmts;", Stmt_Rule),
+        Accept_No_Side_Effects'Access
+       );
    --  TODO: How to make a concrete pattern matching
    --  an arbitrary number of alternatives?
    --  Or at least 2..N, where N is the largest number of alternatives
@@ -872,6 +868,68 @@ package Predefined_Rewriters is
         Make_Pattern
           ("return (for some $S_E of $S_Elements => $S_Cond);",
            Return_Stmt_Rule));
+
+   Rewriter_For_All_Range_All : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern
+          ("declare $S_Var : Boolean := true; begin "
+           & "for $S_I in $S_Range "
+           & "loop if $S_Expr then $S_Var := false; end if; end loop; "
+           & "$M_Stmts; end;",
+           Block_Stmt_Rule),
+        Make_Pattern
+          ("declare $S_Var : Boolean := "
+           & "(for all $S_I in $S_Range => $S_Expr); "
+           & "begin $M_Stmts; end;",
+           Block_Stmt_Rule),
+       Accept_No_Side_Effects'Access);
+
+   Rewriter_For_All_Elements_All :
+   aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern
+          ("declare $S_Var : Boolean := true; begin " &
+           "for $S_E of $S_Elements loop " &
+           "if $S_Expr then $S_Var := false; end if; " & "end loop; " &
+           "$M_Stmts; end;",
+           Block_Stmt_Rule),
+        Make_Pattern
+          ("declare $S_Var : Boolean := "
+           & "(for all $S_E of $S_Elements => $S_Expr); "
+           & "begin $M_Stmts; end;",
+           Block_Stmt_Rule),
+       Accept_No_Side_Effects'Access);
+
+   Rewriter_For_Some_Range_All : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern
+          ("declare $S_Var : Boolean := false; begin "
+           & "for $S_I in $S_Range "
+           & "loop if $S_Expr then $S_Var := true; end if; end loop; "
+           & "$M_Stmts; end;",
+           Block_Stmt_Rule),
+        Make_Pattern
+          ("declare $S_Var : Boolean := "
+           & "(for some $S_I in $S_Range => $S_Expr); "
+           & "begin $M_Stmts; end;",
+           Block_Stmt_Rule),
+       Accept_No_Side_Effects'Access);
+
+   Rewriter_For_Some_Elements_All :
+   aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern
+          ("declare $S_Var : Boolean := false; begin " &
+           "for $S_E of $S_Elements loop " &
+           "if $S_Expr then $S_Var := true; end if; " & "end loop; " &
+           "$M_Stmts; end;",
+           Block_Stmt_Rule),
+        Make_Pattern
+          ("declare $S_Var : Boolean := "
+           & "(for some $S_E of $S_Elements => $S_Expr); "
+           & "begin $M_Stmts; end;",
+           Block_Stmt_Rule),
+       Accept_No_Side_Effects'Access);
 
 ------------------------------------------------------------------------------
    --  Declarations

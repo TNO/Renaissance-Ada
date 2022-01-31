@@ -27,5 +27,11 @@ package Rejuvenation.Find_And_Replacer is
    --  by the matching string at the placeholder.
    --  Return value indicates whether any match was found and accepted
    --  Note: When a match is found and accepted, the file will be changed
+   --
+   --  Note: When find-and-replacing all instances of a particular warning
+   --  detected by your favorite linter, such as GNATcheck and CodePeer,
+   --  you don't have to reimplement the semantic check of that warning, since
+   --  you can just check whether the location of the found instance occurs
+   --  in the list of reported locations by the linter.
 
 end Rejuvenation.Find_And_Replacer;

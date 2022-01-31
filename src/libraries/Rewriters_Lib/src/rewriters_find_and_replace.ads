@@ -24,6 +24,13 @@ package Rewriters_Find_And_Replace is
 
    function Accept_Match
      (RFR : Rewriter_Find_And_Replace) return Match_Accepter;
+   --  Note: When rewriting all instances of a particular warning
+   --  detected by your favorite linter, such as GNATcheck and CodePeer,
+   --  you don't have to reimplement the semantic check of that warning
+   --  to accept a match, since
+   --  you can just check whether the location of the found instance occurs
+   --  in the list of reported locations by the linter.
+
 
    function Make_Rewriter_Find_And_Replace
      (Find_Pattern, Replace_Pattern : Pattern;

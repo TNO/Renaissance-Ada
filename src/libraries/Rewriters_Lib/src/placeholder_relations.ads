@@ -14,6 +14,14 @@ package Placeholder_Relations is
    --  Is Expression in Match a constant expression?
    --  Note: 3, 3+4, "abc" & "def",  and 4*(5+7) are all constant expressions
 
+   function Has_Side_Effect
+     (Match      : Match_Pattern;
+      Expression : String)
+      return Boolean;
+   --  Has Execution of Expression a side effect?
+   --  Side effects include:
+   --     variables are changed, write to file, write to screen, ...
+
    function Is_Within_Base_Subp_Body
      (Match     : Match_Pattern;
       Subp_Name : String)
