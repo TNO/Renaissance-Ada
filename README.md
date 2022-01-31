@@ -3,6 +3,9 @@
 
 [ESI](https://esi.nl)'s Renaissance approach to [legacy software](https://en.wikipedia.org/wiki/Legacy_code) is an interative process of
 two steps that strengthen each other: enhance insight and reduce complexity.
+For more info, see e.g. this 
+[Bits & Chips article](https://bits-chips.nl/artikel/esi-helps-thermo-fisher-and-philips-grease-their-software-machines)
+and [Model-based software transformation](https://esi.nl/research/output/methods/model-based-software-transformation).
 
 # Renaissance-Ada
 This repository contains the tooling for [ESI](https://esi.nl)'s Renaissance approach to [legacy software](https://en.wikipedia.org/wiki/Legacy_code) 
@@ -31,9 +34,6 @@ queried using [Neo4J](https://neo4j.com/).
 ## History
 The Renaissance approach was initially developed by [ESI](https://esi.nl)
 in public-private research projects together with [Thermo Fisher](https://thermofisher.com) and [Philips](http://philips.com).
-For more info, see e.g. this 
-[Bits & Chips article](https://bits-chips.nl/artikel/esi-helps-thermo-fisher-and-philips-grease-their-software-machines)
-and [Model-based software transformation](https://esi.nl/research/output/methods/model-based-software-transformation).
 The Renaissance tooling to target [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software
 was developed in Bright, 
 a public-private research project together with [ITEC](https://itecequipment.com), an independent subsidiary of [Nexperia](https://nexperia.com).
