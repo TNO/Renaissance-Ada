@@ -2,10 +2,13 @@
 ![Enhance insight and reduce complexity](/doc/enhance-insight-reduce-complexity.jpg)
 
 [ESI](https://esi.nl)'s Renaissance approach to [legacy software](https://en.wikipedia.org/wiki/Legacy_code) is an interative process of
-two steps that strengthen each other: enhance insight and reduce complexity.
+two steps that strengthen each other
+* enhance insight and 
+* reduce complexity.
+
 For more info, see e.g. this 
 [Bits & Chips article](https://bits-chips.nl/artikel/esi-helps-thermo-fisher-and-philips-grease-their-software-machines)
-and [Model-based software transformation](https://esi.nl/research/output/methods/model-based-software-transformation).
+and [ESI's research on model-based software transformation](https://esi.nl/research/output/methods/model-based-software-transformation).
 
 # Renaissance-Ada
 This repository contains the tooling for [ESI](https://esi.nl)'s Renaissance approach to [legacy software](https://en.wikipedia.org/wiki/Legacy_code) 
