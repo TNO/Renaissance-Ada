@@ -1,5 +1,5 @@
 # Renaissance-Ada
-Tooling for [ESI](https://esi.nl)'s Renaissance approach to legacy [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software.
+Tooling for [ESI](https://esi.nl)'s Renaissance approach to [legacy software](https://en.wikipedia.org/wiki/Legacy_code) written in [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)).
 
 The Renaissance-Ada project builds on top of [LibAdalang](https://adaco.re/libadalang) and includes the following functionality
 * [Dependency Graph Extractor](/src/tools/Dependency_Graph_Extractor) that produces a [graphml](http://graphml.graphdrawing.org) file for visualization and querying 
