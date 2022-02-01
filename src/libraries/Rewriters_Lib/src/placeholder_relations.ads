@@ -13,6 +13,13 @@ package Placeholder_Relations is
       return Boolean;
    --  Is Expression in Match a constant expression?
    --  Note: 3, 3+4, "abc" & "def",  and 4*(5+7) are all constant expressions
+   --  TODO: Can we use libadalang's
+   --      function P_Is_Static_Expr
+   --        (Node : Expr'Class;
+   --         Imprecise_Fallback : Boolean := False) return Boolean;
+   --         --  Return whether this expression is static according to the ARM definition
+   --         --  of static. See RM 4.9.
+   --  for our purpose?
 
    function Has_Side_Effect
      (Match      : Match_Pattern;
