@@ -43,3 +43,6 @@ a public-private research project together with [ITEC](https://itecequipment.com
 ## Related technologies
 * [HayStack-Ada](https://github.com/BurritoZz/Haystack-Ada) is a GNATStudio plug-in for AST-based Find and Replace. 
 [HayStack-Ada](https://github.com/BurritoZz/Haystack-Ada) uses a re-implementation of the rejuvenation library in python.
+* [Rascal MPL](https://www.rascal-mpl.org/) is a metaprogramming language that 
+integrates source code analysis, transformation, and generation primitives on the language level.
+Unfortunately, Rascal still lacks a bridge to [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)).
