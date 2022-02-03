@@ -1,13 +1,22 @@
 with Ada.Assertions;       use Ada.Assertions;
 with Ada.Text_IO;          use Ada.Text_IO;
 with Langkit_Support.Text; use Langkit_Support.Text;
-with Libadalang.Analysis;  use Libadalang.Analysis;
 with Libadalang.Common;    use Libadalang.Common;
 with Rejuvenation;         use Rejuvenation;
 with Rejuvenation.Finder;  use Rejuvenation.Finder;
 with Rejuvenation.Utils;   use Rejuvenation.Utils;
 
 package body Placeholder_Relations is
+
+   function Get_Expression_Type
+     (Match : Match_Pattern;
+      Expression : String)
+      return Base_Type_Decl
+   is
+      E : constant Expr := Match.Get_Single_As_Node (Expression).As_Expr;
+   begin
+      return E.P_Expression_Type;
+   end Get_Expression_Type;
 
    function Is_Referenced_In
      (D_N : Defining_Name; Node : Ada_Node) return Boolean;

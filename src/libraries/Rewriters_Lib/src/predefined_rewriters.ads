@@ -20,6 +20,9 @@ with Rewriters_Sequence;            use Rewriters_Sequence;
 
 package Predefined_Rewriters is
 
+   function Is_Boolean_Expression
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
+
    function Accept_No_Side_Effects
      (Match : Match_Pattern) return Boolean is
      (not Has_Side_Effect (Match, "$S_Expr"));
@@ -186,43 +189,55 @@ package Predefined_Rewriters is
      Rewriter_Not_Less_Equal'Access & Rewriter_Not_In'Access &
      Rewriter_Not_Not_In'Access;
 
+   function Accept_Boolean_No_Side_Effects
+     (Match : Match_Pattern) return Boolean is
+     (Is_Boolean_Expression (Match, "$S_Expr")
+      and then not Has_Side_Effect (Match, "$S_Expr"));
+
    Rewriter_And_Then : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Left and $S_Expr", Expr_Rule),
         Make_Pattern ("$S_Left and then $S_Expr", Expr_Rule),
-        Accept_No_Side_Effects'Access);
-   --  TODO: check Conditions / Expressions are booleans
-   --        ('and' is also bitwise operator)
+        Accept_Boolean_No_Side_Effects'Access);
 
    Rewriter_Or_Else : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Left or $S_Expr", Expr_Rule),
         Make_Pattern ("$S_Left or else $S_Expr", Expr_Rule),
-        Accept_No_Side_Effects'Access);
-   --  TODO: check Conditions / Expressions are booleans
-   --        ('or' is also bitwise operator)
+        Accept_Boolean_No_Side_Effects'Access);
+
+   function Accept_Boolean
+     (Match : Match_Pattern) return Boolean is
+     (Is_Boolean_Expression (Match, "$S_Expr"));
 
    --  TODO: check True is a Boolean
-   --  TODO: do we also need the symmetric variant: true = $S_Var?
    Rewriter_Equal_True : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("$S_Var = true", Expr_Rule),
-        Make_Pattern ("$S_Var", Expr_Rule));
+       (Make_Pattern ("$S_Expr = true", Expr_Rule),
+        Make_Pattern ("$S_Expr", Expr_Rule),
+        Accept_Boolean'Access);
+   --  TODO: do we also need the symmetric variant: true = $S_Expr?
 
    Rewriter_Equal_False : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("$S_Var = false", Expr_Rule),
-        Make_Pattern ("not $S_Var", Expr_Rule));
+       (Make_Pattern ("$S_Expr = false", Expr_Rule),
+        Make_Pattern ("not $S_Expr", Expr_Rule),
+        Accept_Boolean'Access);
+   --  TODO: do we also need the symmetric variant: false = $S_Expr?
 
    Rewriter_Different_True : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("$S_Var /= true", Expr_Rule),
-        Make_Pattern ("not $S_Var", Expr_Rule));
+       (Make_Pattern ("$S_Expr /= true", Expr_Rule),
+        Make_Pattern ("not $S_Expr", Expr_Rule),
+        Accept_Boolean'Access);
+   --  TODO: do we also need the symmetric variant: true /= $S_Expr?
 
    Rewriter_Different_False : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("$S_Var /= false", Expr_Rule),
-        Make_Pattern ("$S_Var", Expr_Rule));
+       (Make_Pattern ("$S_Expr /= false", Expr_Rule),
+        Make_Pattern ("$S_Expr", Expr_Rule),
+        Accept_Boolean'Access);
+--  TODO: do we also need the symmetric variant: false /= $S_Expr?
 
    Rewrite_De_Morgan_Not_And : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
