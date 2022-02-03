@@ -200,6 +200,7 @@ procedure Code_Reviewer is
                    (if F_P.As_Ada_Node.Kind in Ada_Ada_List then
                       Find_Sub_List (Unit.Root, F_P).Length
                     else Find_Full (Unit.Root, F_P).Length);
+               --  TODO: only / also count items that pass check function
             end loop;
             Put_Line (Rewriter_Name & " : " & Count'Image);
          end;
