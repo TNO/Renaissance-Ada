@@ -45,5 +45,7 @@ a public-private research project together with [ITEC](https://itecequipment.com
 [HayStack-Ada](https://github.com/BurritoZz/Haystack-Ada) uses a re-implementation of the rejuvenation library in python.
 * [Rascal MPL](https://www.rascal-mpl.org) is a metaprogramming language that 
 integrates source code analysis, transformation, and generation primitives on the language level.
-Unfortunately, [Rascal MPL](https://www.rascal-mpl.org) still lacks a bridge to [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)).
-* [Spoofax](https://spoofax.dev) is a language designer's workbench. [Spoofax](https://spoofax.dev) uses [concrete syntax](https://www.spoofax.dev/howtos/stratego/concrete-syntax) to specify code transformations.
+Unfortunately, [Rascal MPL](https://www.rascal-mpl.org) still lacks support for [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)).
+* [Spoofax](https://spoofax.dev) is a language designer's workbench. [Spoofax](https://spoofax.dev) supports [concrete syntax](https://www.spoofax.dev/howtos/stratego/concrete-syntax) to specify code transformations.
+Unfortunately, [Spoofax](https://spoofax.dev) still lacks support for [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)).
+
