@@ -17,9 +17,9 @@ The Renaissance-Ada project builds on top of [LibAdalang](https://adaco.re/libad
 * [Dependency Graph Extractor](/src/tools/Dependency_Graph_Extractor) that produces a [graphml](http://graphml.graphdrawing.org) file for visualization and querying 
 with e.g. [yEd](https://www.yworks.com/products/yed) and [Neo4J](https://neo4j.com/).
 * [Rejuvenation Library](/src/libraries/Rejuvenation_Lib) that 
-allow analysis and manipulation of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language))  code based on concrete patterns.
+allow analysis and manipulation of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language))  code based on concrete syntax.
 * [Rewriters Library](/src/libraries/Rewriters_Lib) that
-enables automatic rewriting of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) code based on concrete patterns.
+enables automatic rewriting of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) code based on concrete syntax.
 * [Code Reviewer](/src/tools/Code_Reviewer) that automatically reviews [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) code 
 based on a large list of rewrite rules.
 
@@ -43,6 +43,7 @@ a public-private research project together with [ITEC](https://itecequipment.com
 ## Related technologies
 * [HayStack-Ada](https://github.com/BurritoZz/Haystack-Ada) is a GNATStudio plug-in for AST-based Find and Replace. 
 [HayStack-Ada](https://github.com/BurritoZz/Haystack-Ada) uses a re-implementation of the rejuvenation library in python.
-* [Rascal MPL](https://www.rascal-mpl.org/) is a metaprogramming language that 
+* [Rascal MPL](https://www.rascal-mpl.org) is a metaprogramming language that 
 integrates source code analysis, transformation, and generation primitives on the language level.
-Unfortunately, Rascal still lacks a bridge to [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)).
+Unfortunately, [Rascal MPL](https://www.rascal-mpl.org) still lacks a bridge to [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)).
+* [Spoofax](https://spoofax.dev) is a language designer's workbench. [Spoofax](https://spoofax.dev) uses [concrete syntax](https://www.spoofax.dev/howtos/stratego/concrete-syntax) to specify code transformations.
