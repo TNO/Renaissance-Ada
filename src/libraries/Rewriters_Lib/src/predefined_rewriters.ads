@@ -326,6 +326,44 @@ package Predefined_Rewriters is
         Make_Pattern ("(not ($S_Cond))", Expr_Rule),
         Rewriters => Rewriters_Not & RMP'Access);
 
+   function Accept_Extreme
+     (Match : Match_Pattern) return Boolean is
+     (Is_Integer_Expression (Match, "$S_X")
+      and then not Has_Side_Effect (Match, "$S_X")
+      and then Is_Integer_Expression (Match, "$S_Y")
+      and then not Has_Side_Effect (Match, "$S_Y")
+     );
+
+   Rewriter_Integer_Max_Greater_Than :
+   aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("(if $S_X > $S_Y then $S_X else $S_Y)", Expr_Rule),
+        Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
+        Accept_Extreme'Access);
+   --  TODO: do we need even more cases?
+   --  like (if $S_X > $S_Y then $S_Y else $S_X)   -- swapped usage
+
+   Rewriter_Integer_Max_Greater_Equal :
+   aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("(if $S_X >= $S_Y then $S_X else $S_Y)", Expr_Rule),
+        Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
+        Accept_Extreme'Access);
+
+   Rewriter_Integer_Less_Than :
+   aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("(if $S_X < $S_Y then $S_X else $S_Y)", Expr_Rule),
+        Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
+        Accept_Extreme'Access);
+
+   Rewriter_Integer_Less_Equal :
+   aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("(if $S_X < $S_Y then $S_X else $S_Y)", Expr_Rule),
+        Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
+        Accept_Extreme'Access);
+
    function Accept_Constant_Expression
      (Match : Match_Pattern) return Boolean is
      (Is_Constant_Expression (Match, "$S_Expr"));
@@ -373,6 +411,10 @@ package Predefined_Rewriters is
      Rewriter_If_Not_In_Expression'Access &
      Rewriter_Boolean_If_Condition_Expression'Access &
      Rewriter_Boolean_If_Not_Condition_Expression'Access &
+     Rewriter_Integer_Max_Greater_Than'Access &
+     Rewriter_Integer_Max_Greater_Equal'Access &
+     Rewriter_Integer_Min_Less_Than'Access &
+     Rewriter_Integer_Min_Less_Equal'Access &
      Rewriter_Concat_Before_If_Expression'Access &
      Rewriter_Concat_After_If_Expression'Access;
 

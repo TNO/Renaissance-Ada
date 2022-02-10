@@ -307,6 +307,18 @@ procedure Code_Reviewer is
         ("Boolean_If_Not_Condition_Expression",
          Rewriter_Boolean_If_Not_Condition_Expression);
       Name_To_Rewriter_Map.Include
+        ("Integer_Max_Greater_Than",
+         Rewriter_Integer_Max_Greater_Than);
+      Name_To_Rewriter_Map.Include
+        ("Integer_Max_Greater_Equal",
+         Rewriter_Integer_Max_Greater_Equal);
+      Name_To_Rewriter_Map.Include
+        ("Integer_Min_Less_Than",
+         Rewriter_Integer_Min_Less_Than);
+      Name_To_Rewriter_Map.Include
+        ("Integer_Min_Less_Equal",
+         Rewriter_Integer_Min_Less_Equal);
+      Name_To_Rewriter_Map.Include
         ("Concat_Before_If_Expression",
          Rewriter_Concat_Before_If_Expression);
       Name_To_Rewriter_Map.Include
