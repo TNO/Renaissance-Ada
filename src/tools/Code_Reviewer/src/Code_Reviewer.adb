@@ -17,16 +17,18 @@ with Libadalang.Common;           use Libadalang.Common;
 with Rejuvenation;                use Rejuvenation;
 with Rejuvenation.File_Utils;     use Rejuvenation.File_Utils;
 with Rejuvenation.Finder;         use Rejuvenation.Finder;
+with Rejuvenation.Find_And_Replacer; use Rejuvenation.Find_And_Replacer;
 with Rejuvenation.Node_Locations; use Rejuvenation.Node_Locations;
 with Rejuvenation.Patterns;       use Rejuvenation.Patterns;
 with Rejuvenation.Pretty_Print;   use Rejuvenation.Pretty_Print;
 with Rejuvenation.Simple_Factory; use Rejuvenation.Simple_Factory;
 --  use Rejuvenation.Simple_Factory.Unbounded_Strings;
-with Rejuvenation.Text_Rewrites; use Rejuvenation.Text_Rewrites;
+with Rejuvenation.Text_Rewrites;  use Rejuvenation.Text_Rewrites;
+--  with Rejuvenation.Utils;          use Rejuvenation.Utils;
 
-with Rewriters;                  use Rewriters;
-with Rewriters_Find_And_Replace; use Rewriters_Find_And_Replace;
-with Predefined_Rewriters;       use Predefined_Rewriters;
+with Rewriters;                      use Rewriters;
+with Rewriters_Find_And_Replace;     use Rewriters_Find_And_Replace;
+with Predefined_Rewriters;           use Predefined_Rewriters;
 
 procedure Code_Reviewer is
 
@@ -189,20 +191,38 @@ procedure Code_Reviewer is
       for KE in Map.Iterate loop
          declare
             Rewriter_Name : constant String  := Name_To_Rewriter_Maps.Key (KE);
-            F_P           : constant Pattern :=
-              Name_To_Rewriter_Maps.Element (KE).Find_Pattern;
-            Count : Natural := 0;
+            Element       : constant Rewriter_Find_And_Replace :=
+              Name_To_Rewriter_Maps.Element (KE);
+            F_P           : constant Pattern := Element.Find_Pattern;
+            A_M           : constant Match_Accepter := Element.Accept_Match;
+            NrOf_Find : Natural := 0;
+            NrOf_Accept : Natural := 0;
          begin
             for Unit of Units loop
-               Count :=
-                 Count +
-                 Natural
+               declare
+                  Matches : constant Match_Pattern_List.Vector :=
                    (if F_P.As_Ada_Node.Kind in Ada_Ada_List then
-                      Find_Sub_List (Unit.Root, F_P).Length
-                    else Find_Full (Unit.Root, F_P).Length);
-               --  TODO: only / also count items that pass check function
+                      Find_Sub_List (Unit.Root, F_P)
+                    else Find_Full (Unit.Root, F_P));
+               begin
+                  NrOf_Find := NrOf_Find + Natural (Matches.Length);
+                  for Match of Matches loop
+                     --  Put_Line
+                     --    (Image
+                     --      (Match.Get_Nodes.First_Element.Full_Sloc_Image));
+                     --  Put_Line
+                     --    (Raw_Signature
+                     --            (Match.Get_Nodes.First_Element,
+                     --             Match.Get_Nodes.Last_Element));
+                     if A_M (Match) then
+                        NrOf_Accept := NrOf_Accept + 1;
+                     end if;
+                  end loop;
+               end;
             end loop;
-            Put_Line (Rewriter_Name & " : " & Count'Image);
+            Put_Line (Rewriter_Name & " : "
+                      & NrOf_Accept'Image
+                      & " (" & NrOf_Find'Image & ")");
          end;
       end loop;
 
@@ -257,7 +277,8 @@ procedure Code_Reviewer is
 
       Name_To_Rewriter_Map.Include
         ("Idempotence_And", Rewriter_Idempotence_And);
-      Name_To_Rewriter_Map.Include ("Idempotence_Or", Rewriter_Idempotence_Or);
+      Name_To_Rewriter_Map.Include
+        ("Idempotence_Or", Rewriter_Idempotence_Or);
       Name_To_Rewriter_Map.Include
         ("Complementation_And", Rewriter_Complementation_And);
       Name_To_Rewriter_Map.Include
@@ -265,20 +286,24 @@ procedure Code_Reviewer is
 
       Name_To_Rewriter_Map.Include ("Not_Not", Rewriter_Not_Not);
       Name_To_Rewriter_Map.Include ("Not_Equal", Rewriter_Not_Equal);
-      Name_To_Rewriter_Map.Include ("Not_Different", Rewriter_Not_Different);
+      Name_To_Rewriter_Map.Include
+        ("Not_Different", Rewriter_Not_Different);
       Name_To_Rewriter_Map.Include
         ("Not_Greater_Than", Rewriter_Not_Greater_Than);
       Name_To_Rewriter_Map.Include
         ("Not_Greater_Equal", Rewriter_Not_Greater_Equal);
-      Name_To_Rewriter_Map.Include ("Not_Less_Than", Rewriter_Not_Less_Than);
-      Name_To_Rewriter_Map.Include ("Not_Less_Equal", Rewriter_Not_Less_Equal);
+      Name_To_Rewriter_Map.Include
+        ("Not_Less_Than", Rewriter_Not_Less_Than);
+      Name_To_Rewriter_Map.Include
+        ("Not_Less_Equal", Rewriter_Not_Less_Equal);
       Name_To_Rewriter_Map.Include ("Not_In", Rewriter_Not_In);
       Name_To_Rewriter_Map.Include ("Not_Not_In", Rewriter_Not_Not_In);
       Name_To_Rewriter_Map.Include ("And_Then", Rewriter_And_Then);
       Name_To_Rewriter_Map.Include ("Or_Else", Rewriter_Or_Else);
       Name_To_Rewriter_Map.Include ("Equal_True", Rewriter_Equal_True);
       Name_To_Rewriter_Map.Include ("Equal_False", Rewriter_Equal_False);
-      Name_To_Rewriter_Map.Include ("Different_True", Rewriter_Different_True);
+      Name_To_Rewriter_Map.Include
+        ("Different_True", Rewriter_Different_True);
       Name_To_Rewriter_Map.Include
         ("Different_False", Rewriter_Different_False);
       Name_To_Rewriter_Map.Include
@@ -292,7 +317,8 @@ procedure Code_Reviewer is
       Name_To_Rewriter_Map.Include
         ("De_Morgan_Not_Some_Range", Rewrite_De_Morgan_Not_Some_Range);
       Name_To_Rewriter_Map.Include
-        ("De_Morgan_Not_Some_Elements", Rewrite_De_Morgan_Not_Some_Elements);
+        ("De_Morgan_Not_Some_Elements",
+         Rewrite_De_Morgan_Not_Some_Elements);
       Name_To_Rewriter_Map.Include
         ("If_Different_Expression", Rewriter_If_Different_Expression);
       Name_To_Rewriter_Map.Include
@@ -322,18 +348,21 @@ procedure Code_Reviewer is
         ("Concat_Before_If_Expression",
          Rewriter_Concat_Before_If_Expression);
       Name_To_Rewriter_Map.Include
-        ("Concat_After_If_Expression", Rewriter_Concat_After_If_Expression);
+        ("Concat_After_If_Expression",
+         Rewriter_Concat_After_If_Expression);
       Name_To_Rewriter_Map.Include
         ("Case_Expression_Binary_With_Others",
          Rewriter_Case_Expression_Binary_With_Others);
       Name_To_Rewriter_Map.Include
         ("Equals_To_In_Range", Rewriter_Equals_To_In_Range);
       Name_To_Rewriter_Map.Include
-        ("Combine_In_Range_And_Equal", Rewriter_Combine_In_Range_And_Equal);
+        ("Combine_In_Range_And_Equal",
+         Rewriter_Combine_In_Range_And_Equal);
       Name_To_Rewriter_Map.Include
         ("Combine_In_Ranges", Rewriter_Combine_In_Ranges);
       Name_To_Rewriter_Map.Include
-        ("Differents_To_Not_In_Range", Rewriter_Differents_To_Not_In_Range);
+        ("Differents_To_Not_In_Range",
+         Rewriter_Differents_To_Not_In_Range);
       Name_To_Rewriter_Map.Include
         ("Combine_Not_In_Range_And_Different",
          Rewriter_Combine_Not_In_Range_And_Different);
@@ -344,26 +373,30 @@ procedure Code_Reviewer is
       Name_To_Rewriter_Map.Include
         ("Unnecessary_Null_Stmt", Rewriter_Unnecessary_Null_Stmt);
       Name_To_Rewriter_Map.Include ("If_True_Stmt", Rewriter_If_True_Stmt);
-      Name_To_Rewriter_Map.Include ("If_False_Stmt", Rewriter_If_False_Stmt);
+      Name_To_Rewriter_Map.Include
+        ("If_False_Stmt", Rewriter_If_False_Stmt);
       Name_To_Rewriter_Map.Include
         ("If_Different_Stmt", Rewriter_If_Different_Stmt);
       Name_To_Rewriter_Map.Include
         ("If_Not_Condition_Stmt", Rewriter_If_Not_Condition_Stmt);
-      Name_To_Rewriter_Map.Include ("If_Not_In_Stmt", Rewriter_If_Not_In_Stmt);
+      Name_To_Rewriter_Map.Include
+        ("If_Not_In_Stmt", Rewriter_If_Not_In_Stmt);
       Name_To_Rewriter_Map.Include ("Use_Elsif", Rewriter_Use_Elsif);
       Name_To_Rewriter_Map.Include
         ("Null_Then_Branch", Rewriter_Null_Then_Branch);
       Name_To_Rewriter_Map.Include
         ("Null_Else_Branch", Rewriter_Null_Else_Branch);
       Name_To_Rewriter_Map.Include
-        ("If_Identical_Branches_Stmt", Rewriter_If_Identical_Branches_Stmt);
+        ("If_Identical_Branches_Stmt",
+         Rewriter_If_Identical_Branches_Stmt);
       Name_To_Rewriter_Map.Include
         ("If_Identical_Tails_Stmt", Rewriter_If_Identical_Tails_Stmt);
       Name_To_Rewriter_Map.Include
         ("If_Argument_Stmt", Rewriter_If_Argument_Stmt);
       Name_To_Rewriter_Map.Include
         ("If_Assignment_Stmt", Rewriter_If_Assignment_Stmt);
-      Name_To_Rewriter_Map.Include ("If_Return_Stmt", Rewriter_If_Return_Stmt);
+      Name_To_Rewriter_Map.Include
+        ("If_Return_Stmt", Rewriter_If_Return_Stmt);
       Name_To_Rewriter_Map.Include
         ("If_Return_Stmts", Rewriter_If_Return_Stmts);
 
