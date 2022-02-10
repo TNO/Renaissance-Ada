@@ -22,6 +22,10 @@ package Predefined_Rewriters is
 
    function Is_Boolean_Expression
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
+   function Is_Integer_Expression
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
+   function Is_Float_Expression
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
 
    function Accept_No_Side_Effects
      (Match : Match_Pattern) return Boolean is
@@ -350,14 +354,14 @@ package Predefined_Rewriters is
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
-   Rewriter_Integer_Less_Than :
+   Rewriter_Integer_Min_Less_Than :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("(if $S_X < $S_Y then $S_X else $S_Y)", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
-   Rewriter_Integer_Less_Equal :
+   Rewriter_Integer_Min_Less_Equal :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("(if $S_X < $S_Y then $S_X else $S_Y)", Expr_Rule),
