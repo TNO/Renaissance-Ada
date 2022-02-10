@@ -364,7 +364,7 @@ package Predefined_Rewriters is
    Rewriter_Integer_Min_Less_Equal :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("(if $S_X < $S_Y then $S_X else $S_Y)", Expr_Rule),
+       (Make_Pattern ("(if $S_X <= $S_Y then $S_X else $S_Y)", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
