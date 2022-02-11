@@ -48,6 +48,7 @@ package body Placeholder_Relations is
    begin
       case E.Kind is
          when Ada_String_Literal
+            | Ada_Char_Literal
             | Ada_Int_Literal
             | Ada_Real_Literal
             | Ada_Null_Literal =>
@@ -102,6 +103,7 @@ package body Placeholder_Relations is
          --  TODO: add Ada_Attribute_Ref when it is clear
          --  whether users can define their own attribute function (in Ada2022)
          when Ada_String_Literal
+            | Ada_Char_Literal
             | Ada_Int_Literal
             | Ada_Real_Literal
             | Ada_Null_Literal =>
@@ -124,6 +126,11 @@ package body Placeholder_Relations is
             --  F_Subpool
             --  F_Type_Or_Expr
             return True;
+         when Ada_Box_Expr =>
+            --  Can occur in aggregates:
+            --  The meaning is that the component of the aggregate takes
+            --  the default value if there is one.
+            return False;
          when Ada_If_Expr =>
             declare
                I_E : constant If_Expr := E.As_If_Expr;
@@ -207,7 +214,8 @@ package body Placeholder_Relations is
                return (not A.F_Ancestor_Expr.Is_Null
                        and then Has_Side_Effect (A.F_Ancestor_Expr))
                  or else (for some Assoc of A.F_Assocs.Children =>
-                            Has_Side_Effect (Assoc.As_Param_Assoc.F_R_Expr));
+                            Has_Side_Effect
+                              (Assoc.As_Aggregate_Assoc.F_R_Expr));
             end;
          when others =>
             Put_Line

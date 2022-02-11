@@ -407,7 +407,7 @@ package Predefined_Rewriters is
 
    function Accept_Independent
      (Match : Match_Pattern) return Boolean is
-     (Are_Independent (Match, "$Cond", "$S_Expr"));
+     (Are_Independent (Match, "$S_Cond", "$S_Expr"));
 
    Rewriter_Concat_Before_If_Expression :
    aliased constant Rewriter_Find_And_Replace :=
@@ -683,15 +683,15 @@ package Predefined_Rewriters is
 
    function Accept_All_Independent
      (Match : Match_Pattern) return Boolean is
-     (Are_Independent (Match, "$Cond", "$M_Args_Before")
-     and then Are_Independent (Match, "$Cond", "$M_Args_After"));
+     (Are_Independent (Match, "$S_Cond", "$M_Args_Before")
+     and then Are_Independent (Match, "$S_Cond", "$M_Args_After"));
    --  Note that the order of evaluation of parameters is NOT specified in Ada
    --  see e.g. http://www.ada-auth.org/standards/12rat/html/Rat12-4-2.html
    --  hence also $M_Args_After might be effected and might have an effect!
 
-   --  Note that current implementation doesn't handle pattern as expected.
-   --  We have no backtracking implemented yet.
-   --  So, any match in the curent implementation will have
+   --  Note that our current implementation doesn't handle this pattern
+   --  as one would expected, since we have no backtracking implemented yet.
+   --  So, any match in the current implementation will have
    --  an empty list for $M_Args_Before.
    Rewriter_If_Argument_Stmt : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
