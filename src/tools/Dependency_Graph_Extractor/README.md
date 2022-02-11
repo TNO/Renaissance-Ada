@@ -86,9 +86,9 @@ cd C:\path\to\Renaissance-Ada\src\tools\Dependency_Graph_Extractor
 mkdir obj
 gprbuild -XLIBRARY_TYPE=static -P dependency_graph_extractor.gpr
 ```
-## Usage
+## Running
 
-Usage of the Dependency Graph Extractor is as follows:
+Run the Dependency Graph Extractor as follows:
 
 ```
 dependency_graph_extractor.exe -o output.graphml [-p directory] project_1.gpr ... project_n.gpr
@@ -119,3 +119,32 @@ Note we assume that either `dependency_graph_extractor.exe` is on the system PAT
 or the current directory is the `obj` directory of the Dependency_Graph_Extractor project.
 
 This will create the GraphML file `rejuvenation_lib.graphml` in the current directory.
+
+## Usage
+Open the generated `graphml` file with [Neo4j](https://neo4j.com).
+
+### Analyze recursion
+Note that all queries are rather general.
+So add `LIMIT 25` to the end of the queries 
+whenever your code base contains alot of recursion to still get a fast response.
+
+#### Find recursive functions
+Run the query
+```cypher
+MATCH (f)-[:Calls]->(f) RETURN *
+```
+to find all recursive functions.
+
+#### Find all recursion
+Run the query
+```cypher
+MATCH (f)-[:Calls*]->(f) RETURN *
+```
+to find all recursion.
+
+#### Find indirect recursion
+Run the query
+```cypher
+MATCH (a)-[:Calls*]->(b)-[:Calls*]->(a) RETURN *
+```
+to find indirect recursion only.
