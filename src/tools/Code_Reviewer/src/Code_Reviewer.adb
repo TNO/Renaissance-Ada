@@ -40,11 +40,14 @@ procedure Code_Reviewer is
    type Version_Control_Kind is (GIT, SVN);
    Source_Version_Control : constant Version_Control_Kind := GIT;
 
-   Source_Directory : constant String := "C:\path\to\Renaissance-Ada";
+   Source_Directory : constant String :=
+       "C:\path\to\Renaissance-Ada";
    --  Example to review the code within Renaissance-Ada
 
    Project_Filename : constant String :=
-     Source_Directory & "\src\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
+     Source_Directory
+     & "\src\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
+
    --  Example to review the rejuvenation_lib project
    --  TODO: when aggregate projects are supported review all projects!
 
@@ -456,9 +459,12 @@ procedure Code_Reviewer is
         ("For_Some_Range_All", Rewriter_For_Some_Range_All);
       Name_To_Rewriter_Map.Include
         ("For_Some_Elements_All", Rewriter_For_Some_Elements_All);
-
       Name_To_Rewriter_Map.Include
         ("Declare_And_Overwrite", Rewriter_Declare_And_Overwrite);
+
+      Name_To_Rewriter_Map.Include
+        ("Append", Rewriter_Append);
+
       Name_To_Rewriter_Map.Include
         ("Declarations_Combine", Rewriter_Declarations_Combine);
       Name_To_Rewriter_Map.Include

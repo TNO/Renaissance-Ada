@@ -1,7 +1,6 @@
 with Rejuvenation.String_Utils; use Rejuvenation.String_Utils;
 with Rejuvenation.Utils;        use Rejuvenation.Utils;
 with Libadalang.Analysis;       use Libadalang.Analysis;
-with Ada.Text_IO; use Ada.Text_IO;
 
 package body Predefined_Rewriters is
 
@@ -43,8 +42,9 @@ package body Predefined_Rewriters is
       T : constant Base_Type_Decl :=
         Get_Expression_Type (Match, Placeholder_Name);
    begin
-      Put_Line (Raw_Signature (T.F_Name));
-      return False;
+      return Raw_Signature (T.F_Name) = "Unbounded_String"
+        and then not T.P_Is_Array_Type
+        and then Ends_With (T.Unit.Get_Filename, "\adainclude\a-strunb.ads");
    end Is_Unbounded_String;
 
 end Predefined_Rewriters;
