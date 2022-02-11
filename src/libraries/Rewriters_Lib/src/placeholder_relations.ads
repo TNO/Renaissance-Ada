@@ -24,19 +24,27 @@ package Placeholder_Relations is
    --  for our purpose?
 
    function Has_Side_Effect
-     (Match : Match_Pattern; Expression : String) return Boolean with
-      Pre => Match.Has_Single (Expression);
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
       --  Has Execution of Expression a side effect?
       --  Side effects include:
       --     variables are changed, write to file, write to screen, ...
 
-   function Are_Independent
+   function Has_Effect_On
      (Match : Match_Pattern; Placeholder_A, Placeholder_B : String)
-      return Boolean with
-      Pre => Match.Has_Single (Placeholder_A)
-     and then Match.Has_Single (Placeholder_B);
+      return Boolean;
+   --  Does place_holder effect place_holder B?
+   --  Effects include
+   --       * output parameter of a function
+   --         used in the other placeholder
+   --       * side effect of a function (i.e. state change)
+   --         used in the other placeholder
+
+   function Are_Independent
+     (Match : Match_Pattern; Placeholder_1, Placeholder_2 : String)
+      return Boolean;
    --  Are the placeholders independent?
-   --  In other words, can change the order of execution of these placeholders?
+   --  In other words, can the order of execution of these placeholders
+   --  be changed without changing the behaviour of the program?
 
    function Is_Within_Base_Subp_Body
      (Match : Match_Pattern; Subp_Name : String) return Boolean;

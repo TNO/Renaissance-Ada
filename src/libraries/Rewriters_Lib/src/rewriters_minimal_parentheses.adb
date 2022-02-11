@@ -10,6 +10,7 @@ package body Rewriters_Minimal_Parentheses is
       return Ada_Node
    is
    begin
+      --  TODO: improve! next loop is useless!
       while Node.Is_Null loop
          null;
       end loop;

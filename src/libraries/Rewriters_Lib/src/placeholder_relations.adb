@@ -199,35 +199,67 @@ package body Placeholder_Relations is
    end Has_Side_Effect;
 
    function Has_Side_Effect
-     (Match : Match_Pattern; Expression : String) return Boolean
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean
    is
-      E : constant Expr := Match.Get_Single_As_Node (Expression).As_Expr;
+      --  basic implementation:
+      --  statement and declarations always have side effects
+      --  e.g. change variable and introduce definition
+      Nodes : constant Node_List.Vector :=
+        Match.Get_Placeholder_As_Nodes (Placeholder_Name);
    begin
-      return Has_Side_Effect (E);
+      return (for some Node of Nodes =>
+                Node.Kind not in Ada_Expr
+              or else Has_Side_Effect (Node.As_Expr));
    end Has_Side_Effect;
 
-   function Are_Independent
+   function Has_Effect_On (A, B : Ada_Node) return Boolean;
+   function Has_Effect_On (A : Ada_Node;
+                           B : Ada_Node with Unreferenced)
+   return Boolean
+   is
+   --  Basic implementation
+   --  When an expression has no side effects,
+   --  it has no effect on B
+   --
+   --  All Nodes A that effect Node B are reported as True
+   --  Yet not all nodes A that do not effect node B are reported as False
+   --
+   --  TODO: use the variables that written by A and
+   --        read by B
+   --        to make it more accurate
+   --
+   --        Note: dependent effects include
+   --       * output parameter of a function
+   --         used in the other placeholder
+   --       * side effect of a function (i.e. state change)
+   --         used in the other placeholder
+   begin
+      return A.Kind not in Ada_Expr
+        or else Has_Side_Effect (A.As_Expr);
+   end Has_Effect_On;
+
+   function Has_Effect_On
      (Match : Match_Pattern; Placeholder_A, Placeholder_B : String)
       return Boolean
-   --  Basic implementation
-   --  When both are expressions without side effects they can be swapped.
-   --
-   --      accepted placeholders are independent, but
-   --      not all rejected placeholders are dependent!
-   --
-   --  TODO: use the variables that are read and written by the placeholders
-   --        to make it accept far more correct cases.
    is
-      Node_A : constant Ada_Node := Match.Get_Single_As_Node (Placeholder_A);
-      Node_B : constant Ada_Node := Match.Get_Single_As_Node (Placeholder_B);
+      Nodes_A : constant Node_List.Vector :=
+        Match.Get_Placeholder_As_Nodes (Placeholder_A);
+      Nodes_B : constant Node_List.Vector :=
+        Match.Get_Placeholder_As_Nodes (Placeholder_B);
    begin
-      return Node_A.Kind in Ada_Expr
-        and then not Has_Side_Effect (Node_A.As_Expr)
-        and then Node_B.Kind in Ada_Expr
-        and then not Has_Side_Effect (Node_B.As_Expr);
+      return (for some Node_A of Nodes_A =>
+                (for some Node_B of Nodes_B =>
+                   Has_Effect_On (Node_A, Node_B)));
+   end Has_Effect_On;
+
+   function Are_Independent
+     (Match : Match_Pattern; Placeholder_1, Placeholder_2 : String)
+      return Boolean
+   is
+   begin
+      return not Has_Effect_On (Match, Placeholder_1, Placeholder_2)
+        and then not Has_Effect_On (Match, Placeholder_2, Placeholder_1);
    end Are_Independent;
-
-
 
    function Is_Within_Base_Subp_Body
      (Match : Match_Pattern; Subp_Name : String) return Boolean

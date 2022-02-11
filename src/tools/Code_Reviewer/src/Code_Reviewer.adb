@@ -339,6 +339,18 @@ procedure Code_Reviewer is
         ("Integer_Max_Greater_Equal",
          Rewriter_Integer_Max_Greater_Equal);
       Name_To_Rewriter_Map.Include
+        ("Integer_Max_Less_Than",
+         Rewriter_Integer_Max_Less_Than);
+      Name_To_Rewriter_Map.Include
+        ("Integer_Max_Less_Equal",
+         Rewriter_Integer_Max_Less_Equal);
+      Name_To_Rewriter_Map.Include
+        ("Integer_Min_Greater_Than",
+         Rewriter_Integer_Min_Greater_Than);
+      Name_To_Rewriter_Map.Include
+        ("Integer_Min_Greater_Equal",
+         Rewriter_Integer_Min_Greater_Equal);
+      Name_To_Rewriter_Map.Include
         ("Integer_Min_Less_Than",
          Rewriter_Integer_Min_Less_Than);
       Name_To_Rewriter_Map.Include
@@ -350,6 +362,12 @@ procedure Code_Reviewer is
       Name_To_Rewriter_Map.Include
         ("Concat_After_If_Expression",
          Rewriter_Concat_After_If_Expression);
+      Name_To_Rewriter_Map.Include
+        ("Plus_Before_If_Expression",
+         Rewriter_Plus_Before_If_Expression);
+      Name_To_Rewriter_Map.Include
+        ("Plus_After_If_Expression",
+         Rewriter_Plus_After_If_Expression);
       Name_To_Rewriter_Map.Include
         ("Case_Expression_Binary_With_Others",
          Rewriter_Case_Expression_Binary_With_Others);

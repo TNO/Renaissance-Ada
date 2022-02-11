@@ -27,9 +27,28 @@ package Predefined_Rewriters is
    function Is_Float_Expression
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
 
+   function Accept_Boolean
+     (Match : Match_Pattern) return Boolean is
+     (Is_Boolean_Expression (Match, "$S_Expr"));
+
    function Accept_No_Side_Effects
      (Match : Match_Pattern) return Boolean is
      (not Has_Side_Effect (Match, "$S_Expr"));
+
+   function Accept_Multiple_No_Side_Effects
+     (Match : Match_Pattern) return Boolean is
+     (not Has_Side_Effect (Match, "$M_Expr"));
+
+   function Accept_Boolean_No_Side_Effects
+     (Match : Match_Pattern) return Boolean is
+     (Is_Boolean_Expression (Match, "$S_Expr")
+      and then not Has_Side_Effect (Match, "$S_Expr"));
+
+   function Accept_Integer_No_Side_Effects
+     (Match : Match_Pattern) return Boolean is
+     (Is_Integer_Expression (Match, "$S_Expr")
+      and then not Has_Side_Effect (Match, "$S_Expr"));
+
 
 ------------------------------------------------------------------------------
    --  Expressions
@@ -55,14 +74,14 @@ package Predefined_Rewriters is
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr - $S_Expr", Expr_Rule),
         Make_Pattern ("0", Expr_Rule),
-        Accept_No_Side_Effects'Access);
+        Accept_Integer_No_Side_Effects'Access);
    --  TODO can it be correct for integers & float at the same time?
 
    Rewriter_Definition_Divide : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr / $S_Expr", Expr_Rule),
         Make_Pattern ("1", Expr_Rule),
-        Accept_No_Side_Effects'Access);
+        Accept_Integer_No_Side_Effects'Access);
    --  TODO can it be correct for integers & float at the same time?
 
    Rewriter_Definition_Modulo : aliased constant Rewriter_Find_And_Replace :=
@@ -70,6 +89,7 @@ package Predefined_Rewriters is
        (Make_Pattern ("$S_Expr mod $S_Expr", Expr_Rule),
         Make_Pattern ("0", Expr_Rule),
         Accept_No_Side_Effects'Access);
+   --  mod only defined for integers
 
    Rewriter_Definition_Remainder :
    aliased constant Rewriter_Find_And_Replace :=
@@ -77,6 +97,7 @@ package Predefined_Rewriters is
        (Make_Pattern ("$S_Expr rem $S_Expr", Expr_Rule),
         Make_Pattern ("0", Expr_Rule),
         Accept_No_Side_Effects'Access);
+   --  rem only defined for integers
 
    Rewriter_Idempotence_And : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
@@ -193,11 +214,6 @@ package Predefined_Rewriters is
      Rewriter_Not_Less_Equal'Access & Rewriter_Not_In'Access &
      Rewriter_Not_Not_In'Access;
 
-   function Accept_Boolean_No_Side_Effects
-     (Match : Match_Pattern) return Boolean is
-     (Is_Boolean_Expression (Match, "$S_Expr")
-      and then not Has_Side_Effect (Match, "$S_Expr"));
-
    Rewriter_And_Then : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Left and $S_Expr", Expr_Rule),
@@ -210,11 +226,6 @@ package Predefined_Rewriters is
         Make_Pattern ("$S_Left or else $S_Expr", Expr_Rule),
         Accept_Boolean_No_Side_Effects'Access);
 
-   function Accept_Boolean
-     (Match : Match_Pattern) return Boolean is
-     (Is_Boolean_Expression (Match, "$S_Expr"));
-
-   --  TODO: check True is a Boolean
    Rewriter_Equal_True : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr = true", Expr_Rule),
@@ -344,14 +355,40 @@ package Predefined_Rewriters is
        (Make_Pattern ("(if $S_X > $S_Y then $S_X else $S_Y)", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
-   --  TODO: do we need even more cases?
-   --  like (if $S_X > $S_Y then $S_Y else $S_X)   -- swapped usage
 
    Rewriter_Integer_Max_Greater_Equal :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("(if $S_X >= $S_Y then $S_X else $S_Y)", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
+        Accept_Extreme'Access);
+
+   Rewriter_Integer_Max_Less_Than :
+   aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("(if $S_X < $S_Y then $S_Y else $S_X)", Expr_Rule),
+        Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
+        Accept_Extreme'Access);
+
+   Rewriter_Integer_Max_Less_Equal :
+   aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("(if $S_X <= $S_Y then $S_Y else $S_X)", Expr_Rule),
+        Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
+        Accept_Extreme'Access);
+
+   Rewriter_Integer_Min_Greater_Than :
+   aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("(if $S_X > $S_Y then $S_Y else $S_X)", Expr_Rule),
+        Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
+        Accept_Extreme'Access);
+
+   Rewriter_Integer_Min_Greater_Equal :
+   aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("(if $S_X >= $S_Y then $S_Y else $S_X)", Expr_Rule),
+        Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Min_Less_Than :
@@ -368,22 +405,10 @@ package Predefined_Rewriters is
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
-   function Accept_Constant_Expression
+   function Accept_Independent
      (Match : Match_Pattern) return Boolean is
-     (Is_Constant_Expression (Match, "$S_Expr"));
+     (Are_Independent (Match, "$Cond", "$S_Expr"));
 
-   --  TODO:
-   --  replace constant check by the real check:
-   --        $S_Cond doesn't effect $S_Expr AND
-   --        $S_Expr doesn't effect $S_Cond
-   --        such that the two placeholders can be reordered
-   --        without changing the outcome
-   --
-   --        Note: effects include
-   --       * output parameter of a function
-   --         used in the other placeholder
-   --       * side effect of a function (i.e. state change)
-   --         used in the other placeholder
    Rewriter_Concat_Before_If_Expression :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
@@ -392,7 +417,7 @@ package Predefined_Rewriters is
            Expr_Rule),
         Make_Pattern
           ("($S_Expr & (if $S_Cond then $S_True else $S_False))", Expr_Rule),
-        Accept_Constant_Expression'Access,
+        Accept_Independent'Access,
         Rewriters => To_Vector (RMP'Access, 1));
 
    Rewriter_Concat_After_If_Expression :
@@ -404,10 +429,32 @@ package Predefined_Rewriters is
         Make_Pattern
           ("((if $S_Cond then $S_True else $S_False) & $S_Expr)", Expr_Rule),
         Rewriters => To_Vector (RMP'Access, 1));
---  TODO: how to generalize to other BinOp like +, *, and then, or else, ...?
---  TODO: double check that this rewrite is correct
+   --  TODO: how to generalize to other BinOp like +, *,
+   --        and then, or else, ...?
+   --  TODO: double check that this rewrite is correct
    --        (i.e. $S_Cond will always be executed before $S_Expr)
    --        for all possible operators (including x ** 0 == 1)
+
+   Rewriter_Plus_Before_If_Expression :
+   aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern
+          ("(if $S_Cond then $S_Expr + $S_True else $S_Expr + $S_False)",
+           Expr_Rule),
+        Make_Pattern
+          ("($S_Expr + (if $S_Cond then $S_True else $S_False))", Expr_Rule),
+        Accept_Independent'Access,
+        Rewriters => To_Vector (RMP'Access, 1));
+
+   Rewriter_Plus_After_If_Expression :
+   aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern
+          ("(if $S_Cond then $S_True + $S_Expr else $S_False + $S_Expr)",
+           Expr_Rule),
+        Make_Pattern
+          ("((if $S_Cond then $S_True else $S_False) + $S_Expr)", Expr_Rule),
+        Rewriters => To_Vector (RMP'Access, 1));
 
    Rewriters_If_Expression : constant Rewriters_Sequence.Vector :=
      Rewriter_If_Different_Expression'Access &
@@ -417,10 +464,16 @@ package Predefined_Rewriters is
      Rewriter_Boolean_If_Not_Condition_Expression'Access &
      Rewriter_Integer_Max_Greater_Than'Access &
      Rewriter_Integer_Max_Greater_Equal'Access &
+     Rewriter_Integer_Max_Less_Than'Access &
+     Rewriter_Integer_Max_Less_Equal'Access &
+     Rewriter_Integer_Min_Greater_Than'Access &
+     Rewriter_Integer_Min_Greater_Equal'Access &
      Rewriter_Integer_Min_Less_Than'Access &
      Rewriter_Integer_Min_Less_Equal'Access &
      Rewriter_Concat_Before_If_Expression'Access &
-     Rewriter_Concat_After_If_Expression'Access;
+     Rewriter_Concat_After_If_Expression'Access &
+     Rewriter_Plus_Before_If_Expression'Access &
+     Rewriter_Plus_After_If_Expression'Access;
 
    Rewriter_Case_Expression_Binary_With_Others :
    aliased constant Rewriter_Find_And_Replace :=
@@ -452,7 +505,7 @@ package Predefined_Rewriters is
         Make_Pattern ("2 * ($S_Expr)", Expr_Rule),
         Accept_No_Side_Effects'Access,
         Rewriters => To_Vector (RMP'Access, 1));
-   --  Check for side effects:
+   --  We check for side effects:
    --       f(3) + f(3) has side effects (in f) twice
    --       while 2 * (f(3)) has side effects only once
    --
@@ -470,12 +523,14 @@ package Predefined_Rewriters is
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Var in $M_Vals or else $S_Var = $S_Val", Expr_Rule),
         Make_Pattern ("$S_Var in $M_Vals | $S_Val", Expr_Rule));
+   --  TODO: put in fix-point rewriter to make range as big as possible
 
    Rewriter_Combine_In_Ranges : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var in $M_Vals_1 or else $S_Var in $M_Vals_2", Expr_Rule),
         Make_Pattern ("$S_Var in $M_Vals_1 | $M_Vals_2", Expr_Rule));
+   --  TODO: put in fix-point rewriter to make range as big as possible
 
    Rewriter_Differents_To_Not_In_Range :
    aliased constant Rewriter_Find_And_Replace :=
@@ -490,6 +545,7 @@ package Predefined_Rewriters is
        (Make_Pattern
           ("$S_Var not in $M_Vals and then $S_Var /= $S_Val", Expr_Rule),
         Make_Pattern ("$S_Var not in $M_Vals | $S_Val", Expr_Rule));
+   --  TODO: put in fix-point rewriter to make range as big as possible
 
    Rewriter_Combine_Not_In_Ranges :
    aliased constant Rewriter_Find_And_Replace :=
@@ -498,6 +554,7 @@ package Predefined_Rewriters is
           ("$S_Var not in $M_Vals_1 and then $S_Var not in $M_Vals_2",
            Expr_Rule),
         Make_Pattern ("$S_Var not in $M_Vals_1 | $M_Vals_2", Expr_Rule));
+   --  TODO: put in fix-point rewriter to make range as big as possible
 
 ------------------------------------------------------------------------------
    --  Statements
@@ -517,6 +574,9 @@ package Predefined_Rewriters is
            If_Stmt_Rule),
         Make_Pattern ("$M_Stmts_True;", Stmts_Rule),
         Rewriters => To_Vector (Rewriter_Unnecessary_Null_Stmt'Access, 1));
+   --  Warning: by removing $M_Stmts_False; some with/use clauses
+   --           might become obsolete and the compiler will
+   --           produce warnings!
 
    Rewriter_If_False_Stmt : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
@@ -525,6 +585,9 @@ package Predefined_Rewriters is
            If_Stmt_Rule),
         Make_Pattern ("$M_Stmts_False;", Stmts_Rule),
         Rewriters => To_Vector (Rewriter_Unnecessary_Null_Stmt'Access, 1));
+   --  Warning: by removing $M_Stmts_True; some with/use clauses
+   --           might become obsolete and the compiler will
+   --           produce warnings!
 
    --  Rewrite only when else branch is NOT empty
    Rewriter_If_Different_Stmt : aliased constant Rewriter_Find_And_Replace :=
@@ -599,7 +662,8 @@ package Predefined_Rewriters is
         Make_Pattern ("$M_Stmts;", Stmt_Rule),
         Accept_No_Side_Effects'Access
        );
-   --  We can't rewrite when $S_Expr has a side effect.
+   --  We can't rewrite when $S_Expr has a side effect,
+   --  because it would change the behaviour of the program.
 
    Rewriter_If_Identical_Tails_Stmt :
    aliased constant Rewriter_Find_And_Replace :=
@@ -614,14 +678,17 @@ package Predefined_Rewriters is
            Stmts_Rule),
         Rewriters =>
           Rewriter_Null_Then_Branch'Access & Rewriter_Null_Else_Branch'Access);
+   --  TODO: put in fix-point rewriter to remove the whole identical tail
+   --        not just the last statement.
 
-   --  TODO: Add check to ensure that swapping $S_Cond and $M_Args_Before
-   --        is allowed
-   --
+   function Accept_All_Independent
+     (Match : Match_Pattern) return Boolean is
+     (Are_Independent (Match, "$Cond", "$M_Args_Before")
+     and then Are_Independent (Match, "$Cond", "$M_Args_After"));
    --  Note that the order of evaluation of parameters is NOT specified in Ada
    --  see e.g. http://www.ada-auth.org/standards/12rat/html/Rat12-4-2.html
    --  hence also $M_Args_After might be effected and might have an effect!
-   --
+
    --  Note that current implementation doesn't handle pattern as expected.
    --  We have no backtracking implemented yet.
    --  So, any match in the curent implementation will have
@@ -640,6 +707,7 @@ package Predefined_Rewriters is
            "$M_Name => (if $S_Cond then $S_Val_True else $S_Val_False)," &
            "$M_Args_After);",
            Call_Stmt_Rule),
+        Accept_All_Independent'Access,
         Rewriters => Rewriters_If_Expression);
 
    Rewriter_If_Assignment_Stmt : aliased constant Rewriter_Find_And_Replace :=
@@ -688,9 +756,6 @@ package Predefined_Rewriters is
 --  all possible values are included in the set of alternatives.
 --  When the evaluation of the expression has a side effect,
 --  we can't leave it out.
---  Furthermore, we can't rewrite it to an if statement,
---  since $M_Values can be equal to the others keyword,
---  yet "($S_Expr) in others" is not a valid condition.
 
    Rewriter_Case_Binary_With_Others :
    aliased constant Rewriter_Find_And_Replace :=
@@ -744,17 +809,21 @@ package Predefined_Rewriters is
 
    function Accept_Variable (Match : Match_Pattern) return Boolean is
      (not Is_Referenced_In (Match, "$S_Var", "$S_Cond")
-      and then not Is_Referenced_In (Match, "$S_Var", "$S_Val_True"));
+      and then not Is_Referenced_In (Match, "$S_Var", "$S_Val_True")
+      and then Are_Independent (Match, "$S_Val_False", "$S_Cond")
+      and then not Has_Effect_On (Match, "$S_Val_False", "$S_Val_True")
+      and then not Has_Effect_On (Match, "$S_Val_False", "$M_Stmts")
+      );
    --  To ensure semantically correct rewrite, we have
    --  to check that
    --  1. $S_Var is NOT used in both $S_Cond and $S_Val_True
-   --  2. TODO: swapping the order of execution of $S_Val_False and $S_Cond
+   --  2. swapping the order of execution of $S_Val_False and $S_Cond
    --     does not result in a different outcome
    --     (due to effects from one on the other)
-   --  3. TODO: the execution of $S_Val_False doesn't effect
-   --           the outcome of $S_Val_True
-   --  4. TODO: the execution of $S_Val_False doesn't effect
-   --           the outcome of $M_Stmts
+   --  3. the execution of $S_Val_False doesn't effect
+   --     the outcome of $S_Val_True
+   --  4. the execution of $S_Val_False doesn't effect
+   --     the outcome of $M_Stmts
 
    --  TODO: can we split this rewriter?
    --        Also add the constant keyword when appropriate!
@@ -1002,7 +1071,8 @@ package Predefined_Rewriters is
        (Make_Pattern
           ("$M_X : $S_Type := $M_Expr;" & "$M_Y : $S_Type := $M_Expr;",
            Basic_Decls_Rule),
-        Make_Pattern ("$M_X, $M_Y : $S_Type := $M_Expr;", Basic_Decl_Rule));
+        Make_Pattern ("$M_X, $M_Y : $S_Type := $M_Expr;", Basic_Decl_Rule),
+       Accept_Multiple_No_Side_Effects'Access);
 
    Rewriter_For_Attribute_Use : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
