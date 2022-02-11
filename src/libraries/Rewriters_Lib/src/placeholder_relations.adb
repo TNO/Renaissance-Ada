@@ -217,6 +217,21 @@ package body Placeholder_Relations is
                             Has_Side_Effect
                               (Assoc.As_Aggregate_Assoc.F_R_Expr));
             end;
+         when Ada_Membership_Expr =>
+            declare
+               M_E : constant Membership_Expr := E.As_Membership_Expr;
+            begin
+               return Has_Side_Effect (M_E.F_Expr)
+                 or else
+                   (for some Alternative of M_E.F_Membership_Exprs.Children =>
+                      Has_Side_Effect (Alternative.As_Expr));
+            end;
+         when Ada_Explicit_Deref =>
+            declare
+               E_D : constant Explicit_Deref := E.As_Explicit_Deref;
+            begin
+               return Has_Side_Effect (E_D.F_Prefix.As_Expr);
+            end;
          when others =>
             Put_Line
               (Image (E.Full_Sloc_Image) &
