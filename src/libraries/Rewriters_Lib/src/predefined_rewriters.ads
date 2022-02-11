@@ -252,7 +252,7 @@ package Predefined_Rewriters is
        (Make_Pattern ("$S_Expr /= false", Expr_Rule),
         Make_Pattern ("$S_Expr", Expr_Rule),
         Accept_Boolean'Access);
---  TODO: do we also need the symmetric variant: false /= $S_Expr?
+   --  TODO: do we also need the symmetric variant: false /= $S_Expr?
 
    Rewrite_De_Morgan_Not_And : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
@@ -431,6 +431,7 @@ package Predefined_Rewriters is
         Rewriters => To_Vector (RMP'Access, 1));
    --  TODO: how to generalize to other BinOp like +, *,
    --        and then, or else, ...?
+   --  TODO: place in fixed-point rewriter to push as much out as possible
    --  TODO: double check that this rewrite is correct
    --        (i.e. $S_Cond will always be executed before $S_Expr)
    --        for all possible operators (including x ** 0 == 1)
