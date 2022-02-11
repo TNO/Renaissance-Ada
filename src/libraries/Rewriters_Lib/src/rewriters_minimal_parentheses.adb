@@ -10,23 +10,13 @@ package body Rewriters_Minimal_Parentheses is
       return Ada_Node
    is
    begin
-      --  TODO: improve! next loop is useless!
-      while Node.Is_Null loop
-         null;
-      end loop;
-
-      if Node.Is_Null or else Node.Parent.Is_Null then
+      if Node.Is_Null
+        or else Node.Kind not in Ada_Expr
+        or else Node.Parent.Is_Null
+      then
          return Node.As_Ada_Node;
       else
-         --  workaround for https://gt3-prod-1.adacore.com/#/tickets/UB17-030
-         case Node.Parent.Kind is
-            when Ada_While_Loop_Spec | Ada_Elsif_Stmt_Part_List =>
-               return Node.Parent.Parent;
-            when Ada_Case_Stmt_Alternative | Ada_Elsif_Stmt_Part =>
-               return Node.Parent.Parent.Parent;
-            when others =>
-               return Node.Parent;
-         end case;
+         return Node.Parent;
       end if;
    end Rewrite_Context;
 

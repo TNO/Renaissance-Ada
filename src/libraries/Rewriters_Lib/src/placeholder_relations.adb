@@ -113,6 +113,17 @@ package body Placeholder_Relations is
                --  conservative assumption: a function call has a side effect.
                return N.P_Is_Call;
             end;
+         when Ada_Attribute_Ref =>
+            --  conservative assumption:
+            --  In Ada 2022, using Put_Image a user defined function
+            --  with a possible side effect can be defined
+            --  for the 'Image attribute
+            return True;
+         when Ada_Allocator =>
+            --  TODO: find out whether allocator can have side effects!
+            --  F_Subpool
+            --  F_Type_Or_Expr
+            return True;
          when Ada_If_Expr =>
             declare
                I_E : constant If_Expr := E.As_If_Expr;
@@ -188,6 +199,15 @@ package body Placeholder_Relations is
                return
                  Has_Side_Effect (R_O.F_Left)
                  or else Has_Side_Effect (R_O.F_Right);
+            end;
+         when Ada_Aggregate =>
+            declare
+               A : constant Aggregate := E.As_Aggregate;
+            begin
+               return (not A.F_Ancestor_Expr.Is_Null
+                       and then Has_Side_Effect (A.F_Ancestor_Expr))
+                 or else (for some Assoc of A.F_Assocs.Children =>
+                            Has_Side_Effect (Assoc.As_Param_Assoc.F_R_Expr));
             end;
          when others =>
             Put_Line
