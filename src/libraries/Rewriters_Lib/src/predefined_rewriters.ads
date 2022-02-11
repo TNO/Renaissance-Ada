@@ -26,10 +26,16 @@ package Predefined_Rewriters is
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
    function Is_Float_Expression
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
+   function Is_Unbounded_String
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
 
    function Accept_Boolean
      (Match : Match_Pattern) return Boolean is
      (Is_Boolean_Expression (Match, "$S_Expr"));
+
+   function Accept_Unbounded_String
+     (Match : Match_Pattern) return Boolean is
+     (Is_Unbounded_String (Match, "$S_Var"));
 
    function Accept_No_Side_Effects
      (Match : Match_Pattern) return Boolean is
@@ -48,7 +54,6 @@ package Predefined_Rewriters is
      (Match : Match_Pattern) return Boolean is
      (Is_Integer_Expression (Match, "$S_Expr")
       and then not Has_Side_Effect (Match, "$S_Expr"));
-
 
 ------------------------------------------------------------------------------
    --  Expressions
@@ -1061,6 +1066,17 @@ package Predefined_Rewriters is
            & "begin $M_Stmts; end;",
            Block_Stmt_Rule),
        Accept_No_Side_Effects'Access);
+
+   Rewriter_Append :
+   aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern
+          ("$S_Var := $S_Var & $S_Tail;",
+           Assignment_Stmt_Rule),
+        Make_Pattern
+          ("Append ($S_Var, $S_Tail);",
+           Stmt_Rule),
+       Accept_Unbounded_String'Access);
 
 ------------------------------------------------------------------------------
    --  Declarations

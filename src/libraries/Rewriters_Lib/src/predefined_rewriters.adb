@@ -1,6 +1,7 @@
 with Rejuvenation.String_Utils; use Rejuvenation.String_Utils;
 with Rejuvenation.Utils;        use Rejuvenation.Utils;
 with Libadalang.Analysis;       use Libadalang.Analysis;
+with Ada.Text_IO; use Ada.Text_IO;
 
 package body Predefined_Rewriters is
 
@@ -20,8 +21,7 @@ package body Predefined_Rewriters is
       return
         Raw_Signature (T.F_Name) = Standard_Type_Name
         and then not T.P_Is_Array_Type
-      --  not an array  (TODO: really needed?)
-
+        --  not an array  (TODO: really needed?)
         and then Ends_With (T.Unit.Get_Filename, Standard_Unit_Filename);
    end Is_Standard_Type_Expression;
 
@@ -36,5 +36,15 @@ package body Predefined_Rewriters is
    function Is_Float_Expression
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean is
      (Is_Standard_Type_Expression (Match, Placeholder_Name, "Float"));
+
+   function Is_Unbounded_String
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean
+   is
+      T : constant Base_Type_Decl :=
+        Get_Expression_Type (Match, Placeholder_Name);
+   begin
+      Put_Line (Raw_Signature (T.F_Name));
+      return False;
+   end Is_Unbounded_String;
 
 end Predefined_Rewriters;
