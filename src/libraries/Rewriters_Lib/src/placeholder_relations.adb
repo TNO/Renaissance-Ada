@@ -206,6 +206,29 @@ package body Placeholder_Relations is
       return Has_Side_Effect (E);
    end Has_Side_Effect;
 
+   function Are_Independent
+     (Match : Match_Pattern; Placeholder_A, Placeholder_B : String)
+      return Boolean
+   --  Basic implementation
+   --  When both are expressions without side effects they can be swapped.
+   --
+   --      accepted placeholders are independent, but
+   --      not all rejected placeholders are dependent!
+   --
+   --  TODO: use the variables that are read and written by the placeholders
+   --        to make it accept far more correct cases.
+   is
+      Node_A : constant Ada_Node := Match.Get_Single_As_Node (Placeholder_A);
+      Node_B : constant Ada_Node := Match.Get_Single_As_Node (Placeholder_B);
+   begin
+      return Node_A.Kind in Ada_Expr
+        and then not Has_Side_Effect (Node_A.As_Expr)
+        and then Node_B.Kind in Ada_Expr
+        and then not Has_Side_Effect (Node_B.As_Expr);
+   end Are_Independent;
+
+
+
    function Is_Within_Base_Subp_Body
      (Match : Match_Pattern; Subp_Name : String) return Boolean
    is
