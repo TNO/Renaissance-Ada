@@ -125,7 +125,8 @@ Open the generated `graphml` file with [Neo4j](https://neo4j.com) according to [
 
 You can now interactively query the graphical database using [Cypher](https://neo4j.com/developer/cypher/).
 For more info on [Cypher](https://neo4j.com/developer/cypher/), 
-see the [Neo4j Cypher refcard](https://neo4j.com/docs/cypher-refcard/current/).
+see the [Cypher resources](https://neo4j.com/developer/cypher/resources/), including the 
+[Neo4j Cypher refcard](https://neo4j.com/docs/cypher-refcard/current/).
 
 Below, you find some example [Cypher](https://neo4j.com/developer/cypher/) queries.
 Note that all example queries are rather general.
