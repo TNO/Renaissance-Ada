@@ -121,29 +121,35 @@ or the current directory is the `obj` directory of the Dependency_Graph_Extracto
 This will create the GraphML file `rejuvenation_lib.graphml` in the current directory.
 
 ## Usage
-Open the generated `graphml` file with [Neo4j](https://neo4j.com).
+Open the generated `graphml` file with [Neo4j](https://neo4j.com) according to [the import instructions](https://neo4j.com/labs/apoc/4.1/import/graphml/).
+
+You can now interactively query the graphical database using [Cypher](https://neo4j.com/developer/cypher/).
+For more info on [Cypher](https://neo4j.com/developer/cypher/), 
+see the [Neo4j Cypher refcard](https://neo4j.com/docs/cypher-refcard/current/).
+
+Below, you find some example [Cypher](https://neo4j.com/developer/cypher/) queries.
+Note that all example queries are rather general.
+So add `LIMIT 25` to the end of the queries 
+whenever your code base contains a lot of matches to still get a fast response.
 
 ### Analyze recursion
-Note that all queries are rather general.
-So add `LIMIT 25` to the end of the queries 
-whenever your code base contains alot of recursion to still get a fast response.
 
 #### Find recursive functions
-Run the query
+Run the [Cypher](https://neo4j.com/developer/cypher/) query
 ```cypher
 MATCH (f)-[:Calls]->(f) RETURN *
 ```
 to find all recursive functions.
 
 #### Find all recursion
-Run the query
+Run the [Cypher](https://neo4j.com/developer/cypher/) query
 ```cypher
 MATCH (f)-[:Calls*]->(f) RETURN *
 ```
 to find all recursion.
 
 #### Find indirect recursion
-Run the query
+Run the [Cypher](https://neo4j.com/developer/cypher/) query
 ```cypher
 MATCH (a)-[:Calls*]->(b)-[:Calls*]->(a) RETURN *
 ```
