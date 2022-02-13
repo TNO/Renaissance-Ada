@@ -125,7 +125,7 @@ Open the generated `graphml` file with [Neo4j](https://neo4j.com) according to [
 
 Prepare yourself by reading the [Node and Edge Types](Ada_Node_and_Edge_Types.docx?raw=true) present in the graph database.
 
-You can now interactively query the graphical database using [Cypher](https://neo4j.com/developer/cypher/).
+You can now interactively query the graph database using [Cypher](https://neo4j.com/developer/cypher/).
 For more info on [Cypher](https://neo4j.com/developer/cypher/), 
 see the [Cypher resources](https://neo4j.com/developer/cypher/resources/), including the 
 [Neo4j Cypher refcard](https://neo4j.com/docs/cypher-refcard/current/).
