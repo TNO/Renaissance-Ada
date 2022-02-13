@@ -123,6 +123,8 @@ This will create the GraphML file `rejuvenation_lib.graphml` in the current dire
 ## Usage
 Open the generated `graphml` file with [Neo4j](https://neo4j.com) according to [the import instructions](https://neo4j.com/labs/apoc/4.1/import/graphml/).
 
+Prepare yourself by reading the [Node and Edge Types](Ada_Node_and_Edge_Types.docx?raw=true) present in the graph database.
+
 You can now interactively query the graphical database using [Cypher](https://neo4j.com/developer/cypher/).
 For more info on [Cypher](https://neo4j.com/developer/cypher/), 
 see the [Cypher resources](https://neo4j.com/developer/cypher/resources/), including the 
