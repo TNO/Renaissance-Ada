@@ -1,16 +1,17 @@
-with Ada.Containers;                 use Ada.Containers;
-with Ada.Exceptions;                 use Ada.Exceptions;
-with Ada.Text_IO;                    use Ada.Text_IO;
-with Langkit_Support.Text;           use Langkit_Support.Text;
-with Libadalang.Common;              use Libadalang.Common;
-with Rejuvenation;                   use Rejuvenation;
-with Rejuvenation.Finder;            use Rejuvenation.Finder;
-with Rejuvenation.Node_Locations;    use Rejuvenation.Node_Locations;
-with Rejuvenation.Match_Patterns;    use Rejuvenation.Match_Patterns;
-with Rejuvenation.Pretty_Print;      use Rejuvenation.Pretty_Print;
-with Rejuvenation.Simple_Factory;    use Rejuvenation.Simple_Factory;
-with Rejuvenation.Text_Rewrites;     use Rejuvenation.Text_Rewrites;
-with Rewriters_Sequence_Utils;       use Rewriters_Sequence_Utils;
+with Ada.Containers;              use Ada.Containers;
+with Ada.Exceptions;              use Ada.Exceptions;
+with Ada.Text_IO;                 use Ada.Text_IO;
+with Langkit_Support.Text;        use Langkit_Support.Text;
+with Libadalang.Common;           use Libadalang.Common;
+with Rejuvenation;                use Rejuvenation;
+with Rejuvenation.Finder;         use Rejuvenation.Finder;
+with Rejuvenation.Node_Locations; use Rejuvenation.Node_Locations;
+with Rejuvenation.Match_Patterns; use Rejuvenation.Match_Patterns;
+with Rejuvenation.Pretty_Print;   use Rejuvenation.Pretty_Print;
+with Rejuvenation.Simple_Factory; use Rejuvenation.Simple_Factory;
+with Rejuvenation.Text_Rewrites;  use Rejuvenation.Text_Rewrites;
+with Rewriters_Sequence_Utils;    use Rewriters_Sequence_Utils;
+with Rewriters_Context_Utils;     use Rewriters_Context_Utils;
 
 package body Rewriters_Find_And_Replace is
 
@@ -111,30 +112,34 @@ package body Rewriters_Find_And_Replace is
         Make_Contexts (Matches, RFR.F_Match_Accepter, RFR.F_Rewriters);
    begin
       for Context of Contexts loop
+         declare
+            Supported_Context : constant Ada_Node :=
+              To_Supported_Context (Context);
+            TR : Text_Rewrite := Make_Text_Rewrite_Node (Supported_Context);
          begin
+            Find_And_Replace
+              (TR, Supported_Context, RFR.F_Find_Pattern,
+               RFR.F_Replace_Pattern, RFR.F_Match_Accepter);
             declare
-               TR : Text_Rewrite := Make_Text_Rewrite_Node (Context);
+               Rule : constant Grammar_Rule :=
+                 Node_To_Rule (Supported_Context);
+               Match_Unit : constant Analysis_Unit :=
+                 Analyze_Fragment (TR.ApplyToString, Rule);
+               Rewritten_Instance : constant String :=
+                 Rewrite (RFR.F_Rewriters, Match_Unit.Root, False, Rule);
             begin
-               Find_And_Replace
-                 (TR, Context, RFR.F_Find_Pattern, RFR.F_Replace_Pattern,
-                  RFR.F_Match_Accepter);
-               declare
-                  Rule       : constant Grammar_Rule := Node_To_Rule (Context);
-                  Match_Unit : constant Analysis_Unit :=
-                    Analyze_Fragment (TR.ApplyToString, Rule);
-                  Rewritten_Instance : constant String :=
-                    Rewrite (RFR.F_Rewriters, Match_Unit.Root, False, Rule);
-               begin
-                  TN.Replace (Context, Rewritten_Instance);
+               TN.Replace (Supported_Context, Rewritten_Instance);
 
-                  if Top_Level then
-                     Surround_Node_By_Pretty_Print_Section (TN, Context);
-                  end if;
-               end;
+               if Top_Level then
+                  Surround_Node_By_Pretty_Print_Section
+                    (TN, Supported_Context);
+               end if;
             end;
          exception
             when others =>
-               Put_Line (Image (Context.Full_Sloc_Image) & "Error in Context");
+               Put_Line
+                 (Image (Supported_Context.Full_Sloc_Image) &
+                  "Error in Context");
                raise;
          end;
       end loop;

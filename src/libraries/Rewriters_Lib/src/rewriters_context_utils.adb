@@ -1,4 +1,5 @@
-with Ada.Assertions; use Ada.Assertions;
+with Ada.Assertions;    use Ada.Assertions;
+with Libadalang.Common; use Libadalang.Common;
 
 package body Rewriters_Context_Utils is
 
@@ -14,5 +15,19 @@ package body Rewriters_Context_Utils is
          return C2;
       end if;
    end Combine_Contexts;
+
+   function To_Supported_Context (C : Ada_Node) return Ada_Node
+   is
+   begin
+      --  workaround for https://gt3-prod-1.adacore.com/#/tickets/UB17-030
+      case C.Kind is
+         when Ada_While_Loop_Spec | Ada_Elsif_Stmt_Part_List =>
+            return C.Parent;
+         when Ada_Case_Stmt_Alternative | Ada_Elsif_Stmt_Part =>
+            return C.Parent.Parent;
+         when others =>
+            return C;
+      end case;
+   end To_Supported_Context;
 
 end Rewriters_Context_Utils;
