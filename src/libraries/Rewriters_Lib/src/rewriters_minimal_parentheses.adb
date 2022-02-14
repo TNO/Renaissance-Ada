@@ -49,8 +49,7 @@ package body Rewriters_Minimal_Parentheses is
             --  with single parameter
             return True;
          when Ada_Bin_Op | Ada_Relation_Op | Ada_Un_Op | Ada_Membership_Expr |
-              Ada_Paren_Expr
-            =>
+              Ada_Paren_Expr =>
             --  conservative: we don't remove when used in left operand
             --                e.g. (a + b) + c <==> a + b + c
          --  conservative, yet local handling of special case

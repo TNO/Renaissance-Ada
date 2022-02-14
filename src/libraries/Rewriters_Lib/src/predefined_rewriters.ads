@@ -263,13 +263,13 @@ package Predefined_Rewriters is
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not ($S_A and then $S_B)", Expr_Rule),
         Make_Pattern ("(not ($S_A)) or else (not ($S_B))", Expr_Rule),
-        Rewriters => Rewriters_Not);
+        Rewriters => Rewriters_Not & RMP'Access);
 
    Rewrite_De_Morgan_Not_Or : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not ($S_A or else $S_B)", Expr_Rule),
         Make_Pattern ("(not ($S_A)) and then (not ($S_B))", Expr_Rule),
-        Rewriters => Rewriters_Not);
+        Rewriters => Rewriters_Not & RMP'Access);
 
    Rewrite_De_Morgan_Not_All_Range :
    aliased constant Rewriter_Find_And_Replace :=
@@ -277,7 +277,7 @@ package Predefined_Rewriters is
        (Make_Pattern ("not (for all $S_I in $S_Range => $S_Cond)", Expr_Rule),
         Make_Pattern
           ("(for some $S_I in $S_Range => not ($S_Cond))", Expr_Rule),
-        Rewriters => Rewriters_Not);
+        Rewriters => Rewriters_Not & RMP'Access);
 
    Rewrite_De_Morgan_Not_All_Elements :
    aliased constant Rewriter_Find_And_Replace :=
@@ -286,7 +286,7 @@ package Predefined_Rewriters is
           ("not (for all $S_E of $S_Elements => $S_Cond)", Expr_Rule),
         Make_Pattern
           ("(for some $S_E of $S_Elements => not ($S_Cond))", Expr_Rule),
-        Rewriters => Rewriters_Not);
+        Rewriters => Rewriters_Not & RMP'Access);
 
    Rewrite_De_Morgan_Not_Some_Range :
    aliased constant Rewriter_Find_And_Replace :=
@@ -294,7 +294,7 @@ package Predefined_Rewriters is
        (Make_Pattern ("not (for some $S_I in $S_Range => $S_Cond)", Expr_Rule),
         Make_Pattern
           ("(for all $S_I in $S_Range => not ($S_Cond))", Expr_Rule),
-        Rewriters => Rewriters_Not);
+        Rewriters => Rewriters_Not & RMP'Access);
 
    Rewrite_De_Morgan_Not_Some_Elements :
    aliased constant Rewriter_Find_And_Replace :=
@@ -303,7 +303,7 @@ package Predefined_Rewriters is
           ("not (for some $S_E of $S_Elements => $S_Cond)", Expr_Rule),
         Make_Pattern
           ("(for all $S_E of $S_Elements => not ($S_Cond))", Expr_Rule),
-        Rewriters => Rewriters_Not);
+        Rewriters => Rewriters_Not & RMP'Access);
 
    Rewriter_If_Different_Expression :
    aliased constant Rewriter_Find_And_Replace :=
@@ -320,7 +320,7 @@ package Predefined_Rewriters is
           ("if not $S_Cond then $S_Val_True else $S_Val_False", Expr_Rule),
         Make_Pattern
           ("if $S_Cond then $S_Val_False else $S_Val_True", Expr_Rule),
-        Rewriters => To_Vector (RMP'Access, 1));
+        Rewriters => To_Vector (RMP'Access, 1) & RMP'Access);
 
    Rewriter_If_Not_In_Expression :
    aliased constant Rewriter_Find_And_Replace :=
@@ -330,14 +330,14 @@ package Predefined_Rewriters is
            Expr_Rule),
         Make_Pattern
           ("if $S_Expr in $M_Values then $S_Val_False else $S_Val_True",
-           Expr_Rule));
+           Expr_Rule),
+        Rewriters => To_Vector (RMP'Access, 1));
 
    Rewriter_Boolean_If_Condition_Expression :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_Cond then true else false", Expr_Rule),
-        Make_Pattern ("$S_Cond", Expr_Rule),
-        Rewriters => To_Vector (RMP'Access, 1));
+        Make_Pattern ("$S_Cond", Expr_Rule));
 
    Rewriter_Boolean_If_Not_Condition_Expression :
    aliased constant Rewriter_Find_And_Replace :=
