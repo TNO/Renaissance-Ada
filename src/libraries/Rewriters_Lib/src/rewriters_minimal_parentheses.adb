@@ -30,8 +30,8 @@ package body Rewriters_Minimal_Parentheses is
       Parent : constant Ada_Node := ParenExpr.Parent;
    begin
       return
-        not Parent.Is_Null
-        and then Parent.Kind in Ada_Expr_Function | Ada_Qual_Expr;
+        Parent.Is_Null
+        or else Parent.Kind in Ada_Expr_Function | Ada_Qual_Expr;
    end Are_Brackets_Syntactically_Mandatory;
 
    function Are_Brackets_Necessary (ParenExpr : Paren_Expr) return Boolean;
@@ -49,7 +49,8 @@ package body Rewriters_Minimal_Parentheses is
             --  with single parameter
             return True;
          when Ada_Bin_Op | Ada_Relation_Op | Ada_Un_Op | Ada_Membership_Expr |
-           Ada_Paren_Expr =>
+              Ada_Paren_Expr
+            =>
             --  conservative: we don't remove when used in left operand
             --                e.g. (a + b) + c <==> a + b + c
          --  conservative, yet local handling of special case
@@ -59,8 +60,8 @@ package body Rewriters_Minimal_Parentheses is
                Parent : constant Ada_Node := ParenExpr.Parent;
             begin
                return
-                 not Parent.Is_Null
-                 and then Parent.Kind in Ada_Bin_Op | Ada_Relation_Op |
+                 Parent.Is_Null
+                 or else Parent.Kind in Ada_Bin_Op | Ada_Relation_Op |
                      Ada_Un_Op | Ada_Membership_Expr;
             end;
          when others =>
