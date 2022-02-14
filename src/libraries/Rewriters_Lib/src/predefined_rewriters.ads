@@ -309,41 +309,41 @@ package Predefined_Rewriters is
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("(if $S_A /= $S_B then $S_Val_True else $S_Val_False)", Expr_Rule),
+          ("if $S_A /= $S_B then $S_Val_True else $S_Val_False", Expr_Rule),
         Make_Pattern
-          ("(if $S_A = $S_B then $S_Val_False else $S_Val_True)", Expr_Rule));
+          ("if $S_A = $S_B then $S_Val_False else $S_Val_True", Expr_Rule));
 
    Rewriter_If_Not_Condition_Expression :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("(if not $S_Cond then $S_Val_True else $S_Val_False)", Expr_Rule),
+          ("if not $S_Cond then $S_Val_True else $S_Val_False", Expr_Rule),
         Make_Pattern
-          ("(if $S_Cond then $S_Val_False else $S_Val_True)", Expr_Rule),
+          ("if $S_Cond then $S_Val_False else $S_Val_True", Expr_Rule),
         Rewriters => To_Vector (RMP'Access, 1));
 
    Rewriter_If_Not_In_Expression :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("(if $S_Expr not in $M_Values then $S_Val_True else $S_Val_False)",
+          ("if $S_Expr not in $M_Values then $S_Val_True else $S_Val_False",
            Expr_Rule),
         Make_Pattern
-          ("(if $S_Expr in $M_Values then $S_Val_False else $S_Val_True)",
+          ("if $S_Expr in $M_Values then $S_Val_False else $S_Val_True",
            Expr_Rule));
 
    Rewriter_Boolean_If_Condition_Expression :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("(if $S_Cond then true else false)", Expr_Rule),
-        Make_Pattern ("($S_Cond)", Expr_Rule),
+       (Make_Pattern ("if $S_Cond then true else false", Expr_Rule),
+        Make_Pattern ("$S_Cond", Expr_Rule),
         Rewriters => To_Vector (RMP'Access, 1));
 
    Rewriter_Boolean_If_Not_Condition_Expression :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("(if $S_Cond then false else true)", Expr_Rule),
-        Make_Pattern ("(not ($S_Cond))", Expr_Rule),
+       (Make_Pattern ("if $S_Cond then false else true", Expr_Rule),
+        Make_Pattern ("not ($S_Cond)", Expr_Rule),
         Rewriters => Rewriters_Not & RMP'Access);
 
    function Accept_Extreme
@@ -357,56 +357,56 @@ package Predefined_Rewriters is
    Rewriter_Integer_Max_Greater_Than :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("(if $S_X > $S_Y then $S_X else $S_Y)", Expr_Rule),
+       (Make_Pattern ("if $S_X > $S_Y then $S_X else $S_Y", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Max_Greater_Equal :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("(if $S_X >= $S_Y then $S_X else $S_Y)", Expr_Rule),
+       (Make_Pattern ("if $S_X >= $S_Y then $S_X else $S_Y", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Max_Less_Than :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("(if $S_X < $S_Y then $S_Y else $S_X)", Expr_Rule),
+       (Make_Pattern ("if $S_X < $S_Y then $S_Y else $S_X", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Max_Less_Equal :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("(if $S_X <= $S_Y then $S_Y else $S_X)", Expr_Rule),
+       (Make_Pattern ("if $S_X <= $S_Y then $S_Y else $S_X", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Min_Greater_Than :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("(if $S_X > $S_Y then $S_Y else $S_X)", Expr_Rule),
+       (Make_Pattern ("if $S_X > $S_Y then $S_Y else $S_X", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Min_Greater_Equal :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("(if $S_X >= $S_Y then $S_Y else $S_X)", Expr_Rule),
+       (Make_Pattern ("if $S_X >= $S_Y then $S_Y else $S_X", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Min_Less_Than :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("(if $S_X < $S_Y then $S_X else $S_Y)", Expr_Rule),
+       (Make_Pattern ("if $S_X < $S_Y then $S_X else $S_Y", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Min_Less_Equal :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern ("(if $S_X <= $S_Y then $S_X else $S_Y)", Expr_Rule),
+       (Make_Pattern ("if $S_X <= $S_Y then $S_X else $S_Y", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
@@ -418,10 +418,10 @@ package Predefined_Rewriters is
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("(if $S_Cond then $S_Expr & $S_True else $S_Expr & $S_False)",
+          ("if $S_Cond then $S_Expr & $S_True else $S_Expr & $S_False",
            Expr_Rule),
         Make_Pattern
-          ("($S_Expr & (if $S_Cond then $S_True else $S_False))", Expr_Rule),
+          ("$S_Expr & (if $S_Cond then $S_True else $S_False)", Expr_Rule),
         Accept_Independent'Access,
         Rewriters => To_Vector (RMP'Access, 1));
 
@@ -429,10 +429,10 @@ package Predefined_Rewriters is
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("(if $S_Cond then $S_True & $S_Expr else $S_False & $S_Expr)",
+          ("if $S_Cond then $S_True & $S_Expr else $S_False & $S_Expr",
            Expr_Rule),
         Make_Pattern
-          ("((if $S_Cond then $S_True else $S_False) & $S_Expr)", Expr_Rule),
+          ("(if $S_Cond then $S_True else $S_False) & $S_Expr", Expr_Rule),
         Rewriters => To_Vector (RMP'Access, 1));
    --  TODO: how to generalize to other BinOp like +, *,
    --        and then, or else, ...?
@@ -445,10 +445,10 @@ package Predefined_Rewriters is
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("(if $S_Cond then $S_Expr + $S_True else $S_Expr + $S_False)",
+          ("if $S_Cond then $S_Expr + $S_True else $S_Expr + $S_False",
            Expr_Rule),
         Make_Pattern
-          ("($S_Expr + (if $S_Cond then $S_True else $S_False))", Expr_Rule),
+          ("$S_Expr + (if $S_Cond then $S_True else $S_False)", Expr_Rule),
         Accept_Independent'Access,
         Rewriters => To_Vector (RMP'Access, 1));
 
@@ -456,10 +456,10 @@ package Predefined_Rewriters is
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("(if $S_Cond then $S_True + $S_Expr else $S_False + $S_Expr)",
+          ("if $S_Cond then $S_True + $S_Expr else $S_False + $S_Expr",
            Expr_Rule),
         Make_Pattern
-          ("((if $S_Cond then $S_True else $S_False) + $S_Expr)", Expr_Rule),
+          ("(if $S_Cond then $S_True else $S_False) + $S_Expr", Expr_Rule),
         Rewriters => To_Vector (RMP'Access, 1));
 
    Rewriters_If_Expression : constant Rewriters_Sequence.Vector :=
@@ -485,11 +485,11 @@ package Predefined_Rewriters is
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("(case $S_Expr is when $M_Values => $S_Val_In, "
-           & "when others => $S_Val_Out)",
+          ("case $S_Expr is when $M_Values => $S_Val_In, "
+           & "when others => $S_Val_Out",
            Expr_Rule),
         Make_Pattern
-          ("(if ($S_Expr) in $M_Values then $S_Val_In else $S_Val_Out)",
+          ("if ($S_Expr) in $M_Values then $S_Val_In else $S_Val_Out",
            Expr_Rule),
         Rewriters => Rewriters_If_Expression & RMP'Access);
 
