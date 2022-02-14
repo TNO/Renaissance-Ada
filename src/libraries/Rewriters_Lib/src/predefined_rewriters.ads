@@ -336,7 +336,7 @@ package Predefined_Rewriters is
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_Cond then true else false", Expr_Rule),
-        Make_Pattern ("$S_Cond", Expr_Rule),
+        Make_Pattern ("($S_Cond)", Expr_Rule),
         Rewriters => To_Vector (RMP'Access, 1));
 
    Rewriter_Boolean_If_Not_Condition_Expression :
