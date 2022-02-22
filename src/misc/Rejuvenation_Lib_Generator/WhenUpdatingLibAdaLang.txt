@@ -19,7 +19,7 @@ and
          -- End of generated fragment --------
          
 use Code > Format Selection
-or  Copde > Format file
+or  Code > Format file
  on added / all code 
 (if desired / required to adhere to specific style)
 
