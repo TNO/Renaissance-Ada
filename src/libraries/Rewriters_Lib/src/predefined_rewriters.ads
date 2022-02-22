@@ -468,14 +468,15 @@ package Predefined_Rewriters is
      Rewriter_If_Not_In_Expression'Access &
      Rewriter_Boolean_If_Condition_Expression'Access &
      Rewriter_Boolean_If_Not_Condition_Expression'Access &
-     Rewriter_Integer_Max_Greater_Than'Access &
-     Rewriter_Integer_Max_Greater_Equal'Access &
-     Rewriter_Integer_Max_Less_Than'Access &
-     Rewriter_Integer_Max_Less_Equal'Access &
-     Rewriter_Integer_Min_Greater_Than'Access &
-     Rewriter_Integer_Min_Greater_Equal'Access &
-     Rewriter_Integer_Min_Less_Than'Access &
-     Rewriter_Integer_Min_Less_Equal'Access &
+     --  See issue: https://github.com/TNO/Renaissance-Ada/issues/18
+     --  Rewriter_Integer_Max_Greater_Than'Access &
+     --  Rewriter_Integer_Max_Greater_Equal'Access &
+     --  Rewriter_Integer_Max_Less_Than'Access &
+     --  Rewriter_Integer_Max_Less_Equal'Access &
+     --  Rewriter_Integer_Min_Greater_Than'Access &
+     --  Rewriter_Integer_Min_Greater_Equal'Access &
+     --  Rewriter_Integer_Min_Less_Than'Access &
+     --  Rewriter_Integer_Min_Less_Equal'Access &
      Rewriter_Concat_Before_If_Expression'Access &
      Rewriter_Concat_After_If_Expression'Access &
      Rewriter_Plus_Before_If_Expression'Access &
