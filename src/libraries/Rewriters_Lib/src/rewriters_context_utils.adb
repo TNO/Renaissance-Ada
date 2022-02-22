@@ -20,6 +20,7 @@ package body Rewriters_Context_Utils is
    is
    begin
       --  workaround for https://gt3-prod-1.adacore.com/#/tickets/UB17-030
+      --  solved in libadalang version 23.0 and higher
       case C.Kind is
          when Ada_While_Loop_Spec | Ada_Elsif_Stmt_Part_List =>
             return C.Parent;
