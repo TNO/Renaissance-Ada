@@ -1,6 +1,7 @@
+with Ada.Assertions;            use Ada.Assertions;
+with Libadalang.Analysis;       use Libadalang.Analysis;
 with Rejuvenation.String_Utils; use Rejuvenation.String_Utils;
 with Rejuvenation.Utils;        use Rejuvenation.Utils;
-with Libadalang.Analysis;       use Libadalang.Analysis;
 
 package body Predefined_Rewriters is
 
@@ -17,6 +18,9 @@ package body Predefined_Rewriters is
       T : constant Base_Type_Decl :=
         Get_Expression_Type (Match, Placeholder_Name);
    begin
+      Assert (Check => not T.Is_Null,
+              Message => "Is_Standard_Type_Expression - "
+                        & "Unexpectedly Base Type Decl is null");
       return
         Raw_Signature (T.F_Name) = Standard_Type_Name
         and then not T.P_Is_Array_Type
