@@ -477,9 +477,9 @@ package Predefined_Rewriters is
      --  Rewriter_Integer_Min_Greater_Equal'Access &
      --  Rewriter_Integer_Min_Less_Than'Access &
      --  Rewriter_Integer_Min_Less_Equal'Access &
-     Rewriter_Concat_Before_If_Expression'Access &
+     --  Rewriter_Concat_Before_If_Expression'Access &
      Rewriter_Concat_After_If_Expression'Access &
-     Rewriter_Plus_Before_If_Expression'Access &
+     --  Rewriter_Plus_Before_If_Expression'Access &
      Rewriter_Plus_After_If_Expression'Access;
 
    Rewriter_Case_Expression_Binary_With_Others :
