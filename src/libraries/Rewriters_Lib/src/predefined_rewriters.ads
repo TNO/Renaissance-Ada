@@ -20,6 +20,183 @@ with Rewriters_Sequence;            use Rewriters_Sequence;
 
 package Predefined_Rewriters is
 
+   ----------------------------------------------------------------------------
+   --  Expressions
+   ----------------------------------------------------------------------------
+
+   RMP : aliased constant Rewriter_Minimal_Parentheses;
+
+   Rewriter_Definition_Equal     : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Definition_Different : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Definition_Minus     : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Definition_Divide    : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Definition_Modulo    : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Definition_Remainder : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Idempotence_And     : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Idempotence_Or      : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Complementation_And : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Complementation_Or  : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Not_Not       : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Not_Equal     : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Not_Different : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Not_Greater_Than  : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Not_Greater_Equal : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Not_Less_Than     : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Not_Less_Equal    : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Not_In     : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Not_Not_In : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_And_Then : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Or_Else  : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Equal_True      : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Equal_False     : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Different_True  : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Different_False : aliased constant Rewriter_Find_And_Replace;
+
+   Rewrite_De_Morgan_Not_And : aliased constant Rewriter_Find_And_Replace;
+   Rewrite_De_Morgan_Not_Or : aliased constant Rewriter_Find_And_Replace;
+   Rewrite_De_Morgan_Not_All_Range :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewrite_De_Morgan_Not_All_Elements :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewrite_De_Morgan_Not_Some_Range :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewrite_De_Morgan_Not_Some_Elements :
+     aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_If_Different_Expression :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_If_Not_Condition_Expression :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_If_Not_In_Expression :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Boolean_If_Condition_Expression :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Boolean_If_Not_Condition_Expression :
+     aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Integer_Max_Greater_Than :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Integer_Max_Greater_Equal :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Integer_Max_Less_Than : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Integer_Max_Less_Equal :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Integer_Min_Greater_Than :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Integer_Min_Greater_Equal :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Integer_Min_Less_Than :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Integer_Min_Less_Equal :
+     aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Concat_Before_If_Expression :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Concat_After_If_Expression :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Plus_Before_If_Expression :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Plus_After_If_Expression :
+     aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Case_Expression_Binary_With_Others :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Double : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Equals_To_In_Range : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Combine_In_Range_And_Equal :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Combine_In_Ranges : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Differents_To_Not_In_Range :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Combine_Not_In_Range_And_Different :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Combine_Not_In_Ranges : aliased constant Rewriter_Find_And_Replace;
+
+   ----------------------------------------------------------------------------
+   --  Statements
+   ----------------------------------------------------------------------------
+
+   Rewriter_Unnecessary_Null_Stmt : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_If_True_Stmt          : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_If_False_Stmt         : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_If_Different_Stmt     : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_If_Not_Condition_Stmt : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_If_Not_In_Stmt        : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Use_Elsif : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Null_Then_Branch : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Null_Else_Branch : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_If_Identical_Branches_Stmt :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_If_Identical_Tails_Stmt :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_If_Argument_Stmt : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_If_Assignment_Stmt : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_If_Return_Stmt : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_If_Return_Stmts : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Case_Single : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Case_Binary_With_Others :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Case_Identical_Branches :
+     aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Return_Expression : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Declare_And_Overwrite : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_For_All_Range_And_Then :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_All_Elements_And_Then :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_Some_Range_Or_Else :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_Some_Elements_Or_Else :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_All_Range_Exit : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_All_Elements_Exit : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_Some_Range_Exit : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_Some_Elements_Exit :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_All_Range_Return : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_All_Elements_Return :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_Some_Range_Return : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_Some_Elements_Return :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_All_Range_All : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_All_Elements_All : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_Some_Range_All : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_Some_Elements_All : aliased constant Rewriter_Find_And_Replace;
+
+   Rewriter_Append : aliased constant Rewriter_Find_And_Replace;
+
+   ----------------------------------------------------------------------------
+   --  Declarations
+   ----------------------------------------------------------------------------
+
+   Rewriter_Declarations_Combine : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_Attribute_Use : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_Attribute_Use_Aliased :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_Attribute_Use_Array :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_Attribute_Use_Pragma_Var :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_For_Attribute_Use_Pragma_All :
+     aliased constant Rewriter_Find_And_Replace;
+
+private
+
    function Is_Boolean_Expression
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
    function Is_Integer_Expression
@@ -29,16 +206,13 @@ package Predefined_Rewriters is
    function Is_Unbounded_String
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
 
-   function Accept_Boolean
-     (Match : Match_Pattern) return Boolean is
+   function Accept_Boolean (Match : Match_Pattern) return Boolean is
      (Is_Boolean_Expression (Match, "$S_Expr"));
 
-   function Accept_Unbounded_String
-     (Match : Match_Pattern) return Boolean is
+   function Accept_Unbounded_String (Match : Match_Pattern) return Boolean is
      (Is_Unbounded_String (Match, "$S_Var"));
 
-   function Accept_No_Side_Effects
-     (Match : Match_Pattern) return Boolean is
+   function Accept_No_Side_Effects (Match : Match_Pattern) return Boolean is
      (not Has_Side_Effect (Match, "$S_Expr"));
 
    function Accept_Multiple_No_Side_Effects
@@ -55,72 +229,59 @@ package Predefined_Rewriters is
      (Is_Integer_Expression (Match, "$S_Expr")
       and then not Has_Side_Effect (Match, "$S_Expr"));
 
-------------------------------------------------------------------------------
-   --  Expressions
-------------------------------------------------------------------------------
-
    RMP : aliased constant Rewriter_Minimal_Parentheses :=
      Make_Rewriter_Minimal_Parentheses;
 
    Rewriter_Definition_Equal : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr = $S_Expr", Expr_Rule),
-        Make_Pattern ("true", Expr_Rule),
-        Accept_No_Side_Effects'Access);
+        Make_Pattern ("true", Expr_Rule), Accept_No_Side_Effects'Access);
 
    Rewriter_Definition_Different :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr /= $S_Expr", Expr_Rule),
-        Make_Pattern ("false", Expr_Rule),
-        Accept_No_Side_Effects'Access);
+        Make_Pattern ("false", Expr_Rule), Accept_No_Side_Effects'Access);
 
    Rewriter_Definition_Minus : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr - $S_Expr", Expr_Rule),
-        Make_Pattern ("0", Expr_Rule),
-        Accept_Integer_No_Side_Effects'Access);
+        Make_Pattern ("0", Expr_Rule), Accept_Integer_No_Side_Effects'Access);
    --  TODO can it be correct for integers & float at the same time?
 
    Rewriter_Definition_Divide : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr / $S_Expr", Expr_Rule),
-        Make_Pattern ("1", Expr_Rule),
-        Accept_Integer_No_Side_Effects'Access);
+        Make_Pattern ("1", Expr_Rule), Accept_Integer_No_Side_Effects'Access);
    --  TODO can it be correct for integers & float at the same time?
 
    Rewriter_Definition_Modulo : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr mod $S_Expr", Expr_Rule),
-        Make_Pattern ("0", Expr_Rule),
-        Accept_No_Side_Effects'Access);
+        Make_Pattern ("0", Expr_Rule), Accept_No_Side_Effects'Access);
    --  mod only defined for integers
 
    Rewriter_Definition_Remainder :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr rem $S_Expr", Expr_Rule),
-        Make_Pattern ("0", Expr_Rule),
-        Accept_No_Side_Effects'Access);
+        Make_Pattern ("0", Expr_Rule), Accept_No_Side_Effects'Access);
    --  rem only defined for integers
 
    Rewriter_Idempotence_And : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr and then $S_Expr", Expr_Rule),
-        Make_Pattern ("$S_Expr", Expr_Rule),
-        Accept_No_Side_Effects'Access);
+        Make_Pattern ("$S_Expr", Expr_Rule), Accept_No_Side_Effects'Access);
 
    Rewriter_Idempotence_Or : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr or else $S_Expr", Expr_Rule),
-        Make_Pattern ("$S_Expr", Expr_Rule),
-        Accept_No_Side_Effects'Access);
+        Make_Pattern ("$S_Expr", Expr_Rule), Accept_No_Side_Effects'Access);
 
    Rewriter_Complementation_And : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr and then not $S_Expr", Expr_Rule),
-        Make_Pattern ("false", Expr_Rule),
-        Accept_No_Side_Effects'Access);
+        Make_Pattern ("false", Expr_Rule), Accept_No_Side_Effects'Access);
    --  TODO include variants with
    --            * swapped order of A and not A
    --            * parenthesis around not argument
@@ -130,8 +291,7 @@ package Predefined_Rewriters is
    Rewriter_Complementation_Or : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr or else not $S_Expr", Expr_Rule),
-        Make_Pattern ("true", Expr_Rule),
-        Accept_No_Side_Effects'Access);
+        Make_Pattern ("true", Expr_Rule), Accept_No_Side_Effects'Access);
    --  TODO include variants with
    --            * swapped order of A and not A
    --            * parenthesis around not argument
@@ -234,29 +394,25 @@ package Predefined_Rewriters is
    Rewriter_Equal_True : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr = true", Expr_Rule),
-        Make_Pattern ("$S_Expr", Expr_Rule),
-        Accept_Boolean'Access);
+        Make_Pattern ("$S_Expr", Expr_Rule), Accept_Boolean'Access);
    --  TODO: do we also need the symmetric variant: true = $S_Expr?
 
    Rewriter_Equal_False : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr = false", Expr_Rule),
-        Make_Pattern ("not $S_Expr", Expr_Rule),
-        Accept_Boolean'Access);
+        Make_Pattern ("not $S_Expr", Expr_Rule), Accept_Boolean'Access);
    --  TODO: do we also need the symmetric variant: false = $S_Expr?
 
    Rewriter_Different_True : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr /= true", Expr_Rule),
-        Make_Pattern ("not $S_Expr", Expr_Rule),
-        Accept_Boolean'Access);
+        Make_Pattern ("not $S_Expr", Expr_Rule), Accept_Boolean'Access);
    --  TODO: do we also need the symmetric variant: true /= $S_Expr?
 
    Rewriter_Different_False : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr /= false", Expr_Rule),
-        Make_Pattern ("$S_Expr", Expr_Rule),
-        Accept_Boolean'Access);
+        Make_Pattern ("$S_Expr", Expr_Rule), Accept_Boolean'Access);
    --  TODO: do we also need the symmetric variant: false /= $S_Expr?
 
    Rewrite_De_Morgan_Not_And : aliased constant Rewriter_Find_And_Replace :=
@@ -272,7 +428,7 @@ package Predefined_Rewriters is
         Rewriters => Rewriters_Not & RMP'Access);
 
    Rewrite_De_Morgan_Not_All_Range :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not (for all $S_I in $S_Range => $S_Cond)", Expr_Rule),
         Make_Pattern
@@ -280,7 +436,7 @@ package Predefined_Rewriters is
         Rewriters => Rewriters_Not & RMP'Access);
 
    Rewrite_De_Morgan_Not_All_Elements :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("not (for all $S_E of $S_Elements => $S_Cond)", Expr_Rule),
@@ -289,7 +445,7 @@ package Predefined_Rewriters is
         Rewriters => Rewriters_Not & RMP'Access);
 
    Rewrite_De_Morgan_Not_Some_Range :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not (for some $S_I in $S_Range => $S_Cond)", Expr_Rule),
         Make_Pattern
@@ -297,7 +453,7 @@ package Predefined_Rewriters is
         Rewriters => Rewriters_Not & RMP'Access);
 
    Rewrite_De_Morgan_Not_Some_Elements :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("not (for some $S_E of $S_Elements => $S_Cond)", Expr_Rule),
@@ -306,7 +462,7 @@ package Predefined_Rewriters is
         Rewriters => Rewriters_Not & RMP'Access);
 
    Rewriter_If_Different_Expression :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_A /= $S_B then $S_Val_True else $S_Val_False", Expr_Rule),
@@ -314,7 +470,7 @@ package Predefined_Rewriters is
           ("if $S_A = $S_B then $S_Val_False else $S_Val_True", Expr_Rule));
 
    Rewriter_If_Not_Condition_Expression :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if not $S_Cond then $S_Val_True else $S_Val_False", Expr_Rule),
@@ -323,7 +479,7 @@ package Predefined_Rewriters is
         Rewriters => To_Vector (RMP'Access, 1) & RMP'Access);
 
    Rewriter_If_Not_In_Expression :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Expr not in $M_Values then $S_Val_True else $S_Val_False",
@@ -334,84 +490,81 @@ package Predefined_Rewriters is
         Rewriters => To_Vector (RMP'Access, 1));
 
    Rewriter_Boolean_If_Condition_Expression :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_Cond then true else false", Expr_Rule),
         Make_Pattern ("$S_Cond", Expr_Rule));
 
    Rewriter_Boolean_If_Not_Condition_Expression :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_Cond then false else true", Expr_Rule),
         Make_Pattern ("not ($S_Cond)", Expr_Rule),
         Rewriters => Rewriters_Not & RMP'Access);
 
-   function Accept_Extreme
-     (Match : Match_Pattern) return Boolean is
+   function Accept_Extreme (Match : Match_Pattern) return Boolean is
      (Is_Integer_Expression (Match, "$S_X")
       and then not Has_Side_Effect (Match, "$S_X")
       and then Is_Integer_Expression (Match, "$S_Y")
-      and then not Has_Side_Effect (Match, "$S_Y")
-     );
+      and then not Has_Side_Effect (Match, "$S_Y"));
 
    Rewriter_Integer_Max_Greater_Than :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X > $S_Y then $S_X else $S_Y", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Max_Greater_Equal :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X >= $S_Y then $S_X else $S_Y", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Max_Less_Than :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X < $S_Y then $S_Y else $S_X", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Max_Less_Equal :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X <= $S_Y then $S_Y else $S_X", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Min_Greater_Than :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X > $S_Y then $S_Y else $S_X", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Min_Greater_Equal :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X >= $S_Y then $S_Y else $S_X", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Min_Less_Than :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X < $S_Y then $S_X else $S_Y", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
    Rewriter_Integer_Min_Less_Equal :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X <= $S_Y then $S_X else $S_Y", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Accept_Extreme'Access);
 
-   function Accept_Independent
-     (Match : Match_Pattern) return Boolean is
+   function Accept_Independent (Match : Match_Pattern) return Boolean is
      (Are_Independent (Match, "$S_Cond", "$S_Expr"));
 
    Rewriter_Concat_Before_If_Expression :
@@ -422,11 +575,10 @@ package Predefined_Rewriters is
            Expr_Rule),
         Make_Pattern
           ("$S_Expr & (if $S_Cond then $S_True else $S_False)", Expr_Rule),
-        Accept_Independent'Access,
-        Rewriters => To_Vector (RMP'Access, 1));
+        Accept_Independent'Access, Rewriters => To_Vector (RMP'Access, 1));
 
    Rewriter_Concat_After_If_Expression :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then $S_True & $S_Expr else $S_False & $S_Expr",
@@ -442,18 +594,17 @@ package Predefined_Rewriters is
    --        for all possible operators (including x ** 0 == 1)
 
    Rewriter_Plus_Before_If_Expression :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then $S_Expr + $S_True else $S_Expr + $S_False",
            Expr_Rule),
         Make_Pattern
           ("$S_Expr + (if $S_Cond then $S_True else $S_False)", Expr_Rule),
-        Accept_Independent'Access,
-        Rewriters => To_Vector (RMP'Access, 1));
+        Accept_Independent'Access, Rewriters => To_Vector (RMP'Access, 1));
 
    Rewriter_Plus_After_If_Expression :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then $S_True + $S_Expr else $S_False + $S_Expr",
@@ -468,26 +619,28 @@ package Predefined_Rewriters is
      Rewriter_If_Not_In_Expression'Access &
      Rewriter_Boolean_If_Condition_Expression'Access &
      Rewriter_Boolean_If_Not_Condition_Expression'Access &
-     --  See issue: https://github.com/TNO/Renaissance-Ada/issues/18
-     --  Rewriter_Integer_Max_Greater_Than'Access &
-     --  Rewriter_Integer_Max_Greater_Equal'Access &
-     --  Rewriter_Integer_Max_Less_Than'Access &
-     --  Rewriter_Integer_Max_Less_Equal'Access &
-     --  Rewriter_Integer_Min_Greater_Than'Access &
-     --  Rewriter_Integer_Min_Greater_Equal'Access &
-     --  Rewriter_Integer_Min_Less_Than'Access &
-     --  Rewriter_Integer_Min_Less_Equal'Access &
-     --  Rewriter_Concat_Before_If_Expression'Access &
+   --  See issue: https://github.com/TNO/Renaissance-Ada/issues/18
+   --  Rewriter_Integer_Max_Greater_Than'Access &
+   --  Rewriter_Integer_Max_Greater_Equal'Access &
+   --  Rewriter_Integer_Max_Less_Than'Access &
+   --  Rewriter_Integer_Max_Less_Equal'Access &
+   --  Rewriter_Integer_Min_Greater_Than'Access &
+   --  Rewriter_Integer_Min_Greater_Equal'Access &
+   --  Rewriter_Integer_Min_Less_Than'Access &
+   --  Rewriter_Integer_Min_Less_Equal'Access &
+   --  Rewriter_Concat_Before_If_Expression'Access &
+
      Rewriter_Concat_After_If_Expression'Access &
-     --  Rewriter_Plus_Before_If_Expression'Access &
+   --  Rewriter_Plus_Before_If_Expression'Access &
+
      Rewriter_Plus_After_If_Expression'Access;
 
    Rewriter_Case_Expression_Binary_With_Others :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("case $S_Expr is when $M_Values => $S_Val_In, "
-           & "when others => $S_Val_Out",
+          ("case $S_Expr is when $M_Values => $S_Val_In, " &
+           "when others => $S_Val_Out",
            Expr_Rule),
         Make_Pattern
           ("if ($S_Expr) in $M_Values then $S_Val_In else $S_Val_Out",
@@ -510,8 +663,7 @@ package Predefined_Rewriters is
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr + $S_Expr", Expr_Rule),
         Make_Pattern ("2 * ($S_Expr)", Expr_Rule),
-        Accept_No_Side_Effects'Access,
-        Rewriters => To_Vector (RMP'Access, 1));
+        Accept_No_Side_Effects'Access, Rewriters => To_Vector (RMP'Access, 1));
    --  We check for side effects:
    --       f(3) + f(3) has side effects (in f) twice
    --       while 2 * (f(3)) has side effects only once
@@ -526,7 +678,7 @@ package Predefined_Rewriters is
         Make_Pattern ("$S_Var in $S_Val1 | $S_Val2", Expr_Rule));
 
    Rewriter_Combine_In_Range_And_Equal :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Var in $M_Vals or else $S_Var = $S_Val", Expr_Rule),
         Make_Pattern ("$S_Var in $M_Vals | $S_Val", Expr_Rule));
@@ -540,14 +692,14 @@ package Predefined_Rewriters is
    --  TODO: put in fix-point rewriter to make range as big as possible
 
    Rewriter_Differents_To_Not_In_Range :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var /= $S_Val1 and then $S_Var /= $S_Val2", Expr_Rule),
         Make_Pattern ("$S_Var not in $S_Val1 | $S_Val2", Expr_Rule));
 
    Rewriter_Combine_Not_In_Range_And_Different :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var not in $M_Vals and then $S_Var /= $S_Val", Expr_Rule),
@@ -555,7 +707,7 @@ package Predefined_Rewriters is
    --  TODO: put in fix-point rewriter to make range as big as possible
 
    Rewriter_Combine_Not_In_Ranges :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var not in $M_Vals_1 and then $S_Var not in $M_Vals_2",
@@ -568,7 +720,7 @@ package Predefined_Rewriters is
 ------------------------------------------------------------------------------
 
    Rewriter_Unnecessary_Null_Stmt :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Stmt; null;", Stmts_Rule),
         Make_Pattern ("$S_Stmt;", Stmt_Rule));
@@ -600,23 +752,25 @@ package Predefined_Rewriters is
    Rewriter_If_Different_Stmt : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("if $S_A /= $S_B then $M_Stmts_True; "
-           & "else $S_Stmt_False; $M_Stmts_False; end if;",
+          ("if $S_A /= $S_B then $M_Stmts_True; " &
+           "else $S_Stmt_False; $M_Stmts_False; end if;",
            If_Stmt_Rule),
-        Make_Pattern ("if $S_A = $S_B then $S_Stmt_False; $M_Stmts_False; "
-           & "else $M_Stmts_True; end if;", If_Stmt_Rule));
+        Make_Pattern
+          ("if $S_A = $S_B then $S_Stmt_False; $M_Stmts_False; " &
+           "else $M_Stmts_True; end if;",
+           If_Stmt_Rule));
 
    --  Rewrite only when else branch is NOT empty
    Rewriter_If_Not_Condition_Stmt :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("if not $S_Cond then $M_Stmts_True; "
-           & "else $S_Stmt_False; $M_Stmts_False; end if;",
+          ("if not $S_Cond then $M_Stmts_True; " &
+           "else $S_Stmt_False; $M_Stmts_False; end if;",
            If_Stmt_Rule),
         Make_Pattern
-          ("if $S_Cond then $S_Stmt_False; $M_Stmts_False; "
-           & "else $M_Stmts_True; end if;",
+          ("if $S_Cond then $S_Stmt_False; $M_Stmts_False; " &
+           "else $M_Stmts_True; end if;",
            If_Stmt_Rule),
         Rewriters => To_Vector (RMP'Access, 1));
 
@@ -662,36 +816,33 @@ package Predefined_Rewriters is
         Make_Pattern ("if $S_Cond then $M_Stmts; end if;", If_Stmt_Rule));
 
    Rewriter_If_Identical_Branches_Stmt :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Expr then $M_Stmts; else $M_Stmts; end if;", If_Stmt_Rule),
-        Make_Pattern ("$M_Stmts;", Stmt_Rule),
-        Accept_No_Side_Effects'Access
-       );
+        Make_Pattern ("$M_Stmts;", Stmt_Rule), Accept_No_Side_Effects'Access);
    --  We can't rewrite when $S_Expr has a side effect,
    --  because it would change the behaviour of the program.
 
    Rewriter_If_Identical_Tails_Stmt :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("if $S_Cond then $M_Stmts_True; $S_Stmt; "
-           & "else $M_Stmts_False; $S_Stmt; end if;",
+          ("if $S_Cond then $M_Stmts_True; $S_Stmt; " &
+           "else $M_Stmts_False; $S_Stmt; end if;",
            If_Stmt_Rule),
         Make_Pattern
-          ("if $S_Cond then $M_Stmts_True; "
-           & "else $M_Stmts_False; end if; $S_Stmt;",
+          ("if $S_Cond then $M_Stmts_True; " &
+           "else $M_Stmts_False; end if; $S_Stmt;",
            Stmts_Rule),
         Rewriters =>
           Rewriter_Null_Then_Branch'Access & Rewriter_Null_Else_Branch'Access);
    --  TODO: put in fix-point rewriter to remove the whole identical tail
    --        not just the last statement.
 
-   function Accept_All_Independent
-     (Match : Match_Pattern) return Boolean is
+   function Accept_All_Independent (Match : Match_Pattern) return Boolean is
      (Are_Independent (Match, "$S_Cond", "$M_Args_Before")
-     and then Are_Independent (Match, "$S_Cond", "$M_Args_After"));
+      and then Are_Independent (Match, "$S_Cond", "$M_Args_After"));
    --  Note that the order of evaluation of parameters is NOT specified in Ada
    --  see e.g. http://www.ada-auth.org/standards/12rat/html/Rat12-4-2.html
    --  hence also $M_Args_After might be effected and might have an effect!
@@ -704,8 +855,8 @@ package Predefined_Rewriters is
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then " &
-           "$S_Subp ($M_Args_Before, $M_Name => $S_Val_True, $M_Args_After);"
-           & "else " &
+           "$S_Subp ($M_Args_Before, $M_Name => $S_Val_True, $M_Args_After);" &
+           "else " &
            "$S_Subp ($M_Args_Before, $M_Name => $S_Val_False, $M_Args_After);"
            & "end if;",
            If_Stmt_Rule),
@@ -714,8 +865,7 @@ package Predefined_Rewriters is
            "$M_Name => (if $S_Cond then $S_Val_True else $S_Val_False)," &
            "$M_Args_After);",
            Call_Stmt_Rule),
-        Accept_All_Independent'Access,
-        Rewriters => Rewriters_If_Expression);
+        Accept_All_Independent'Access, Rewriters => Rewriters_If_Expression);
 
    Rewriter_If_Assignment_Stmt : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
@@ -731,8 +881,8 @@ package Predefined_Rewriters is
    Rewriter_If_Return_Stmt : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("if $S_Cond then return $S_Expr_True; "
-           & "else return $S_Expr_False; end if;",
+          ("if $S_Cond then return $S_Expr_True; " &
+           "else return $S_Expr_False; end if;",
            If_Stmt_Rule),
         Make_Pattern
           ("return (if $S_Cond then $S_Expr_True else $S_Expr_False);",
@@ -742,8 +892,8 @@ package Predefined_Rewriters is
    Rewriter_If_Return_Stmts : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("if $S_Cond then return $S_Expr_True; end if; "
-           & "return $S_Expr_False;",
+          ("if $S_Cond then return $S_Expr_True; end if; " &
+           "return $S_Expr_False;",
            Stmts_Rule),
         Make_Pattern
           ("return (if $S_Cond then $S_Expr_True else $S_Expr_False);",
@@ -755,8 +905,7 @@ package Predefined_Rewriters is
        (Make_Pattern
           ("case $S_Expr is when $M_Values => $M_Stmts; end case;",
            Case_Stmt_Rule),
-        Make_Pattern ("$M_Stmts;", Stmt_Rule),
-           Accept_No_Side_Effects'Access);
+        Make_Pattern ("$M_Stmts;", Stmt_Rule), Accept_No_Side_Effects'Access);
 --  In case of a case statement with a single alternative (single when branch),
 --  the condition "($S_Expr) in $M_Values" is True:
 --  Ada requires and the compiler enforces that
@@ -765,30 +914,28 @@ package Predefined_Rewriters is
 --  we can't leave it out.
 
    Rewriter_Case_Binary_With_Others :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("case $S_Expr is when $M_Values => $M_Stmts_In; "
-           & "when others => $M_Stmts_Out; end case;",
+          ("case $S_Expr is when $M_Values => $M_Stmts_In; " &
+           "when others => $M_Stmts_Out; end case;",
            Case_Stmt_Rule),
         Make_Pattern
-          ("if ($S_Expr) in $M_Values then $M_Stmts_In; "
-           & "else $M_Stmts_Out; end if;",
+          ("if ($S_Expr) in $M_Values then $M_Stmts_In; " &
+           "else $M_Stmts_Out; end if;",
            If_Stmt_Rule),
         Rewriters =>
           Rewriter_Null_Else_Branch'Access & Rewriter_Null_Then_Branch'Access &
           RMP'Access);
 
    Rewriter_Case_Identical_Branches :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("case $S_Expr is " & "when $M_1_Vals => $M_Stmts;" &
            "when $M_2_Vals => $M_Stmts;" & "end case;",
            Case_Stmt_Rule),
-        Make_Pattern ("$M_Stmts;", Stmt_Rule),
-        Accept_No_Side_Effects'Access
-       );
+        Make_Pattern ("$M_Stmts;", Stmt_Rule), Accept_No_Side_Effects'Access);
    --  TODO: How to make a concrete pattern matching
    --  an arbitrary number of alternatives?
    --  Or at least 2..N, where N is the largest number of alternatives
@@ -809,8 +956,8 @@ package Predefined_Rewriters is
    Rewriter_Return_Expression : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("declare $S_Var : constant $S_Type := $S_Expr; "
-           & "begin return $S_Var; end;",
+          ("declare $S_Var : constant $S_Type := $S_Expr; " &
+           "begin return $S_Var; end;",
            Block_Stmt_Rule),
         Make_Pattern ("return $S_Expr;", Return_Stmt_Rule));
 
@@ -819,8 +966,7 @@ package Predefined_Rewriters is
       and then not Is_Referenced_In (Match, "$S_Var", "$S_Val_True")
       and then Are_Independent (Match, "$S_Val_False", "$S_Cond")
       and then not Has_Effect_On (Match, "$S_Val_False", "$S_Val_True")
-      and then not Has_Effect_On (Match, "$S_Val_False", "$M_Stmts")
-      );
+      and then not Has_Effect_On (Match, "$S_Val_False", "$M_Stmts"));
    --  To ensure semantically correct rewrite, we have
    --  to check that
    --  1. $S_Var is NOT used in both $S_Cond and $S_Val_True
@@ -835,12 +981,12 @@ package Predefined_Rewriters is
    --  TODO: can we split this rewriter?
    --        Also add the constant keyword when appropriate!
    Rewriter_Declare_And_Overwrite :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : $S_Type := $S_Val_False; " &
-           "begin if $S_Cond then $S_Var := $S_Val_True; end if; "
-           & "$M_Stmts; end;",
+           "begin if $S_Cond then $S_Var := $S_Val_True; end if; " &
+           "$M_Stmts; end;",
            Stmt_Rule),
         Make_Pattern
           ("declare $S_Var : $S_Type := " &
@@ -854,11 +1000,11 @@ package Predefined_Rewriters is
    --   prevent rewrite when $S_Var is an array access using $S_I
 
    Rewriter_For_All_Range_And_Then :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("for $S_I in $S_Range "
-           & "loop $S_Var := $S_Var and then $S_Cond; end loop;",
+          ("for $S_I in $S_Range " &
+           "loop $S_Var := $S_Var and then $S_Cond; end loop;",
            Loop_Stmt_Rule),
         Make_Pattern
           ("$S_Var := $S_Var and then (for all $S_I in $S_Range => $S_Cond);",
@@ -866,23 +1012,23 @@ package Predefined_Rewriters is
         Accept_Single_Variable'Access);
 
    Rewriter_For_All_Elements_And_Then :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("for $S_E of $S_Elements loop " &
            "$S_Var := $S_Var and then $S_Cond;" & "end loop;",
            Loop_Stmt_Rule),
         Make_Pattern
-          ("$S_Var := $S_Var and then "
-             & "(for all $S_E of $S_Elements => $S_Cond);",
+          ("$S_Var := $S_Var and then " &
+           "(for all $S_E of $S_Elements => $S_Cond);",
            Stmt_Rule));
 
    Rewriter_For_Some_Range_Or_Else :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("for $S_I in $S_Range "
-           & "loop $S_Var := $S_Var or else $S_Cond; end loop;",
+          ("for $S_I in $S_Range " &
+           "loop $S_Var := $S_Var or else $S_Cond; end loop;",
            Loop_Stmt_Rule),
         Make_Pattern
           ("$S_Var := $S_Var or else (for some $S_I in $S_Range => $S_Cond);",
@@ -890,33 +1036,32 @@ package Predefined_Rewriters is
         Accept_Single_Variable'Access);
 
    Rewriter_For_Some_Elements_Or_Else :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("for $S_E of $S_Elements loop " &
            "$S_Var := $S_Var or else $S_Cond;" & "end loop;",
            Loop_Stmt_Rule),
         Make_Pattern
-          ("$S_Var := $S_Var or else "
-             & "(for some $S_E of $S_Elements => $S_Cond);",
+          ("$S_Var := $S_Var or else " &
+           "(for some $S_E of $S_Elements => $S_Cond);",
            Stmt_Rule));
 
    Rewriter_For_All_Range_Exit : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("declare $S_Var : Boolean := true; begin "
-           & "for $S_I in $S_Range "
-           & "loop if $S_Cond then $S_Var := false; exit; end if; end loop; "
-           & "$M_Stmts; end;",
+          ("declare $S_Var : Boolean := true; begin " &
+           "for $S_I in $S_Range " &
+           "loop if $S_Cond then $S_Var := false; exit; end if; end loop; " &
+           "$M_Stmts; end;",
            Block_Stmt_Rule),
         Make_Pattern
-          ("declare $S_Var : Boolean := "
-           & "(for all $S_I in $S_Range => $S_Cond); "
-           & "begin $M_Stmts; end;",
+          ("declare $S_Var : Boolean := " &
+           "(for all $S_I in $S_Range => $S_Cond); " & "begin $M_Stmts; end;",
            Block_Stmt_Rule));
 
    Rewriter_For_All_Elements_Exit :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : Boolean := true; begin " &
@@ -925,27 +1070,26 @@ package Predefined_Rewriters is
            "$M_Stmts; end;",
            Block_Stmt_Rule),
         Make_Pattern
-          ("declare $S_Var : Boolean := "
-           & "(for all $S_E of $S_Elements => $S_Cond); "
-           & "begin $M_Stmts; end;",
+          ("declare $S_Var : Boolean := " &
+           "(for all $S_E of $S_Elements => $S_Cond); " &
+           "begin $M_Stmts; end;",
            Block_Stmt_Rule));
 
    Rewriter_For_Some_Range_Exit : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("declare $S_Var : Boolean := false; begin "
-           & "for $S_I in $S_Range "
-           & "loop if $S_Cond then $S_Var := true; exit; end if; end loop; "
-           & "$M_Stmts; end;",
+          ("declare $S_Var : Boolean := false; begin " &
+           "for $S_I in $S_Range " &
+           "loop if $S_Cond then $S_Var := true; exit; end if; end loop; " &
+           "$M_Stmts; end;",
            Block_Stmt_Rule),
         Make_Pattern
-          ("declare $S_Var : Boolean := "
-           & "(for some $S_I in $S_Range => $S_Cond); "
-           & "begin $M_Stmts; end;",
+          ("declare $S_Var : Boolean := " &
+           "(for some $S_I in $S_Range => $S_Cond); " & "begin $M_Stmts; end;",
            Block_Stmt_Rule));
 
    Rewriter_For_Some_Elements_Exit :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : Boolean := false; begin " &
@@ -954,41 +1098,41 @@ package Predefined_Rewriters is
            "$M_Stmts; end;",
            Block_Stmt_Rule),
         Make_Pattern
-          ("declare $S_Var : Boolean := "
-           & "(for some $S_E of $S_Elements => $S_Cond); "
-           & "begin $M_Stmts; end;",
+          ("declare $S_Var : Boolean := " &
+           "(for some $S_E of $S_Elements => $S_Cond); " &
+           "begin $M_Stmts; end;",
            Block_Stmt_Rule));
 
    Rewriter_For_All_Range_Return :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("for $S_I in $S_Range "
-           & "loop if $S_Cond then return false; end if; end loop; "
-           & "return true;",
+          ("for $S_I in $S_Range " &
+           "loop if $S_Cond then return false; end if; end loop; " &
+           "return true;",
            Stmts_Rule),
         Make_Pattern
           ("return (for all $S_I in $S_Range => $S_Cond);", Return_Stmt_Rule));
 
    Rewriter_For_All_Elements_Return :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("for $S_E of $S_Elements "
-           & "loop if $S_Cond then return false; end if; end loop; "
-           & "return true;",
+          ("for $S_E of $S_Elements " &
+           "loop if $S_Cond then return false; end if; end loop; " &
+           "return true;",
            Stmts_Rule),
         Make_Pattern
           ("return (for all $S_E of $S_Elements => $S_Cond);",
            Return_Stmt_Rule));
 
    Rewriter_For_Some_Range_Return :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("for $S_I in $S_Range "
-           & "loop if $S_Cond then return true; end if; end loop; "
-           & "return false;",
+          ("for $S_I in $S_Range " &
+           "loop if $S_Cond then return true; end if; end loop; " &
+           "return false;",
            Stmts_Rule),
         Make_Pattern
           ("return (for some $S_I in $S_Range => $S_Cond);",
@@ -998,9 +1142,9 @@ package Predefined_Rewriters is
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("for $S_E of $S_Elements "
-           & "loop if $S_Cond then return true; end if; end loop; "
-           & "return false;",
+          ("for $S_E of $S_Elements " &
+           "loop if $S_Cond then return true; end if; end loop; " &
+           "return false;",
            Stmts_Rule),
         Make_Pattern
           ("return (for some $S_E of $S_Elements => $S_Cond);",
@@ -1009,20 +1153,19 @@ package Predefined_Rewriters is
    Rewriter_For_All_Range_All : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("declare $S_Var : Boolean := true; begin "
-           & "for $S_I in $S_Range "
-           & "loop if $S_Expr then $S_Var := false; end if; end loop; "
-           & "$M_Stmts; end;",
+          ("declare $S_Var : Boolean := true; begin " &
+           "for $S_I in $S_Range " &
+           "loop if $S_Expr then $S_Var := false; end if; end loop; " &
+           "$M_Stmts; end;",
            Block_Stmt_Rule),
         Make_Pattern
-          ("declare $S_Var : Boolean := "
-           & "(for all $S_I in $S_Range => $S_Expr); "
-           & "begin $M_Stmts; end;",
+          ("declare $S_Var : Boolean := " &
+           "(for all $S_I in $S_Range => $S_Expr); " & "begin $M_Stmts; end;",
            Block_Stmt_Rule),
-       Accept_No_Side_Effects'Access);
+        Accept_No_Side_Effects'Access);
 
    Rewriter_For_All_Elements_All :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : Boolean := true; begin " &
@@ -1031,29 +1174,28 @@ package Predefined_Rewriters is
            "$M_Stmts; end;",
            Block_Stmt_Rule),
         Make_Pattern
-          ("declare $S_Var : Boolean := "
-           & "(for all $S_E of $S_Elements => $S_Expr); "
-           & "begin $M_Stmts; end;",
+          ("declare $S_Var : Boolean := " &
+           "(for all $S_E of $S_Elements => $S_Expr); " &
+           "begin $M_Stmts; end;",
            Block_Stmt_Rule),
-       Accept_No_Side_Effects'Access);
+        Accept_No_Side_Effects'Access);
 
    Rewriter_For_Some_Range_All : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("declare $S_Var : Boolean := false; begin "
-           & "for $S_I in $S_Range "
-           & "loop if $S_Expr then $S_Var := true; end if; end loop; "
-           & "$M_Stmts; end;",
+          ("declare $S_Var : Boolean := false; begin " &
+           "for $S_I in $S_Range " &
+           "loop if $S_Expr then $S_Var := true; end if; end loop; " &
+           "$M_Stmts; end;",
            Block_Stmt_Rule),
         Make_Pattern
-          ("declare $S_Var : Boolean := "
-           & "(for some $S_I in $S_Range => $S_Expr); "
-           & "begin $M_Stmts; end;",
+          ("declare $S_Var : Boolean := " &
+           "(for some $S_I in $S_Range => $S_Expr); " & "begin $M_Stmts; end;",
            Block_Stmt_Rule),
-       Accept_No_Side_Effects'Access);
+        Accept_No_Side_Effects'Access);
 
    Rewriter_For_Some_Elements_All :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : Boolean := false; begin " &
@@ -1062,35 +1204,30 @@ package Predefined_Rewriters is
            "$M_Stmts; end;",
            Block_Stmt_Rule),
         Make_Pattern
-          ("declare $S_Var : Boolean := "
-           & "(for some $S_E of $S_Elements => $S_Expr); "
-           & "begin $M_Stmts; end;",
+          ("declare $S_Var : Boolean := " &
+           "(for some $S_E of $S_Elements => $S_Expr); " &
+           "begin $M_Stmts; end;",
            Block_Stmt_Rule),
-       Accept_No_Side_Effects'Access);
+        Accept_No_Side_Effects'Access);
 
-   Rewriter_Append :
-   aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_Append : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern
-          ("$S_Var := $S_Var & $S_Tail;",
-           Assignment_Stmt_Rule),
-        Make_Pattern
-          ("Append ($S_Var, $S_Tail);",
-           Stmt_Rule),
-       Accept_Unbounded_String'Access);
+       (Make_Pattern ("$S_Var := $S_Var & $S_Tail;", Assignment_Stmt_Rule),
+        Make_Pattern ("Append ($S_Var, $S_Tail);", Stmt_Rule),
+        Accept_Unbounded_String'Access);
 
-------------------------------------------------------------------------------
+   ----------------------------------------------------------------------------
    --  Declarations
-------------------------------------------------------------------------------
+   ----------------------------------------------------------------------------
 
    Rewriter_Declarations_Combine :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$M_X : $S_Type := $M_Expr;" & "$M_Y : $S_Type := $M_Expr;",
            Basic_Decls_Rule),
         Make_Pattern ("$M_X, $M_Y : $S_Type := $M_Expr;", Basic_Decl_Rule),
-       Accept_Multiple_No_Side_Effects'Access);
+        Accept_Multiple_No_Side_Effects'Access);
 
    Rewriter_For_Attribute_Use : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
@@ -1099,29 +1236,29 @@ package Predefined_Rewriters is
            "for $S_Var'$S_Attribute use $S_Expr;",
            Basic_Decls_Rule),
         Make_Pattern
-          ("$S_Var : $S_Type := $M_Value "
-           & "with $M_Aspects, $S_Attribute => $S_Expr;",
+          ("$S_Var : $S_Type := $M_Value " &
+           "with $M_Aspects, $S_Attribute => $S_Expr;",
            Basic_Decl_Rule));
 
    Rewriter_For_Attribute_Use_Aliased :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var : aliased $S_Type := $M_Value with $M_Aspects;" &
            "for $S_Var'$S_Attribute use $S_Expr;",
            Basic_Decls_Rule),
         Make_Pattern
-          ("$S_Var : aliased $S_Type := $M_Value "
-           & "with $M_Aspects, $S_Attribute => $S_Expr;",
+          ("$S_Var : aliased $S_Type := $M_Value " &
+           "with $M_Aspects, $S_Attribute => $S_Expr;",
            Basic_Decl_Rule));
 
    Rewriter_For_Attribute_Use_Array :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("$S_Var : array ($M_Ranges) of $S_Type := "
-           & "$M_Value with $M_Aspects;"
-           & "for $S_Var'$S_Attribute use $S_Expr;",
+          ("$S_Var : array ($M_Ranges) of $S_Type := " &
+           "$M_Value with $M_Aspects;" &
+           "for $S_Var'$S_Attribute use $S_Expr;",
            Basic_Decls_Rule),
         Make_Pattern
           ("$S_Var : array ($M_Ranges) of $S_Type := $M_Value " &
@@ -1129,7 +1266,7 @@ package Predefined_Rewriters is
            Basic_Decl_Rule));
 
    Rewriter_For_Attribute_Use_Pragma_Var :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var : $S_Type := $M_Value with $M_Aspects;" &
@@ -1143,7 +1280,7 @@ package Predefined_Rewriters is
            Basic_Decls_Rule));
 
    Rewriter_For_Attribute_Use_Pragma_All :
-   aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var : $S_Type := $M_Value with $M_Aspects;" &
