@@ -374,6 +374,7 @@ procedure Code_Reviewer is
       Name_To_Rewriter_Map.Include
         ("Case_Expression_Binary_With_Others",
          Rewriter_Case_Expression_Binary_With_Others);
+      Name_To_Rewriter_Map.Include ("Double", Rewriter_Double);
       Name_To_Rewriter_Map.Include
         ("Equals_To_In_Range", Rewriter_Equals_To_In_Range);
       Name_To_Rewriter_Map.Include
@@ -389,7 +390,6 @@ procedure Code_Reviewer is
          Rewriter_Combine_Not_In_Range_And_Different);
       Name_To_Rewriter_Map.Include
         ("Combine_In_Ranges", Rewriter_Combine_In_Ranges);
-      Name_To_Rewriter_Map.Include ("Double", Rewriter_Double);
 
       Name_To_Rewriter_Map.Include
         ("Unnecessary_Null_Stmt", Rewriter_Unnecessary_Null_Stmt);
@@ -425,7 +425,11 @@ procedure Code_Reviewer is
       Name_To_Rewriter_Map.Include
         ("Case_Binary_With_Others", Rewriter_Case_Binary_With_Others);
       Name_To_Rewriter_Map.Include
+        ("Case_Identical_Branches", Rewriter_Case_Identical_Branches);
+      Name_To_Rewriter_Map.Include
         ("Return_Expression", Rewriter_Return_Expression);
+      Name_To_Rewriter_Map.Include
+        ("Declare_And_Overwrite", Rewriter_Declare_And_Overwrite);
 
       Name_To_Rewriter_Map.Include
         ("For_All_Range_And_Then", Rewriter_For_All_Range_And_Then);
@@ -459,8 +463,6 @@ procedure Code_Reviewer is
         ("For_Some_Range_All", Rewriter_For_Some_Range_All);
       Name_To_Rewriter_Map.Include
         ("For_Some_Elements_All", Rewriter_For_Some_Elements_All);
-      Name_To_Rewriter_Map.Include
-        ("Declare_And_Overwrite", Rewriter_Declare_And_Overwrite);
 
       Name_To_Rewriter_Map.Include
         ("Append", Rewriter_Append);
