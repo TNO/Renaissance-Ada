@@ -1,3 +1,4 @@
+with Libadalang.Analysis;         use Libadalang.Analysis;
 with Libadalang.Common;           use Libadalang.Common;
 with Rejuvenation.Match_Patterns; use Rejuvenation.Match_Patterns;
 with Rejuvenation.Patterns;       use Rejuvenation.Patterns;
@@ -179,6 +180,8 @@ package Predefined_Rewriters is
    Rewriter_For_Some_Elements_All : aliased constant Rewriter_Find_And_Replace;
 
    Rewriter_Append : aliased constant Rewriter_Find_And_Replace;
+   Rewriter_Append_To_Unbounded_String :
+     aliased constant Rewriter_Find_And_Replace;
 
    ----------------------------------------------------------------------------
    --  Declarations
@@ -203,8 +206,15 @@ private
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
    function Is_Float_Expression
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
+   function Is_String_Expression
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
    function Is_Unbounded_String
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
+
+   function Is_Referenced_Decl_Defined_In_AStrUnb
+     (N : Name)
+      return Boolean;
+
 
    function Accept_Boolean (Match : Match_Pattern) return Boolean is
      (Is_Boolean_Expression (Match, "$S_Expr"));
@@ -1210,11 +1220,31 @@ private
            Block_Stmt_Rule),
         Accept_No_Side_Effects'Access);
 
+   function Accept_Append_To_Unbounded_String
+     (Match : Match_Pattern)
+      return Boolean
+   is
+     (Is_String_Expression (Match, "$S_Expr") and then
+      Is_Referenced_Decl_Defined_In_AStrUnb
+        (Match.Get_Nodes.First_Element.As_Call_Stmt.F_Call));
+
+   Rewriter_Append_To_Unbounded_String :
+     aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern
+          ("Append ($S_Var, To_Unbounded_String ($M_Source => $S_Expr));",
+           Call_Stmt_Rule),
+        Make_Pattern
+          ("Append ($S_Var, $S_Expr);", Call_Stmt_Rule),
+        Accept_Append_To_Unbounded_String'Access);
+
    Rewriter_Append : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Var := $S_Var & $S_Tail;", Assignment_Stmt_Rule),
-        Make_Pattern ("Append ($S_Var, $S_Tail);", Stmt_Rule),
+        Make_Pattern ("Append ($S_Var, $S_Tail);", Call_Stmt_Rule),
         Accept_Unbounded_String'Access);
+   --  When issue 18 is solved, chain Rewriter_Append_To_Unbounded_String
+   --  after the Append rewrite to remove the unnecessary conversions as well
 
    ----------------------------------------------------------------------------
    --  Declarations
