@@ -70,6 +70,13 @@ package Predefined_Rewriters is
    Rewrite_De_Morgan_Not_Some_Elements :
      aliased constant Rewriter_Find_And_Replace;
 
+   Rewriter_If_True_Expression :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_If_False_Expression :
+     aliased constant Rewriter_Find_And_Replace;
+   Rewriter_If_Identical_Expression :
+     aliased constant Rewriter_Find_And_Replace;
+
    Rewriter_If_Different_Expression :
      aliased constant Rewriter_Find_And_Replace;
    Rewriter_If_Not_Condition_Expression :
@@ -471,6 +478,31 @@ private
           ("(for all $S_E of $S_Elements => not ($S_Cond))", Expr_Rule),
         Rewriters => Rewriters_Not & RMP'Access);
 
+   Rewriter_If_True_Expression :
+     aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern
+          ("if true then $S_Val_True else $S_Val_False", Expr_Rule),
+        Make_Pattern
+          ("$S_Val_True", Expr_Rule));
+
+   Rewriter_If_False_Expression :
+     aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern
+          ("if false then $S_Val_True else $S_Val_False", Expr_Rule),
+        Make_Pattern
+          ("$S_Val_False", Expr_Rule));
+
+   Rewriter_If_Identical_Expression :
+     aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern
+          ("if $S_Expr then $S_Val else $S_Val", Expr_Rule),
+        Make_Pattern
+          ("$S_Val", Expr_Rule),
+        Accept_No_Side_Effects'Access);
+
    Rewriter_If_Different_Expression :
      aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
@@ -504,6 +536,7 @@ private
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_Cond then true else false", Expr_Rule),
         Make_Pattern ("$S_Cond", Expr_Rule));
+   --  TODO: check true & false are booleans
 
    Rewriter_Boolean_If_Not_Condition_Expression :
      aliased constant Rewriter_Find_And_Replace :=
@@ -511,6 +544,7 @@ private
        (Make_Pattern ("if $S_Cond then false else true", Expr_Rule),
         Make_Pattern ("not ($S_Cond)", Expr_Rule),
         Rewriters => Rewriters_Not & RMP'Access);
+   --  TODO: check true & false are booleans
 
    function Accept_Extreme (Match : Match_Pattern) return Boolean is
      (Is_Integer_Expression (Match, "$S_X")
@@ -624,25 +658,27 @@ private
         Rewriters => To_Vector (RMP'Access, 1));
 
    Rewriters_If_Expression : constant Rewriters_Sequence.Vector :=
+     --  Outcommented some rewriters to prevent triggering known bug:
+     --  See issue: https://github.com/TNO/Renaissance-Ada/issues/18
+     Rewriter_If_True_Expression'Access &
+     Rewriter_If_False_Expression'Access &
+     --  Rewriter_If_Identical_Expression'Access &
      Rewriter_If_Different_Expression'Access &
      Rewriter_If_Not_Condition_Expression'Access &
      Rewriter_If_Not_In_Expression'Access &
      Rewriter_Boolean_If_Condition_Expression'Access &
      Rewriter_Boolean_If_Not_Condition_Expression'Access &
-   --  See issue: https://github.com/TNO/Renaissance-Ada/issues/18
-   --  Rewriter_Integer_Max_Greater_Than'Access &
-   --  Rewriter_Integer_Max_Greater_Equal'Access &
-   --  Rewriter_Integer_Max_Less_Than'Access &
-   --  Rewriter_Integer_Max_Less_Equal'Access &
-   --  Rewriter_Integer_Min_Greater_Than'Access &
-   --  Rewriter_Integer_Min_Greater_Equal'Access &
-   --  Rewriter_Integer_Min_Less_Than'Access &
-   --  Rewriter_Integer_Min_Less_Equal'Access &
-   --  Rewriter_Concat_Before_If_Expression'Access &
-
+     --  Rewriter_Integer_Max_Greater_Than'Access &
+     --  Rewriter_Integer_Max_Greater_Equal'Access &
+     --  Rewriter_Integer_Max_Less_Than'Access &
+     --  Rewriter_Integer_Max_Less_Equal'Access &
+     --  Rewriter_Integer_Min_Greater_Than'Access &
+     --  Rewriter_Integer_Min_Greater_Equal'Access &
+     --  Rewriter_Integer_Min_Less_Than'Access &
+     --  Rewriter_Integer_Min_Less_Equal'Access &
+     --  Rewriter_Concat_Before_If_Expression'Access &
      Rewriter_Concat_After_If_Expression'Access &
-   --  Rewriter_Plus_Before_If_Expression'Access &
-
+     --  Rewriter_Plus_Before_If_Expression'Access &
      Rewriter_Plus_After_If_Expression'Access;
 
    Rewriter_Case_Expression_Binary_With_Others :

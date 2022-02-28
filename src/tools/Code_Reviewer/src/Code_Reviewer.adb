@@ -322,6 +322,17 @@ procedure Code_Reviewer is
       Name_To_Rewriter_Map.Include
         ("De_Morgan_Not_Some_Elements",
          Rewrite_De_Morgan_Not_Some_Elements);
+
+      Name_To_Rewriter_Map.Include
+        ("If_True_Expression",
+         Rewriter_If_True_Expression);
+      Name_To_Rewriter_Map.Include
+        ("If_False_Expression",
+         Rewriter_If_False_Expression);
+      Name_To_Rewriter_Map.Include
+        ("If_Identical_Expression",
+         Rewriter_If_Identical_Expression);
+
       Name_To_Rewriter_Map.Include
         ("If_Different_Expression", Rewriter_If_Different_Expression);
       Name_To_Rewriter_Map.Include
