@@ -437,6 +437,8 @@ private
        (Make_Pattern ("not ($S_A and then $S_B)", Expr_Rule),
         Make_Pattern ("(not ($S_A)) or else (not ($S_B))", Expr_Rule),
         Rewriters => Rewriters_Not & RMP'Access);
+   --  TODO: should we also have the reverse direction?
+   --  enables e.g. if statements to swap their branches!
 
    Rewrite_De_Morgan_Not_Or : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace

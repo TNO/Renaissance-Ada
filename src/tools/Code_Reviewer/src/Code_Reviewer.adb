@@ -41,7 +41,7 @@ procedure Code_Reviewer is
    Source_Version_Control : constant Version_Control_Kind := GIT;
 
    Source_Directory : constant String :=
-   "C:\path\to\Renaissance-Ada";
+     "C:\path\to\Renaissance-Ada";
    --  Example to review the code within Renaissance-Ada
 
    Project_Filename : constant String :=
@@ -476,7 +476,8 @@ procedure Code_Reviewer is
         ("For_Some_Elements_All", Rewriter_For_Some_Elements_All);
 
       Name_To_Rewriter_Map.Include
-        ("Append_To_Unbounded_String", Rewriter_Append_To_Unbounded_String);
+        ("Append_To_Unbounded_String",
+         Rewriter_Append_To_Unbounded_String);
       Name_To_Rewriter_Map.Include
         ("Append", Rewriter_Append);
 
