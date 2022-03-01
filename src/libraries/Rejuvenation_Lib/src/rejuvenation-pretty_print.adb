@@ -1,6 +1,5 @@
 with Ada.Assertions;              use Ada.Assertions;
 with Interfaces.C;                use Interfaces.C;
-with Rejuvenation;                use Rejuvenation;
 with Rejuvenation.File_Utils;     use Rejuvenation.File_Utils;
 with Rejuvenation.Indentation;    use Rejuvenation.Indentation;
 with Rejuvenation.Navigation;     use Rejuvenation.Navigation;

@@ -1,6 +1,5 @@
 with Ada.Assertions;       use Ada.Assertions;
 with Ada.Strings.Fixed;    use Ada.Strings.Fixed;
-with Rejuvenation;         use Rejuvenation;
 with Rejuvenation.Finder;  use Rejuvenation.Finder;
 with Rejuvenation.Utils;   use Rejuvenation.Utils;
 with String_Vectors;       use String_Vectors;
