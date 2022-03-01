@@ -1,4 +1,3 @@
-with Rejuvenation;              use Rejuvenation;
 with Rejuvenation.Finder;       use Rejuvenation.Finder;
 with Rejuvenation.Placeholders; use Rejuvenation.Placeholders;
 with Rejuvenation.Replacer;     use Rejuvenation.Replacer;
