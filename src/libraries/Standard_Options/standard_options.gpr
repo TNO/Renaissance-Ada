@@ -56,14 +56,14 @@ abstract project Standard_Options is
            );
       when "release" =>
          for Default_Switches ("ada") use Compiler'Default_Switches ("ada") &
-           ("-O3" );
+           ("-Os" );
       end case;
    end Compiler;
 
    package Binder is
       for Default_Switches ("Ada") use
       ( "-E"                               --  Currently the same as -Ea:
-                                           --  Store tracebacks in exception occurrences when the target supports it. The “a” is for hexadecimal “address”.
+                                           --  Store tracebacks in exception occurrences when the target supports it. The "a" is for hexadecimal "address".
       );
    end Binder;
 
