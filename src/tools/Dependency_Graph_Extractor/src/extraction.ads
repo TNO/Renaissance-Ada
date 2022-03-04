@@ -29,7 +29,7 @@ private
    function "="(L, R : LAL.Ada_Node'Class) return Boolean renames LAL."=";
 
    function "+"(Str : String) return SU.Unbounded_String is
-      (SU.To_Unbounded_String(Str));
+      (SU.To_Unbounded_String (Str));
 
    Internal_Extraction_Error : exception;
 
