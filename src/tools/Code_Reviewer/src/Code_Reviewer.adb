@@ -47,7 +47,6 @@ procedure Code_Reviewer is
    Project_Filename : constant String :=
      Source_Directory &
      "\src\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
-
    --  Example to review the rejuvenation_lib project
    --  TODO: when aggregate projects are supported review all projects!
 
