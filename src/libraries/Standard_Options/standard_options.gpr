@@ -56,7 +56,11 @@ abstract project Standard_Options is
            );
       when "release" =>
          for Default_Switches ("ada") use Compiler'Default_Switches ("ada") &
-           ("-Os" );
+           ( "-O3"
+           , "-Wno-error=maybe-uninitialized"   --  A gcc-backend warning, not emitted by gnat
+                                                --  AdaCore suspects it is not relevant to Ada code [ticket V304-026].
+                                                --  Will hopefully be solved in upcoming Ada compiler release.
+           );
       end case;
    end Compiler;
 

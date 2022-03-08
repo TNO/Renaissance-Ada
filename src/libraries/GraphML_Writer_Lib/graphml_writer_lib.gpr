@@ -1,3 +1,5 @@
+with "..\Standard_Options\standard_options.gpr";
+
 library project Graphml_Writer_Lib is
 
    for Languages use ("Ada");
@@ -7,9 +9,13 @@ library project Graphml_Writer_Lib is
    for Library_Dir use "lib";
    for Library_Kind use "Static";
 
-   package Compiler is
-      for Switches ("ada") use ("-gnatf", "-gnatwa");
-   end Compiler;
+   package Builder renames Standard_Options.Builder;
+   package Compiler renames Standard_Options.Compiler;
+   package Binder renames Standard_Options.Binder;
+   package Linker renames Standard_Options.Linker;
+   package Check renames Standard_Options.Check;
+   package CodePeer renames Standard_Options.CodePeer;
+   package Pretty_Printer renames Standard_Options.Pretty_Printer;
 
 end Graphml_Writer_Lib;
 
