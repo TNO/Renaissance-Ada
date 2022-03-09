@@ -220,7 +220,7 @@ package body Rejuvenation.Match_Patterns is
       if MPS.Has_Earlier_Multiple_Placeholder_Nodes then
          if MPS.Earlier_Multiple_Placeholder_Nodes.Length <=
            MPS.Multiple_Placeholder_Nodes.Length
-           or else not Are_Equal_As_Raw_Signature
+           or else not Are_Equal_In_Ada
              (MPS.Earlier_Multiple_Placeholder_Nodes.Element
                 (Integer (MPS.Multiple_Placeholder_Nodes.Length + 1)),
               Instance_Node)
@@ -463,7 +463,7 @@ package body Rejuvenation.Match_Patterns is
             if Earlier_Mapping.Length /= Instance_Vector.Length
               or else
               (for some I in 1 .. Natural (Instance_Vector.Length) =>
-                 not Are_Equal_As_Raw_Signature
+                 not Are_Equal_In_Ada
                    (Earlier_Mapping.Element (I), Instance_Vector.Element (I)))
             then
                raise Inconsistent_Placeholder_Values_Exception;
@@ -479,6 +479,21 @@ package body Rejuvenation.Match_Patterns is
      (MP       : in out Match_Pattern; Pattern : Ada_Node'Class;
       Instance :        Ada_Node'Class) return Boolean
    is
+
+      function Disambiguate_Node (Node : Ada_Node) return Ada_Node;
+      --  The same Ada code can be interpreted as different Nodes
+      --  e.g. an defining name and an indentifier
+      function Disambiguate_Node (Node : Ada_Node) return Ada_Node
+      is
+      begin
+         if Node.Is_Null or else Node.Children_Count /= 1 then
+            return Node;
+         else
+            return Disambiguate_Node (Node.First_Child);
+               --  Robustness: it might happen multiple times.
+         end if;
+      end Disambiguate_Node;
+
       Placeholder_Name : constant String := Get_Placeholder_Name (Pattern);
    begin
       if MP.Has_Single (Placeholder_Name) then
@@ -486,7 +501,10 @@ package body Rejuvenation.Match_Patterns is
             Earlier_Mapping : constant Ada_Node :=
               MP.Get_Single_As_Node (Placeholder_Name);
          begin
-            if not Are_Equal_As_Raw_Signature (Earlier_Mapping, Instance) then
+            if not Are_Equal_In_Ada
+               (Disambiguate_Node (Earlier_Mapping),
+                Disambiguate_Node (Instance.As_Ada_Node))
+            then
                raise Inconsistent_Placeholder_Values_Exception;
             end if;
          end;

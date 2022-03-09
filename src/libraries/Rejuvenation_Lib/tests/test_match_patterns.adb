@@ -264,8 +264,8 @@ package body Test_Match_Patterns is
         (If_Stmt_Rule, Pattern, "if x in A | B then null; else null; end if;");
    end Test_If_Stmt;
 
-   procedure Test_Back_Reference (T : in out Test_Case'Class);
-   procedure Test_Back_Reference (T : in out Test_Case'Class) is
+   procedure Test_Back_Reference_Same_Kind (T : in out Test_Case'Class);
+   procedure Test_Back_Reference_Same_Kind (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
       Pattern : constant String :=
@@ -281,13 +281,27 @@ package body Test_Match_Patterns is
       Assert_Match_Full
         (If_Stmt_Rule, Pattern,
          "if x then P; -- comment" & ASCII.LF & " Q; else P; Q; end if;");
-      Assert_Mismatch_Full
+      Assert_Match_Full
         (If_Stmt_Rule,
-         Pattern,                   --  TODO: Is this what we want?
+         Pattern,
          "if x then f(x, y); else f ( x ,  y) ; end if;");
       Assert_Mismatch_Full
         (If_Stmt_Rule, Pattern, "if x then P; Q; else P; X; end if;");
-   end Test_Back_Reference;
+   end Test_Back_Reference_Same_Kind;
+
+   procedure Test_Back_Reference_Different_Kind (T : in out Test_Case'Class);
+   procedure Test_Back_Reference_Different_Kind (T : in out Test_Case'Class) is
+      pragma Unreferenced (T);
+
+      Pattern : constant String :=
+        "declare $S_Var : $S_Type := $S_Val_False; " &
+        "begin $S_Var := $S_Val_True; end;";
+   begin
+      Assert_Match_Full
+        (Stmt_Rule, Pattern,
+         "declare x : Boolean := False; begin x := True; end;");
+   end Test_Back_Reference_Different_Kind;
+
 
    procedure Test_Call_Mismatch_No_Arguments (T : in out Test_Case'Class);
    procedure Test_Call_Mismatch_No_Arguments (T : in out Test_Case'Class) is
@@ -990,7 +1004,11 @@ package body Test_Match_Patterns is
         (T, Test_Subtype_Indication_Decl_Mismatch_Object_Decl'Access,
          "Subtype_Indication Declaration mismatch with Object Declaration");
       Registration.Register_Routine
-        (T, Test_Back_Reference'Access, "Backreferences in Find");
+        (T, Test_Back_Reference_Same_Kind'Access,
+         "Backreferences in Find - same kind");
+      Registration.Register_Routine
+        (T, Test_Back_Reference_Different_Kind'Access,
+         "Backreferences in Find - different kind");
       Registration.Register_Routine
         (T, Test_Stmt'Access, "Value of Stmt placeholder");
       Registration.Register_Routine (T, Test_Label'Access, "Match with label");
