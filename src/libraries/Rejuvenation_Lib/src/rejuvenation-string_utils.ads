@@ -96,16 +96,16 @@ is
       --  Replace 'Prefix' with 'New_Prefix' in 'String_With_Prefix'.
       --  @param String_With_Prefix String that starts with Prefix
       --  @param Prefix Prefix present in String_With_Prefix to be replaced
-      --                by New_Prefix
+      --  by New_Prefix
       --  @param New_Prefix New Prefix to replace Prefix in String_With_Prefix
       --  @return Given that String_With_Prefix = Prefix & Remainder return is
-      --          equal to New_Prefix & Remainder
+      --  equal to New_Prefix & Remainder
 
    function Replace_All (Source, Pattern, Replacement : String) return String;
    --  Replace all occurrences of Pattern in Source by the given Replacement.
    --
    --  Note: Search order is left to right,
-   --        matched parts are replace as a whole.
+   --  matched parts are replace as a whole.
    --
    --  Example: Replace_All ("InInInInIn, "InIn", "Out") = "OutOutIn"
 
