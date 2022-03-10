@@ -19,20 +19,13 @@ package GraphML_Writers is
      (Key_Type => S_U.Unbounded_String, Element_Type => S_U.Unbounded_String,
       Hash     => S_U.Hash, Equivalent_Keys => S_U."=", "=" => S_U."=");
 
-   type GraphML_File is tagged limited private;
-
-   function Create_GraphML_Writer
-     (Filename        : String;
-      Node_Attributes : Attribute_Definition_Sets.Map :=
-        Attribute_Definition_Sets.Empty_Map;
-      Edge_Attributes : Attribute_Definition_Sets.Map :=
-        Attribute_Definition_Sets.Empty_Map)
-      return GraphML_File;
-
-   procedure Close (This : in out GraphML_File);
-
    type Node_Type is new String;
    type Node_Subtype is new String;
+   type Edge_Type is new String;
+
+   type GraphML_File is tagged limited private;
+
+   procedure Close (This : in out GraphML_File);
 
    procedure Write_Node
      (This : in out GraphML_File; Node_Key : String; Node_Name : String;
@@ -46,13 +39,19 @@ package GraphML_Writers is
       Node_Attributes :        Attribute_Value_Sets.Map :=
         Attribute_Value_Sets.Empty_Map);
 
-   type Edge_Type is new String;
-
    procedure Write_Edge
      (This            : in out GraphML_File; Source_Node_Key : String;
       Target_Node_Key :        String; Edge_Ty : Edge_Type;
       Edge_Attributes :        Attribute_Value_Sets.Map :=
         Attribute_Value_Sets.Empty_Map);
+
+   function Create_GraphML_Writer
+     (Filename        : String;
+      Node_Attributes : Attribute_Definition_Sets.Map :=
+        Attribute_Definition_Sets.Empty_Map;
+      Edge_Attributes : Attribute_Definition_Sets.Map :=
+        Attribute_Definition_Sets.Empty_Map)
+      return GraphML_File;
 
 private
 
