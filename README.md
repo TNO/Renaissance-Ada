@@ -57,6 +57,15 @@ Snippets from diff made with [Code Reviewer](/src/tools/Code_Reviewer)
 + return (for all Acf of Acfs => Acf = null);
 ```
 
+Example based on [aws](https://github.com/AdaCore/aws/blob/7488c0f6f4c593b51e8b61b94d245e2ff4896e33/config/ssl/aws-net-ssl__openssl.adb#L215) code
+```diff
+-   Max_Overhead : Stream_Element_Count range 0 .. 2**15 := 81 with Atomic;
+-   for Max_Overhead'Size use 16;
++   Max_Overhead : Stream_Element_Count range 0 .. 2**15 := 81 with
++      Atomic,
++      Size => 16;
+```
+
 # Used by Industry
 [Nexperia](https://nexperia.com) described during [the AdaCore Tech Days](https://events.adacore.com/eutechday2021) 
 how [they benefit from the Renaissance-Ada tooling](https://www.youtube.com/watch?v=EHrd-9wgALM).
