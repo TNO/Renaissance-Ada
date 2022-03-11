@@ -36,14 +36,18 @@ Snippets from diff made with [Code Reviewer](/src/tools/Code_Reviewer)
    function Release_Only (Mode : Operation_Mode) return Boolean is
 -     (case Mode is when Release_Size_Mode | Release_Optimize_Mode => True, when others => False);
 +     (Mode in Release_Size_Mode | Release_Optimize_Mode);
+```
 
+```diff
 - if Valid then
 -    Add (Value, 0, 0, 0);
 - else
 -    Add ("", 0, 0, 0);
 - end if;
 + Add ((if Valid then Value else ""), 0, 0, 0);
+```
 
+```diff
 - for Acf of Acfs loop
 -    if Acf = null then
 -       return False;
