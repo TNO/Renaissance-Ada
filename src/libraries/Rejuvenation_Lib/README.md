@@ -18,6 +18,7 @@ As long as Ada parses it to a single AST node, the "$S_" placeholders can match 
 Note that the current implementation is greedy with respect to placeholders.
 Whenever one could proceed to the next placeholder this will happen.
 So all matches in the current implementation of `$M_X; $S_T;` will always have an empty list for `$M_X`.
+We want to improve this behaviour soon. See https://github.com/TNO/Renaissance-Ada/issues/21.
 
 ### placeholders in find patterns
 
