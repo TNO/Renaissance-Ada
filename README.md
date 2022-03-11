@@ -43,6 +43,14 @@ Snippets from diff made with [Code Reviewer](/src/tools/Code_Reviewer)
 -    Add ("", 0, 0, 0);
 - end if;
 + Add ((if Valid then Value else ""), 0, 0, 0);
+
+- for Acf of Acfs loop
+-    if Acf = null then
+-       return False;
+-    end if;
+- end loop;
+- return True;
++ return (for all Acf of Acfs => Acf = null);
 ```
 
 # Used by Industry
