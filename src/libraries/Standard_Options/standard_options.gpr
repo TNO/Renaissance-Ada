@@ -164,7 +164,7 @@ abstract project Standard_Options is
        "+RNot_Imported_Overlays",                                --  not imported overlays --  MEDIUM
        "+RNon_Qualified_Aggregates",                             --  non-qualified aggregates --  EASY
        "+RNon_Short_Circuit_Operators",                          --  use of predefined AND and OR for boolean types --  EASY
-       -- Non_SPARK_Attributes                                   --  attributes that are not from the SPARK subset --  MEDIUM
+       --  Non_SPARK_Attributes                                  --  attributes that are not from the SPARK subset --  MEDIUM
        "+RNon_Tagged_Derived_Types",                             --  derived types that are not type extensions --  MEDIUM
        "+RNon_Visible_Exceptions",                               --  potential propagations of non-- visible exceptions --  MEDIUM
        "+RNull_Paths",                                           --  null paths in control statements --  EASY
@@ -188,8 +188,8 @@ abstract project Standard_Options is
        "+RPOS_On_Enumeration_Types",                             --  attribute 'POS applied to enumeration types --  MEDIUM
        "+RPositional_Components",                                --  positional components associations in aggregates --  EASY
        "+RPositional_Generic_Parameters",                        --  positional generic associations --  EASY
-       "+RPositional_Parameters",                                --  positional associations in subprogram and entry calls --  EASY
-       -- Predefined_Numeric_Types                               --  explicit references to predefined numeric subtypes --  MEDIUM
+       --  RPositional_Parameters                                --  positional associations in subprogram and entry calls --  EASY
+       --  Predefined_Numeric_Types                              --  explicit references to predefined numeric subtypes --  MEDIUM
        "+RPredicate_Testing",                                    --  expressions need subtype predicate evaluation --  MEDIUM
        "+RPrintable_ASCII",                                      --  non-- printable characters --  EASY
        "+RQuantified_Expressions",                               --  Ada 2012 quantified expressions --  MEDIUM
