@@ -15,14 +15,15 @@ The following snippet
 -     (case Mode is when Release_Size_Mode | Release_Speed_Mode => True, when others => False);
 +     (Mode in Release_Size_Mode | Release_Speed_Mode);
 ```
-is produced using the Rewriter
-that replaces every binary case expression with an **others** alternative, i.e.
+is produced using the rewriter
+that replaces every case expression that adheres to the pattern
 ```ada
 case $S_Expr is 
    when $M_Values => $S_Val_In, 
    when others => $S_Val_Out
 ```
-with the equivalent if expression
+i.e., a **binary** case expression with an **others** alternative,
+by the equivalent if expression, that adheres to the pattern
 ```ada
 if ($S_Expr) in $M_Values 
    then $S_Val_In 
