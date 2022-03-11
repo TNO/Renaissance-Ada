@@ -7,19 +7,43 @@ with Ada.Streams.Stream_IO;
 
 package GraphML_Writers is
 
-   package SU renames Ada.Strings.Unbounded;
+   package S_U renames Ada.Strings.Unbounded;
 
    type GraphML_Type is (GraphML_Boolean, GraphML_Int, GraphML_String);
 
    package Attribute_Definition_Sets is new Ada.Containers.Hashed_Maps
-     (Key_Type => SU.Unbounded_String, Element_Type => GraphML_Type,
-      Hash     => SU.Hash, Equivalent_Keys => SU."=");
+     (Key_Type => S_U.Unbounded_String, Element_Type => GraphML_Type,
+      Hash     => S_U.Hash, Equivalent_Keys => S_U."=");
 
    package Attribute_Value_Sets is new Ada.Containers.Hashed_Maps
-     (Key_Type => SU.Unbounded_String, Element_Type => SU.Unbounded_String,
-      Hash     => SU.Hash, Equivalent_Keys => SU."=", "=" => SU."=");
+     (Key_Type => S_U.Unbounded_String, Element_Type => S_U.Unbounded_String,
+      Hash     => S_U.Hash, Equivalent_Keys => S_U."=", "=" => S_U."=");
+
+   type Node_Type is new String;
+   type Node_Subtype is new String;
+   type Edge_Type is new String;
 
    type GraphML_File is tagged limited private;
+
+   procedure Close (This : in out GraphML_File);
+
+   procedure Write_Node
+     (This : in out GraphML_File; Node_Key : String; Node_Name : String;
+      Node_Ty         :        Node_Type;
+      Node_Attributes :        Attribute_Value_Sets.Map :=
+        Attribute_Value_Sets.Empty_Map);
+
+   procedure Write_Node
+     (This : in out GraphML_File; Node_Key : String; Node_Name : String;
+      Node_Ty         :        Node_Type; Node_Subty : Node_Subtype;
+      Node_Attributes :        Attribute_Value_Sets.Map :=
+        Attribute_Value_Sets.Empty_Map);
+
+   procedure Write_Edge
+     (This            : in out GraphML_File; Source_Node_Key : String;
+      Target_Node_Key :        String; Edge_Ty : Edge_Type;
+      Edge_Attributes :        Attribute_Value_Sets.Map :=
+        Attribute_Value_Sets.Empty_Map);
 
    function Create_GraphML_Writer
      (Filename        : String;
@@ -29,50 +53,25 @@ package GraphML_Writers is
         Attribute_Definition_Sets.Empty_Map)
       return GraphML_File;
 
-   procedure Close (File : in out GraphML_File);
-
-   type Node_Type is new String;
-   type Node_Subtype is new String;
-
-   procedure Write_Node
-     (File : in out GraphML_File; Node_Key : String; Node_Name : String;
-      Node_Ty         :        Node_Type;
-      Node_Attributes :        Attribute_Value_Sets.Map :=
-        Attribute_Value_Sets.Empty_Map);
-
-   procedure Write_Node
-     (File : in out GraphML_File; Node_Key : String; Node_Name : String;
-      Node_Ty         :        Node_Type; Node_Subty : Node_Subtype;
-      Node_Attributes :        Attribute_Value_Sets.Map :=
-        Attribute_Value_Sets.Empty_Map);
-
-   type Edge_Type is new String;
-
-   procedure Write_Edge
-     (File            : in out GraphML_File; Source_Node_Key : String;
-      Target_Node_Key :        String; Edge_Ty : Edge_Type;
-      Edge_Attributes :        Attribute_Value_Sets.Map :=
-        Attribute_Value_Sets.Empty_Map);
-
 private
 
    type Node_Id is new Positive;
 
    type Node_Data is record
       Id         : Node_Id;
-      Ty         : SU.Unbounded_String;
-      Subty      : SU.Unbounded_String;
+      Ty         : S_U.Unbounded_String;
+      Subty      : S_U.Unbounded_String;
       Attributes : Attribute_Value_Sets.Map;
    end record;
 
    package Known_Node_Sets is new Ada.Containers.Hashed_Maps
-     (Key_Type => SU.Unbounded_String, Element_Type => Node_Data,
-      Hash     => SU.Hash, Equivalent_Keys => SU."=");
+     (Key_Type => S_U.Unbounded_String, Element_Type => Node_Data,
+      Hash     => S_U.Hash, Equivalent_Keys => S_U."=");
 
    type Edge_Data is record
       Source_Id  : Node_Id;
       Target_Id  : Node_Id;
-      Edge_Ty    : SU.Unbounded_String;
+      Edge_Ty    : S_U.Unbounded_String;
       Attributes : Attribute_Value_Sets.Map;
    end record;
 

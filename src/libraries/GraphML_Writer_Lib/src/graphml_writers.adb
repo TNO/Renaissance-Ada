@@ -4,26 +4,26 @@ with Ada.Strings.Fixed;
 
 package body GraphML_Writers is
 
-   package SF renames Ada.Strings.Fixed;
+   package S_F renames Ada.Strings.Fixed;
 
-   use type SU.Unbounded_String;
+   use type S_U.Unbounded_String;
 
-   function "+" (Str : String) return SU.Unbounded_String is
-     (SU.To_Unbounded_String (Str));
+   function "+" (Str : String) return S_U.Unbounded_String is
+     (S_U.To_Unbounded_String (Str));
 
-   Node_Tag : constant String := "node";
-   Edge_Tag : constant String := "edge";
+   NODE_TAG : constant String := "node";
+   EDGE_TAG : constant String := "edge";
 
-   Name_Tag    : constant SU.Unbounded_String := +"name";
-   Type_Tag    : constant SU.Unbounded_String := +"type";
-   Subtype_Tag : constant SU.Unbounded_String := +"subtype";
+   NAME_TAG    : constant S_U.Unbounded_String := +"name";
+   TYPE_TAG    : constant S_U.Unbounded_String := +"type";
+   SUBTYPE_TAG : constant S_U.Unbounded_String := +"subtype";
 
    function Edge_Data_Hash (Id : Edge_Data) return Ada.Containers.Hash_Type is
       use type Ada.Containers.Hash_Type;
    begin
       return
         5 * Ada.Containers.Hash_Type (Id.Source_Id) +
-        3 * Ada.Containers.Hash_Type (Id.Target_Id) + SU.Hash (Id.Edge_Ty);
+        3 * Ada.Containers.Hash_Type (Id.Target_Id) + S_U.Hash (Id.Edge_Ty);
    end Edge_Data_Hash;
 
    function Replace_All
@@ -40,7 +40,7 @@ package body GraphML_Writers is
          elsif Str (Index) = From then
             return
               Replace_Inner
-                (SF.Replace_Slice (Str, Index, Index, To), Index - Str'First);
+                (S_F.Replace_Slice (Str, Index, Index, To), Index - Str'First);
          else
             return Replace_Inner (Str, Index - 1);
          end if;
@@ -63,10 +63,10 @@ package body GraphML_Writers is
            ''', "&apos;");
    end Escape;
 
-   function Escape (Str : SU.Unbounded_String) return String;
-   function Escape (Str : SU.Unbounded_String) return String is
+   function Escape (Str : S_U.Unbounded_String) return String;
+   function Escape (Str : S_U.Unbounded_String) return String is
    begin
-      return Escape (SU.To_String (Str));
+      return Escape (S_U.To_String (Str));
    end Escape;
 
    function Image (Ty : GraphML_Type) return String;
@@ -89,7 +89,7 @@ package body GraphML_Writers is
      (Stream : Ada.Streams.Stream_IO.Stream_Access; Indent : Natural;
       Str    : String)
    is
-      use SF;
+      use S_F;
    begin
       String'Write (Stream, Indent * "  ");
       String'Write (Stream, Str);
@@ -132,11 +132,11 @@ package body GraphML_Writers is
         Attribute_Definition_Sets.Empty_Map)
       return GraphML_File
    is
-      Xmlns : constant String :=
+      XMLNS : constant String :=
         "xmlns=""http://graphml.graphdrawing.org/xmlns""";
-      Xmlns_Xsi : constant String :=
+      XMLNS_XSI : constant String :=
         "xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""";
-      Schemalocation : constant String :=
+      SCHEMALOCATION : constant String :=
         "schemaLocation=""http://graphml.graphdrawing.org/xmlns "
             & "http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd""";
    begin
@@ -146,29 +146,29 @@ package body GraphML_Writers is
          File.Stream := Ada.Streams.Stream_IO.Stream (File.File);
 
          File.Node_Attributes := Node_Attributes;
-         File.Node_Attributes.Insert (Name_Tag, GraphML_String);
-         File.Node_Attributes.Insert (Type_Tag, GraphML_String);
-         File.Node_Attributes.Insert (Subtype_Tag, GraphML_String);
+         File.Node_Attributes.Insert (NAME_TAG, GraphML_String);
+         File.Node_Attributes.Insert (TYPE_TAG, GraphML_String);
+         File.Node_Attributes.Insert (SUBTYPE_TAG, GraphML_String);
          File.Edge_Attributes := Edge_Attributes;
-         File.Edge_Attributes.Insert (Type_Tag, GraphML_String);
+         File.Edge_Attributes.Insert (TYPE_TAG, GraphML_String);
 
          Write_String
            (File.Stream, 0, "<?xml version=""1.0"" encoding=""utf-8""?>");
          Write_String
            (File.Stream, 0,
-            "<graphml " & Xmlns & " " & Xmlns_Xsi & " " & Schemalocation &
+            "<graphml " & XMLNS & " " & XMLNS_XSI & " " & SCHEMALOCATION &
             " >");
-         Write_Attribute_Keys (File.Stream, Node_Tag, File.Node_Attributes);
-         Write_Attribute_Keys (File.Stream, Edge_Tag, File.Edge_Attributes);
+         Write_Attribute_Keys (File.Stream, NODE_TAG, File.Node_Attributes);
+         Write_Attribute_Keys (File.Stream, EDGE_TAG, File.Edge_Attributes);
          Write_String (File.Stream, 1, "<graph edgedefault=""directed"">");
       end return;
    end Create_GraphML_Writer;
 
-   procedure Close (File : in out GraphML_File) is
+   procedure Close (This : in out GraphML_File) is
    begin
-      Write_String (File.Stream, 1, "</graph>");
-      Write_String (File.Stream, 0, "</graphml>");
-      Ada.Streams.Stream_IO.Close (File.File);
+      Write_String (This.Stream, 1, "</graph>");
+      Write_String (This.Stream, 0, "</graphml>");
+      Ada.Streams.Stream_IO.Close (This.File);
    end Close;
 
    procedure Write_Data
@@ -205,7 +205,7 @@ package body GraphML_Writers is
       Node_Ty         : String; Node_Subty : String; Has_Node_Subty : Boolean;
       Node_Attributes :        Attribute_Value_Sets.Map)
    is
-      Key : constant SU.Unbounded_String := +Node_Key;
+      Key : constant S_U.Unbounded_String := +Node_Key;
       Id  : constant Node_Id             :=
         (if File.Known_Nodes.Contains (Key) then
            File.Known_Nodes.Element (Key).Id
@@ -214,7 +214,7 @@ package body GraphML_Writers is
         (Id         => Id, Ty => +Node_Ty, Subty => +Node_Subty,
          Attributes => Node_Attributes);
       Id_Attr : constant String :=
-        "id=""" & SF.Trim (Id'Image, Ada.Strings.Left) & """";
+        "id=""" & S_F.Trim (Id'Image, Ada.Strings.Left) & """";
       Subty : constant String :=
         (if Has_Node_Subty then ":" & Escape (Node_Subty) else "");
       Labels_Attr : constant String :=
@@ -229,26 +229,26 @@ package body GraphML_Writers is
 
       Write_String
         (File.Stream, 2,
-         "<" & Node_Tag & " " & Id_Attr & " " & Labels_Attr & ">");
+         "<" & NODE_TAG & " " & Id_Attr & " " & Labels_Attr & ">");
 
       declare
          Attributes : Attribute_Value_Sets.Map := Node_Attributes;
       begin
-         Attributes.Insert (Name_Tag, +Node_Name);
-         Attributes.Insert (Type_Tag, +Node_Ty);
+         Attributes.Insert (NAME_TAG, +Node_Name);
+         Attributes.Insert (TYPE_TAG, +Node_Ty);
 
          if Has_Node_Subty then
-            Attributes.Insert (Subtype_Tag, +Node_Subty);
+            Attributes.Insert (SUBTYPE_TAG, +Node_Subty);
          end if;
 
          Write_Data (File.Stream, File.Node_Attributes, Attributes);
       end;
 
-      Write_String (File.Stream, 2, "</" & Node_Tag & ">");
+      Write_String (File.Stream, 2, "</" & NODE_TAG & ">");
    end Write_Node_Internal;
 
    procedure Write_Node
-     (File : in out GraphML_File; Node_Key : String; Node_Name : String;
+     (This : in out GraphML_File; Node_Key : String; Node_Name : String;
       Node_Ty         :        Node_Type;
       Node_Attributes :        Attribute_Value_Sets.Map :=
         Attribute_Value_Sets.Empty_Map)
@@ -256,12 +256,12 @@ package body GraphML_Writers is
       Node_Ty_String : constant String := String (Node_Ty);
    begin
       Write_Node_Internal
-        (File, Node_Key, Node_Name, Node_Ty_String, "", False,
+        (This, Node_Key, Node_Name, Node_Ty_String, "", False,
          Node_Attributes);
    end Write_Node;
 
    procedure Write_Node
-     (File : in out GraphML_File; Node_Key : String; Node_Name : String;
+     (This : in out GraphML_File; Node_Key : String; Node_Name : String;
       Node_Ty         :        Node_Type; Node_Subty : Node_Subtype;
       Node_Attributes :        Attribute_Value_Sets.Map :=
         Attribute_Value_Sets.Empty_Map)
@@ -271,7 +271,7 @@ package body GraphML_Writers is
       Has_Node_Subty    : constant Boolean := Node_Subty_String /= "";
    begin
       Write_Node_Internal
-        (File, Node_Key, Node_Name, Node_Ty_String, Node_Subty_String,
+        (This, Node_Key, Node_Name, Node_Ty_String, Node_Subty_String,
          Has_Node_Subty, Node_Attributes);
    end Write_Node;
 
@@ -284,17 +284,17 @@ package body GraphML_Writers is
       Target_Node_Key :        String; Edge_Ty : String;
       Edge_Attributes :        Attribute_Value_Sets.Map)
    is
-      Source_Key : constant SU.Unbounded_String := +Source_Node_Key;
+      Source_Key : constant S_U.Unbounded_String := +Source_Node_Key;
       Source_Id : constant Node_Id := File.Known_Nodes.Element (Source_Key).Id;
-      Target_Key : constant SU.Unbounded_String := +Target_Node_Key;
+      Target_Key : constant S_U.Unbounded_String := +Target_Node_Key;
       Target_Id : constant Node_Id := File.Known_Nodes.Element (Target_Key).Id;
       Element    : constant Edge_Data           :=
         (Source_Id  => Source_Id, Target_Id => Target_Id, Edge_Ty => +Edge_Ty,
          Attributes => Edge_Attributes);
       Source_Attr : constant String :=
-        "source=""" & SF.Trim (Source_Id'Image, Ada.Strings.Left) & """";
+        "source=""" & S_F.Trim (Source_Id'Image, Ada.Strings.Left) & """";
       Target_Attr : constant String :=
-        "target=""" & SF.Trim (Target_Id'Image, Ada.Strings.Left) & """";
+        "target=""" & S_F.Trim (Target_Id'Image, Ada.Strings.Left) & """";
       Label_Attr : constant String := "label=""" & Escape (Edge_Ty) & """";
    begin
       if File.Known_Edges.Contains (Element) then
@@ -305,7 +305,7 @@ package body GraphML_Writers is
 
       Write_String
         (File.Stream, 2,
-         "<" & Edge_Tag & " " & Source_Attr & " " & Target_Attr & " " &
+         "<" & EDGE_TAG & " " & Source_Attr & " " & Target_Attr & " " &
          Label_Attr & ">");
 
       declare
@@ -319,30 +319,30 @@ package body GraphML_Writers is
             "<desc>" & Ty & " " & Source & " " & Target & " " & Ty &
             "</desc>");
 
-         Attributes.Insert (Type_Tag, +Edge_Ty);
+         Attributes.Insert (TYPE_TAG, +Edge_Ty);
          Write_Data (File.Stream, File.Edge_Attributes, Attributes);
       end;
 
-      Write_String (File.Stream, 2, "</" & Edge_Tag & ">");
+      Write_String (File.Stream, 2, "</" & EDGE_TAG & ">");
    end Write_Edge_Internal;
 
    procedure Write_Edge
-     (File            : in out GraphML_File; Source_Node_Key : String;
+     (This            : in out GraphML_File; Source_Node_Key : String;
       Target_Node_Key :        String; Edge_Ty : Edge_Type;
       Edge_Attributes :        Attribute_Value_Sets.Map :=
         Attribute_Value_Sets.Empty_Map)
    is
    begin
       pragma Assert
-        (File.Known_Nodes.Contains (+Source_Node_Key),
+        (This.Known_Nodes.Contains (+Source_Node_Key),
          "Source_Node for " & String (Edge_Ty) & " absent: " &
          Source_Node_Key);
       pragma Assert
-        (File.Known_Nodes.Contains (+Target_Node_Key),
+        (This.Known_Nodes.Contains (+Target_Node_Key),
          "Target_Node for " & String (Edge_Ty) & " absent: " &
          Target_Node_Key);
       Write_Edge_Internal
-        (File, Source_Node_Key, Target_Node_Key, String (Edge_Ty),
+        (This, Source_Node_Key, Target_Node_Key, String (Edge_Ty),
          Edge_Attributes);
    end Write_Edge;
 
