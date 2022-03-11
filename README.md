@@ -34,8 +34,8 @@ queried using [Neo4J](https://neo4j.com/).
 Snippets from diff made with [Code Reviewer](/src/tools/Code_Reviewer)
 ```diff
    function Release_Only (Mode : Operation_Mode) return Boolean is
--     (case Mode is when Release_Size_Mode | Release_Optimize_Mode => True, when others => False);
-+     (Mode in Release_Size_Mode | Release_Optimize_Mode);
+-     (case Mode is when Release_Size_Mode | Release_Speed_Mode => True, when others => False);
++     (Mode in Release_Size_Mode | Release_Speed_Mode);
 ```
 
 ```diff
