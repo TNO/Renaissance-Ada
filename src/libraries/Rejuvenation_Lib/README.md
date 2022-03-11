@@ -3,40 +3,40 @@
 The Rejuvenation Library enables analysis and manipulation of Ada code based on concrete patterns.
 Both find- and replace-functionality are based on the [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
 of the concrete patterns.
-Wild cards are allowed in these concrete patterns.
+Placeholders are allowed in these concrete patterns.
 
-## wild cards
+## placeholders
 
-There are two types of wildcards, those starting with "$S_" and those starting with "$M_".
+There are two types of placeholders, those starting with "$S_" and those starting with "$M_".
 Any alphanumeric string is allowed to follow after those prefixes.
 
-"$S_" wildcards allow one to match a single AST node, be that a single expression, a single statement, a single argument, or anything else.
-As long as Ada parses it to a single AST node, the "$S_" wildcard can match it.
+"$S_" placeholders allow one to match a single AST node, be that a single expression, a single statement, a single argument, or anything else.
+As long as Ada parses it to a single AST node, the "$S_" placeholders can match it.
 
-"$M_" wildcards allow one to match a list of AST nodes, i.e., zero or more nodes.
+"$M_" placeholders allow one to match a list of AST nodes, i.e., zero or more nodes.
 
-Note that the current implementation is greedy with respect to wild cards.
+Note that the current implementation is greedy with respect to placeholders.
 Whenever one could proceed to the next placeholder this will happen.
 So all matches in the current implementation of `$M_X; $S_T;` will always have an empty list for `$M_X`.
 
-### wild cards in find patterns
+### placeholders in find patterns
 
-A find pattern might contain multiple different wild cards.
+A find pattern might contain multiple different placeholders.
 
-A find pattern might contain the same wild card multiple times.
+A find pattern might contain the same placeholders multiple times.
 This add a constraint to the find process:
-A match will only be found when all occurrence of the same wild card are identical.
+A match will only be found when all occurrence of the same placeholders are identical.
 Note that universities are still researching what the best definition of identical is.
 In analogy with [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expression), 
-the term backreference is used to denote a wild card that reoccurs.
+the term backreference is used to denote a placeholders that reoccurs.
 
-### wild cards in replace patterns
+### placeholders in replace patterns
 
-A wild card in a replace pattern always refers to that wild card in the find pattern.
-A wild card in a replace pattern that does not occur in the find pattern is thus an error.
-The wild card in the replace pattern will be replaced by the value of that wild card in the match of the find pattern.
+A placeholders in a replace pattern always refers to that placeholders in the find pattern.
+A placeholders in a replace pattern that does not occur in the find pattern is thus an error.
+The placeholders in the replace pattern will be replaced by the value of that placeholders in the match of the find pattern.
 In analogy with [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expression), 
-all wild cards in a replace pattern can be called backreferences.
+all placeholders in a replace pattern can be called backreferences.
 
 # Examples
 See the [examples](../../examples/Rejuvenation_Examples), 
