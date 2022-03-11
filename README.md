@@ -23,24 +23,40 @@ enables automatic rewriting of [Ada](https://en.wikipedia.org/wiki/Ada_(programm
 * [Code Reviewer](/src/tools/Code_Reviewer) that automatically reviews [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) code 
 based on a large list of rewrite rules.
 
+# Examples
+
 The image below shows the depencies of Find-related subprograms of 
 the [Rejuvenation Library](/src/libraries/Rejuvenation_Lib)
 as extracted by the [Dependency Graph Extractor](/src/tools/Dependency_Graph_Extractor) and 
 queried using [Neo4J](https://neo4j.com/).
 ![Dependencies of Find-related subprograms of the Rejuvenation Library](/doc/Relations_Of_Find.jpg)
 
-## Used by Industry
-[Nexperia](https://nexperia.com) described during [the AdaCore Tech Days](https://events.adacore.com/eutechday2021) 
-[how they benefit from the Renaissance-Ada tooling](https://www.youtube.com/watch?v=EHrd-9wgALM).
+Snippets from diff made with [Code Reviewer](/src/tools/Code_Reviewer)
+```diff
+   function Release_Only (Mode : Operation_Mode) return Boolean is
+-     (case Mode is when Release_Size_Mode | Release_Optimize_Mode => True, when others => False);
++     (Mode in Release_Size_Mode | Release_Optimize_Mode);
 
-## History
+- if Valid then
+-    Add (Value, 0, 0, 0);
+- else
+-    Add ("", 0, 0, 0);
+- end if;
++ Add ((if Valid then Value else ""), 0, 0, 0);
+```
+
+# Used by Industry
+[Nexperia](https://nexperia.com) described during [the AdaCore Tech Days](https://events.adacore.com/eutechday2021) 
+how [they benefit from the Renaissance-Ada tooling](https://www.youtube.com/watch?v=EHrd-9wgALM).
+
+# History
 The Renaissance approach was initially developed by [ESI](https://esi.nl)
 in public-private research projects together with [Thermo Fisher](https://thermofisher.com) and [Philips](http://philips.com).
 The Renaissance tooling to target [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software
 was developed in Bright, 
 a public-private research project together with [ITEC](https://itecequipment.com), an independent subsidiary of [Nexperia](https://nexperia.com).
 
-## Related technologies
+# Related technologies
 * [HayStack-Ada](https://github.com/BurritoZz/Haystack-Ada) is a GNATStudio plug-in for AST-based Find and Replace. 
 [HayStack-Ada](https://github.com/BurritoZz/Haystack-Ada) uses a re-implementation of the rejuvenation library in python.
 * [Rascal MPL](https://www.rascal-mpl.org) is a metaprogramming language that 
