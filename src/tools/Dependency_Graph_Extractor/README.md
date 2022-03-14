@@ -66,6 +66,7 @@ Run the [Cypher](https://neo4j.com/developer/cypher/) query
 MATCH (f)-[:Calls*]->(f) RETURN *
 ```
 to find all recursion.
+![recursion found](doc/images/recursion.jpg)
 
 #### Find indirect recursion
 Run the [Cypher](https://neo4j.com/developer/cypher/) query
