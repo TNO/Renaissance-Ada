@@ -87,7 +87,7 @@ WHERE
 RETURN p
 ```
 to find all chains of references that begin in "rejuvenation-patterns.adb" and end in "rejuvenation-simple_factory.ads"
-![resulting chain of references](/doc/images/references.jpg)
+![resulting chain of references](doc/images/references.jpg)
 
 ## Building
 
