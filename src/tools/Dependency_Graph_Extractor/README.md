@@ -66,7 +66,8 @@ Run the [Cypher](https://neo4j.com/developer/cypher/) query
 MATCH (f)-[:Calls*]->(f) RETURN *
 ```
 to find all recursion.
-![recursion found](doc/images/recursion.jpg)
+
+<img src="doc/images/recursion.jpg" width="250"/>
 
 #### Find indirect recursion
 Run the [Cypher](https://neo4j.com/developer/cypher/) query
@@ -88,7 +89,8 @@ WHERE
 RETURN p
 ```
 to find all chains of references that begin in "rejuvenation-patterns.adb" and end in "rejuvenation-simple_factory.ads"
-![resulting chain of references](doc/images/references.jpg)
+
+<img src="doc/images/references.jpg" width="250"/>
 
 ## Building
 
