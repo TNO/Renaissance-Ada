@@ -2,7 +2,95 @@
 
 Given one or more GPR project files, the Dependency Graph Extractor generates a GraphML file with dependency information derived from the Ada source files specified by the given project files.
 
-## Prerequisites
+## Running
+
+Run the Dependency Graph Extractor as follows:
+
+```
+dependency_graph_extractor.exe -o output.graphml [-p directory] project_1.gpr ... project_n.gpr
+
+ -h, --help           Display help
+ -o, --output=ARG     The output GraphML file
+ -p, --prefix=ARG     Directory prefix stripped from the file names in the output graph
+```
+
+The output GraphML file is required, as is at least one GPR file. If the output GraphML file already exists, it will be overwritten.
+
+Optionally, a directory prefix can be passed to the extractor using the `-p` option. When done so, the extractor removes the prefix from every filename in the generated GraphML file. Note that, if a filename does not start with the specified prefix, it wil occur in the GraphML file as-is.
+
+Note. Although Dependency Graph Extractor can analyse multiple projects, it can't analyze an aggregate project with more than one sub-project.
+
+### Example
+
+Suppose we want to extract source code dependency information from the GPR project named `rejuvenation_lib.gpr`, 
+which is located in `C:\path\to\Renaissance-Ada\src\libraries\Rejuvenation_Lib`.
+Moreover, suppose we do not want have the `C:\path\to\Renaissance-Ada\src\libraries\Rejuvenation_Lib` prefix occurring in the generated GraphML file.
+To achieve this, we can run the Dependency Graph Extractor as follows:
+
+```cmd
+dependency_graph_extractor.exe -o rejuvenation_lib.graphml -p C:\path\to\Renaissance-Ada\src\libraries\Rejuvenation_Lib C:\path\to\Renaissance-Ada\src\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr
+```
+
+Note we assume that either `dependency_graph_extractor.exe` is on the system PATH 
+or the current directory is the `obj` directory of the Dependency_Graph_Extractor project.
+
+This will create the GraphML file `rejuvenation_lib.graphml` in the current directory.
+
+## Usage
+Open the generated `graphml` file with [Neo4j](https://neo4j.com) according to [the import instructions](https://neo4j.com/labs/apoc/4.1/import/graphml/).
+
+Prepare yourself by reading the [Node and Edge Types](Ada_Node_and_Edge_Types.docx?raw=true) present in the graph database.
+
+You can now interactively query the graph database using [Cypher](https://neo4j.com/developer/cypher/).
+For more info on [Cypher](https://neo4j.com/developer/cypher/), 
+see the [Cypher resources](https://neo4j.com/developer/cypher/resources/), including the 
+[Neo4j Cypher refcard](https://neo4j.com/docs/cypher-refcard/current/).
+
+Below, you find some example [Cypher](https://neo4j.com/developer/cypher/) queries.
+Note that all example queries are rather general.
+So add `LIMIT 25` to the end of the queries 
+whenever your code base contains a lot of matches to still get a fast response.
+
+### Analyze recursion
+
+#### Find recursive functions
+Run the [Cypher](https://neo4j.com/developer/cypher/) query
+```cypher
+MATCH (f)-[:Calls]->(f) RETURN *
+```
+to find all recursive functions.
+
+#### Find all recursion
+Run the [Cypher](https://neo4j.com/developer/cypher/) query
+```cypher
+MATCH (f)-[:Calls*]->(f) RETURN *
+```
+to find all recursion.
+
+#### Find indirect recursion
+Run the [Cypher](https://neo4j.com/developer/cypher/) query
+```cypher
+MATCH (a)-[:Calls*]->(b)-[:Calls*]->(a) RETURN *
+```
+to find indirect recursion only.
+
+### Analyze references
+Run the [Cypher](https://neo4j.com/developer/cypher/) query
+```cypher
+MATCH
+ p = (decl_begin:AdaDeclaration)-[:References*]->(decl_end:AdaDeclaration),
+ (decl_begin)-[source_begin:Source]->(file_begin:File),
+ (decl_end)-[source_end:Source]->(file_end:File)
+WHERE
+ file_begin.relativeName = "rejuvenation-patterns.adb" AND
+ file_end.relativeName = "rejuvenation-simple_factory.ads"
+RETURN p
+```
+to find all chains of references that begin in "rejuvenation-patterns.adb" and end in "rejuvenation-simple_factory.ads"
+
+## Building
+
+### Prerequisites
 
 The following tools are required for building the extractor:
 
@@ -12,8 +100,7 @@ The following tools are required for building the extractor:
 * [langkit](https://github.com/AdaCore/langkit), the Github `master` branch is known to work
 * [libadalang](https://github.com/AdaCore/libadalang), the Github `master` branch is known to work
 
-## Building
-
+### Build instructions
 To build the Dependency Graph Extractor, we need the Ada components, langkit and libadalang.
 AdaCore provides installers for these components to their customers.
 Otherwise, you need to build these Ada components. 
@@ -86,74 +173,3 @@ cd C:\path\to\Renaissance-Ada\src\tools\Dependency_Graph_Extractor
 mkdir obj
 gprbuild -XLIBRARY_TYPE=static -P dependency_graph_extractor.gpr
 ```
-## Running
-
-Run the Dependency Graph Extractor as follows:
-
-```
-dependency_graph_extractor.exe -o output.graphml [-p directory] project_1.gpr ... project_n.gpr
-
- -h, --help           Display help
- -o, --output=ARG     The output GraphML file
- -p, --prefix=ARG     Directory prefix stripped from the file names in the output graph
-```
-
-The output GraphML file is required, as is at least one GPR file. If the output GraphML file already exists, it will be overwritten.
-
-Optionally, a directory prefix can be passed to the extractor using the `-p` option. When done so, the extractor removes the prefix from every filename in the generated GraphML file. Note that, if a filename does not start with the specified prefix, it wil occur in the GraphML file as-is.
-
-Note. Although Dependency Graph Extractor can analyse multiple projects, it can't analyze an aggregate project with more than one sub-project.
-
-### Example
-
-Suppose we want to extract source code dependency information from the GPR project named `rejuvenation_lib.gpr`, 
-which is located in `C:\path\to\Renaissance-Ada\src\libraries\Rejuvenation_Lib`.
-Moreover, suppose we do not want have the `C:\path\to\Renaissance-Ada\src\libraries\Rejuvenation_Lib` prefix occurring in the generated GraphML file.
-To achieve this, we can run the Dependency Graph Extractor as follows:
-
-```cmd
-dependency_graph_extractor.exe -o rejuvenation_lib.graphml -p C:\path\to\Renaissance-Ada\src\libraries\Rejuvenation_Lib C:\path\to\Renaissance-Ada\src\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr
-```
-
-Note we assume that either `dependency_graph_extractor.exe` is on the system PATH 
-or the current directory is the `obj` directory of the Dependency_Graph_Extractor project.
-
-This will create the GraphML file `rejuvenation_lib.graphml` in the current directory.
-
-## Usage
-Open the generated `graphml` file with [Neo4j](https://neo4j.com) according to [the import instructions](https://neo4j.com/labs/apoc/4.1/import/graphml/).
-
-Prepare yourself by reading the [Node and Edge Types](Ada_Node_and_Edge_Types.docx?raw=true) present in the graph database.
-
-You can now interactively query the graph database using [Cypher](https://neo4j.com/developer/cypher/).
-For more info on [Cypher](https://neo4j.com/developer/cypher/), 
-see the [Cypher resources](https://neo4j.com/developer/cypher/resources/), including the 
-[Neo4j Cypher refcard](https://neo4j.com/docs/cypher-refcard/current/).
-
-Below, you find some example [Cypher](https://neo4j.com/developer/cypher/) queries.
-Note that all example queries are rather general.
-So add `LIMIT 25` to the end of the queries 
-whenever your code base contains a lot of matches to still get a fast response.
-
-### Analyze recursion
-
-#### Find recursive functions
-Run the [Cypher](https://neo4j.com/developer/cypher/) query
-```cypher
-MATCH (f)-[:Calls]->(f) RETURN *
-```
-to find all recursive functions.
-
-#### Find all recursion
-Run the [Cypher](https://neo4j.com/developer/cypher/) query
-```cypher
-MATCH (f)-[:Calls*]->(f) RETURN *
-```
-to find all recursion.
-
-#### Find indirect recursion
-Run the [Cypher](https://neo4j.com/developer/cypher/) query
-```cypher
-MATCH (a)-[:Calls*]->(b)-[:Calls*]->(a) RETURN *
-```
-to find indirect recursion only.
