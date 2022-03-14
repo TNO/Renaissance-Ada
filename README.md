@@ -12,7 +12,7 @@ based on a large list of rewrite rules.
 
 ## Examples
 
-The image below shows the depencies of Find-related subprograms of 
+The image below shows the dependencies of Find-related subprograms of 
 the [Rejuvenation Library](/src/libraries/Rejuvenation_Lib)
 as extracted by the [Dependency Graph Extractor](/src/tools/Dependency_Graph_Extractor) and 
 queried using [Neo4J](https://neo4j.com/).
