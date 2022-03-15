@@ -1105,8 +1105,9 @@ private
            Block_Stmt_Rule),
         Make_Pattern
           ("declare $S_Var : Boolean := " &
-           "(for all $S_I in $S_Range => $S_Cond); " & "begin $M_Stmts; end;",
-           Block_Stmt_Rule));
+           "(for all $S_I in $S_Range => not ($S_Cond)); " & "begin $M_Stmts; end;",
+           Block_Stmt_Rule),
+        Rewriters_Not);
 
    Rewriter_For_All_Elements_Exit :
      aliased constant Rewriter_Find_And_Replace :=
@@ -1119,9 +1120,10 @@ private
            Block_Stmt_Rule),
         Make_Pattern
           ("declare $S_Var : Boolean := " &
-           "(for all $S_E of $S_Elements => $S_Cond); " &
+           "(for all $S_E of $S_Elements => not ($S_Cond)); " &
            "begin $M_Stmts; end;",
-           Block_Stmt_Rule));
+           Block_Stmt_Rule),
+        Rewriters_Not);
 
    Rewriter_For_Some_Range_Exit : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
@@ -1160,7 +1162,8 @@ private
            "return true;",
            Stmts_Rule),
         Make_Pattern
-          ("return (for all $S_I in $S_Range => $S_Cond);", Return_Stmt_Rule));
+          ("return (for all $S_I in $S_Range => not ($S_Cond));", Return_Stmt_Rule),
+        Rewriters_Not);
 
    Rewriter_For_All_Elements_Return :
      aliased constant Rewriter_Find_And_Replace :=
@@ -1171,8 +1174,9 @@ private
            "return true;",
            Stmts_Rule),
         Make_Pattern
-          ("return (for all $S_E of $S_Elements => $S_Cond);",
-           Return_Stmt_Rule));
+          ("return (for all $S_E of $S_Elements => not ($S_Cond));",
+           Return_Stmt_Rule),
+        Rewriters_Not);
 
    Rewriter_For_Some_Range_Return :
      aliased constant Rewriter_Find_And_Replace :=
@@ -1208,9 +1212,10 @@ private
            Block_Stmt_Rule),
         Make_Pattern
           ("declare $S_Var : Boolean := " &
-           "(for all $S_I in $S_Range => $S_Expr); " & "begin $M_Stmts; end;",
+           "(for all $S_I in $S_Range => not ($S_Expr)); " & "begin $M_Stmts; end;",
            Block_Stmt_Rule),
-        Accept_No_Side_Effects'Access);
+        Accept_No_Side_Effects'Access,
+        Rewriters_Not);
 
    Rewriter_For_All_Elements_All :
      aliased constant Rewriter_Find_And_Replace :=
@@ -1223,10 +1228,11 @@ private
            Block_Stmt_Rule),
         Make_Pattern
           ("declare $S_Var : Boolean := " &
-           "(for all $S_E of $S_Elements => $S_Expr); " &
+           "(for all $S_E of $S_Elements => not ($S_Expr)); " &
            "begin $M_Stmts; end;",
            Block_Stmt_Rule),
-        Accept_No_Side_Effects'Access);
+        Accept_No_Side_Effects'Access,
+        Rewriters_Not);
 
    Rewriter_For_Some_Range_All : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
