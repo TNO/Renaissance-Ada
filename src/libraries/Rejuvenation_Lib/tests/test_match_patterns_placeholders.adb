@@ -1,17 +1,20 @@
-with Ada.Containers;              use Ada.Containers;
-with Ada.Strings.Fixed;           use Ada.Strings.Fixed;
-with Ada.Strings.Unbounded;       use Ada.Strings.Unbounded;
-with AUnit.Assertions;            use AUnit.Assertions;
-with Langkit_Support.Text;        use Langkit_Support.Text;
-with Libadalang.Analysis;         use Libadalang.Analysis;
-with Libadalang.Common;           use Libadalang.Common;
-with Missing.AUnit.Assertions;    use Missing.AUnit.Assertions;
-with Rejuvenation;                use Rejuvenation;
-with Rejuvenation.Match_Patterns; use Rejuvenation.Match_Patterns;
-with Rejuvenation.Patterns;       use Rejuvenation.Patterns;
-with Rejuvenation.Simple_Factory; use Rejuvenation.Simple_Factory;
-with Rejuvenation.Utils;          use Rejuvenation.Utils;
+with Ada.Containers;                 use Ada.Containers;
+with Ada.Strings.Fixed;              use Ada.Strings.Fixed;
+with Ada.Strings.Unbounded;          use Ada.Strings.Unbounded;
+with AUnit.Assertions;               use AUnit.Assertions;
+with Langkit_Support.Text;           use Langkit_Support.Text;
+with Libadalang.Analysis;            use Libadalang.Analysis;
+with Libadalang.Common;              use Libadalang.Common;
+with Missing.AUnit.Assertions;       use Missing.AUnit.Assertions;
+with Rejuvenation;                   use Rejuvenation;
+with Rejuvenation.Find_And_Replacer; use Rejuvenation.Find_And_Replacer;
+with Rejuvenation.Match_Patterns;    use Rejuvenation.Match_Patterns;
+with Rejuvenation.Patterns;          use Rejuvenation.Patterns;
+with Rejuvenation.Simple_Factory;    use Rejuvenation.Simple_Factory;
+with Rejuvenation.Text_Rewrites;     use Rejuvenation.Text_Rewrites;
+with Rejuvenation.Utils;             use Rejuvenation.Utils;
 
+with Assert_AST;     use Assert_AST;
 with String_Vectors; use String_Vectors;
 with Make_Ada;       use Make_Ada;
 
@@ -169,6 +172,43 @@ package body Test_Match_Patterns_Placeholders is
       Test_Match_Multiple_Kind (To_Vector ("Prefix", 1));
    end Test_Match_Multiple_Kind;
 
+   procedure Test_Match_Single_Multiple (T : in out Test_Case'Class);
+   procedure Test_Match_Single_Multiple (T : in out Test_Case'Class) is
+      pragma Unreferenced (T);
+
+      Find_Pattern : constant Pattern :=
+        Make_Pattern
+          ("if $S_Cond " & "then $S_Stmt; $M_Stmts_True; "
+           & "else $S_Stmt; $M_Stmts_False;" &
+           "end if;",
+           If_Stmt_Rule);
+      Input : constant Analysis_Unit :=
+        Analyze_Fragment ("if c " & "then Put (X); Put(1); Put(2); "
+                          & "else Put (X); Put(3); Put(4); end if;",
+                          If_Stmt_Rule);
+
+      Replace_Pattern : constant Pattern :=
+        Make_Pattern
+          ("$S_Stmt; " & "if $S_Cond " & "then $M_Stmts_True; "
+           & "else $M_Stmts_False;" &
+           "end if;",
+           Stmts_Rule);
+
+      Expected : constant String := "Put (X); " &
+        "if c " & "then Put(1); Put(2); "
+        & "else Put(3); Put(4); end if;";
+
+      TR : Text_Rewrite'Class := Make_Text_Rewrite_Unit (Input);
+   begin
+      Find_And_Replace (TR, Input.Root, Find_Pattern, Replace_Pattern);
+      declare
+         Actual : constant String        := TR.ApplyToString;
+      begin
+         Assert_Equal_AST (Expected, Actual, Stmts_Rule,
+                           "Find and Replaced unexpectedly failed");
+      end;
+   end Test_Match_Single_Multiple;
+
    procedure Test_Placeholder_In_CaseStmtAlternativeList
      (T : in out Test_Case'Class);
    procedure Test_Placeholder_In_CaseStmtAlternativeList
@@ -223,6 +263,9 @@ package body Test_Match_Patterns_Placeholders is
         (T, Test_Match_Single_Kind'Access, "Match Single kind");
       Registration.Register_Routine
         (T, Test_Match_Multiple_Kind'Access, "Match Multiple kind");
+      Registration.Register_Routine
+        (T, Test_Match_Single_Multiple'Access,
+         "Match Single before Multiple placeholder");
       Registration.Register_Routine
         (T, Test_Placeholder_In_CaseStmtAlternativeList'Access,
          "Placeholder Case Stmt Alternative List");
