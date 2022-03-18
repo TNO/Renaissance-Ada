@@ -133,7 +133,7 @@ abstract project Standard_Options is
        "+RIdentifier_Casing:Constant=upper",                     --  casing of defining names --  EASY
        "+RIdentifier_Casing:Exception=mixed",                    --  casing of defining names --  EASY
        "+RIdentifier_Casing:Others=mixed",                       --  casing of defining names --  EASY
-       "+RIdentifier_Casing:Exclude=" & Repository_Root & "\src\libraries\Standard_Options\dictionary_file.txt",   --  casing of defining names --  EASY
+       "+RIdentifier_Casing:Exclude=" & Repository_Root & "\src\misc\dictionary_file.txt",   --  casing of defining names --  EASY
        "+RIdentifier_Suffixes",                                  --  suffixes in defining names --  EASY
        "+RIdentifier_Prefixes",                                  --  prefixes in defining names --  EASY
        -- Implicit_IN_Mode_Parameters                            --  implicit IN mode in parameter specifications --  TRIVIAL
