@@ -138,3 +138,4 @@ private
       end record;
 
 end Basic_Declaration;
+pragma Elaborate_Body (Basic_Declaration);
