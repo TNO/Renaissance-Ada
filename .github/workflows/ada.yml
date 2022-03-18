@@ -21,22 +21,12 @@ jobs:
         sudo apt-get install gnat gprbuild
     
     - name: Set up libadalang
-      runs:
-         using: "composite"
-         steps:
-         - run: PREFIX=/tmp/ADALIB_DIR
-         - run: FILE=libadalang-linux-master-static.tar.gz
-         - run: mkdir -p $PREFIX
-         - run: aws s3 cp s3://adacore-gha-tray-eu-west-1/libadalang/$FILE . --sse=AES256
-         - run: tar xzf $FILE -C $PREFIX
-         - run: rm -f -v $FILE
+      run: libadalang.sh
 
     - name: Set up GPR_PROJECT_PATH
-      runs:
-         using: "composite"
-         steps:
-         - run: echo $GPR_PROJECT_PATH
-         - run: export GPR_PROJECT_PATH=$PREFIX/share/gpr
+      run: >
+        echo $GPR_PROJECT_PATH && 
+        export GPR_PROJECT_PATH=$PREFIX/share/gpr
 
     - name: Build
       run: gprbuild -k -s -P src/Renaissance_Ada.gpr
