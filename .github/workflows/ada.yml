@@ -21,4 +21,4 @@ jobs:
         sudo apt-get install gnat gprbuild
 
     - name: Build
-      run: gprbuild -P src/Renaissance-Ada.gpr
+      run: gprbuild -P src/Renaissance_Ada.gpr
