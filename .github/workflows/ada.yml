@@ -21,7 +21,7 @@ jobs:
         sudo apt-get install gnat gprbuild
     
     - name: Set up libadalang
-      run: .github/workflows/libadalang.sh
+      run: chmod +x .github/workflows/libadalang.sh && .github/workflows/libadalang.sh
 
     - name: Set up GPR_PROJECT_PATH
       run: >
