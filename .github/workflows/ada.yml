@@ -19,6 +19,19 @@ jobs:
       run: >
         sudo apt-get update && 
         sudo apt-get install gnat gprbuild
+        
+        # Get libadalang binaries
+        prefix=/tmp/ADALIB_DIR
+
+        mkdir -p $prefix
+        FILE=libadalang-linux-master-static.tar.gz
+        aws s3 cp s3://adacore-gha-tray-eu-west-1/libadalang/$FILE . --sse=AES256
+        tar xzf $FILE -C $prefix
+        rm -f -v $FILE
+
+        # Make libadalang available
+        echo $GPR_PROJECT_PATH
+        export GPR_PROJECT_PATH=$prefix/share/gpr
 
     - name: Build
       run: gprbuild -k -s -P src/Renaissance_Ada.gpr
