@@ -1,4 +1,4 @@
-with "..\..\standard_options.gpr";
+with "../../standard_options.gpr";
 
 library project Graphml_Writer_Lib is
 

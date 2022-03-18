@@ -1,5 +1,5 @@
-with "..\..\standard_options.gpr";
-with "..\..\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
+with "../../standard_options.gpr";
+with "../../libraries/Rejuvenation_Lib/rejuvenation_lib.gpr";
 
 project Rejuvenation_Lib_Generator is
    for Source_Dirs use ("src");

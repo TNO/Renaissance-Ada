@@ -1,5 +1,5 @@
 with "libadalang.gpr";
-with "..\..\standard_options.gpr";
+with "../../standard_options.gpr";
 
 library project Rejuvenation_Lib is
 

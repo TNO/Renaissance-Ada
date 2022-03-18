@@ -1,6 +1,6 @@
 with "libadalang.gpr";
-with "..\..\standard_options.gpr";
-with "..\..\libraries\GraphML_Writer_Lib\graphml_writer_lib.gpr";
+with "../../standard_options.gpr";
+with "../../libraries/GraphML_Writer_Lib/graphml_writer_lib.gpr";
 
 project Dependency_Graph_Extractor is
 

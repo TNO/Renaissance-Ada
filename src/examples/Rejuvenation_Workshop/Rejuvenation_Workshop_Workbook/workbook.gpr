@@ -1,5 +1,5 @@
 with "libadalang.gpr";
-with "..\..\..\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
+with "../../../libraries/Rejuvenation_Lib/rejuvenation_lib.gpr";
 
 project Workbook is
 

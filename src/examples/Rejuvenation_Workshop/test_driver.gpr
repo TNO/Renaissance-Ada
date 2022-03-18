@@ -1,8 +1,8 @@
 with "libadalang.gpr";
 with "aunit";
 with "rejuvenation_workshop.gpr";
-with "..\..\standard_options.gpr";
-with "..\..\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
+with "../../standard_options.gpr";
+with "../../libraries/Rejuvenation_Lib/rejuvenation_lib.gpr";
 
 project Test_Driver is
 
@@ -10,7 +10,7 @@ project Test_Driver is
 
    for Languages use ("Ada");
    for Source_Dirs use ("tests");
-   for Object_Dir use "obj\tests";
+   for Object_Dir use "obj/tests";
    for Main use ("test_rejuvenation_workshop.adb");
 
    package Builder renames Standard_Options.Builder;
