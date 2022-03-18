@@ -1,5 +1,5 @@
 with "libadalang.gpr";
-with "..\Standard_Options\standard_options.gpr";
+with "..\..\standard_options.gpr";
 with "..\Rejuvenation_Lib\rejuvenation_lib.gpr";
 
 library project Rewriters_Lib is

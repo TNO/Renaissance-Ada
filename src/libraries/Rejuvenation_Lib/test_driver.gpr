@@ -1,7 +1,7 @@
-with "..\Standard_Options\standard_options.gpr";
 with "aunit.gpr";
-with "..\Missing\missing.gpr";
 with "libadalang.gpr";
+with "..\..\standard_options.gpr";
+with "..\Missing\missing.gpr";
 with "rejuvenation_lib.gpr";
 
 project Test_Driver is

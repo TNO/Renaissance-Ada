@@ -1,5 +1,5 @@
 with "libadalang.gpr";
-with "..\..\libraries\Standard_Options\standard_options.gpr";
+with "..\..\standard_options.gpr";
 with "..\..\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
 with "..\..\libraries\Rewriters_Lib\rewriters_lib.gpr";
 

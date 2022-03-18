@@ -1,7 +1,7 @@
 with "libadalang.gpr";
 with "aunit";
 with "rejuvenation_workshop.gpr";
-with "..\..\libraries\Standard_Options\standard_options.gpr";
+with "..\..\standard_options.gpr";
 with "..\..\libraries\Rejuvenation_Lib\rejuvenation_lib.gpr";
 
 project Test_Driver is

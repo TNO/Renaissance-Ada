@@ -1,5 +1,5 @@
 with "aunit.gpr";
-with "../Standard_Options/standard_options.gpr";
+with "../../standard_options.gpr";
 
 library project Missing is
 
