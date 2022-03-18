@@ -2,7 +2,7 @@ package Deferred_Constant is
 
    I, J : constant Integer;
 
-   K, L : Integer;
+   --  K, L : Integer;
    
 private
 
