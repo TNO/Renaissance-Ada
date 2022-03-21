@@ -33,7 +33,7 @@ jobs:
       shell: bash
       env: 
            UNZIP_PASSWORD: ${{ secrets.UNZIP_PASSWORD }}
-      run: 7z x -p "$UNZIP_PASSWORD" libadalang-22.1-x86_64-linux-bin.tar.gz.zip
+      run: 7z x -p"$UNZIP_PASSWORD" libadalang-22.1-x86_64-linux-bin.tar.gz.zip
            
     - name: Set up libadalang
       run: > 
