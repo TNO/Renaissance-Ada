@@ -34,17 +34,13 @@ jobs:
            
     - name: Set up libadalang
       run: > 
-        mkdir -p /tmp/ADALIB_DIR &&
+        mkdir -p /tmp &&
         tar xzf libadalang-22.1-x86_64-linux-bin.tar.gz -C /tmp &&
         rm -f -v libadalang-22.1-x86_64-linux-bin.tar.gz
 
-    - name: check set up
-      run : ls /tmp/libadalang-22.1-x86_64-linux-bin
-      
-    - name: Set up GPR_PROJECT_PATH
-      run: >
-        echo $GPR_PROJECT_PATH && 
-        export GPR_PROJECT_PATH=/tmp/libadalang-22.1-x86_64-linux-bin/share/gpr
-
     - name: Build
-      run: gprbuild -k -s -P src/Renaissance_Ada.gpr
+      env:
+          GPR_PROJECT_PATH : /tmp/libadalang-22.1-x86_64-linux-bin/share/gpr
+      run: >
+           echo $GPR_PROJECT_PATH &&
+           gprbuild -k -s -P src/Renaissance_Ada.gpr
