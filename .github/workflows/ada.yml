@@ -26,9 +26,6 @@ jobs:
     - name: download libadalang
       run : wget https://github.com/TNO/Renaissance-Ada-Dependencies/releases/download/v22.1/libadalang-22.1-x86_64-linux-bin.tar.gz.zip
 
-    - name: check download
-      run : ls
-      
     - name: unzip libadalang
       shell: bash
       env: 
@@ -40,6 +37,9 @@ jobs:
         mkdir -p /tmp/ADALIB_DIR &&
         tar xzf libadalang-22.1-x86_64-linux-bin.tar.gz -C /tmp/ADALIB_DIR &&
         rm -f -v libadalang-22.1-x86_64-linux-bin.tar.gz
+
+    - name: check set up
+      run : ls /tmp/ADALIB_DIR
 
     - name: Set up GPR_PROJECT_PATH
       run: >
