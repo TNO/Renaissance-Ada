@@ -20,13 +20,24 @@ jobs:
         sudo apt-get update && 
         sudo apt-get install gnat gprbuild
     
+    - name: download libadalang
+      run : wget https://github.com/TNO/Renaissance-Ada-Dependencies/releases/download/v22.1/libadalang-22.1-x86_64-linux-bin.tar.gz.zip
+      
+    - name: unzip libadalang
+      env: 
+           UNZIP_PASSWORD: ${{secrets.LIBADALANG_UNZIP_PASSWORD}}
+      run: unzip -P "$UNZIP_PASSWORD" libadalang-22.1-x86_64-linux-bin.tar.gz.zip
+           
     - name: Set up libadalang
-      run: chmod +x .github/workflows/libadalang.sh && .github/workflows/libadalang.sh
+      run: > 
+        mkdir -p /tmp/ADALIB_DIR &&
+        tar xzf libadalang-22.1-x86_64-linux-bin.tar.gz -C /tmp/ADALIB_DIR &&
+        rm -f -v libadalang-22.1-x86_64-linux-bin.tar.gz
 
     - name: Set up GPR_PROJECT_PATH
       run: >
         echo $GPR_PROJECT_PATH && 
-        export GPR_PROJECT_PATH=$PREFIX/share/gpr
+        export GPR_PROJECT_PATH=/tmp/ADALIB_DIR/share/gpr
 
     - name: Build
       run: gprbuild -k -s -P src/Renaissance_Ada.gpr
