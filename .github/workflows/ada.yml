@@ -22,17 +22,7 @@ jobs:
       run: >
         sudo apt-get update && 
         sudo apt-get install gnat gprbuild
-        
-    - name: Check set up
-      run: >
-        echo $GPR_PROJECT_PATH &&
-        echo "ls /share" &&
-        ls /share &&
-        echo "ls /share/gpr" &&
-        ls /share/gpr &&
-        echo "ls /gnat" &&
-        ls /gnat
-    
+            
     - name: download libadalang
       run : wget https://github.com/TNO/Renaissance-Ada-Dependencies/releases/download/v22.1/libadalang-22.1-x86_64-linux-bin.tar.gz.zip
 
