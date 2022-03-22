@@ -1,5 +1,9 @@
+--  Gnat Community doesn't support -gnat2022 flag
+--  Use pragma instead
+pragma Extensions_Allowed (On);
 with Ada.Numerics.Big_Numbers.Big_Integers;
 use Ada.Numerics.Big_Numbers.Big_Integers;
+pragma Extensions_Allowed (Off);
 with Ada.Characters.Handling; use Ada.Characters.Handling;
 with Ada.Strings.Fixed;       use Ada.Strings.Fixed;
 

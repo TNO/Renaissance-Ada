@@ -1,0 +1,9 @@
+name = "rejuvenation_lib"
+description = "Shiny new project"
+version = "0.0.0"
+
+authors = ["Pierre van de Laar"]
+maintainers = ["Pierre van de Laar <pierre.van.de.laar@gmail.com>"]
+maintainers-logins = ["laarpjljvd"]
+[[depends-on]]  # Added by alr
+libadalang = "^22.0.0"  # Added by alr

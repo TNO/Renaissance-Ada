@@ -91,5 +91,4 @@ package Rejuvenation.Simple_Factory is
    --  (need to deal with a much more complex API even when not dealing with
    --  aggregate projects).
 
-
 end Rejuvenation.Simple_Factory;
