@@ -1,21 +1,25 @@
-with "aunit.gpr";
-with "../../standard_options.gpr";
+with "config/missing_config.gpr";
+project Missing is
 
-library project Missing is
+   for Library_Name use "Missing";
+   for Library_Version use Project'Library_Name & ".so." & Missing_Config.Crate_Version;
 
-   for Languages use ("Ada");
-   for Library_Name use "Missing_Lib";
    for Source_Dirs use ("src");
-   for Object_Dir use "obj";
+   for Object_Dir use "obj/" & Missing_Config.Build_Profile;
+   for Create_Missing_Dirs use "True";
    for Library_Dir use "lib";
-   for Library_Kind use "Static";
 
-   package Builder renames Standard_Options.Builder;
-   package Compiler renames Standard_Options.Compiler;
-   package Binder renames Standard_Options.Binder;
-   package Linker renames Standard_Options.Linker;
-   package Check renames Standard_Options.Check;
-   package CodePeer renames Standard_Options.CodePeer;
-   package Pretty_Printer renames Standard_Options.Pretty_Printer;
+   type Library_Type_Type is ("relocatable", "static", "static-pic");
+   Library_Type : Library_Type_Type :=
+     external ("MISSING_LIBRARY_TYPE", external ("LIBRARY_TYPE", "static"));
+   for Library_Kind use Library_Type;
+
+   package Compiler is
+      for Default_Switches ("Ada") use Missing_Config.Ada_Compiler_Switches;
+   end Compiler;
+
+   package Binder is
+      for Switches ("Ada") use ("-Es"); --  Symbolic traceback
+   end Binder;
 
 end Missing;

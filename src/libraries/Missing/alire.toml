@@ -1,0 +1,6 @@
+name = "missing"
+description = "Shiny new project"
+version = "0.0.0"
+
+[[depends-on]]
+aunit = "^22.0.0"

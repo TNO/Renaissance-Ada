@@ -1,0 +1,13 @@
+name = "dependency_graph_extractor"
+description = "Shiny new project"
+version = "0.0.0"
+
+executables = ["dependency_graph_extractor"]
+
+[[depends-on]]
+graphml_writers = "~0.0.0"
+gnatcoll = "^22.0.0"
+libadalang = "^22.0.0"
+
+[[pins]]
+graphml_writers = { path='../../libraries/GraphML_Writer_Lib' }

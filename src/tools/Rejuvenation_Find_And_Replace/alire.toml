@@ -1,0 +1,11 @@
+name = "rejuvenation_find_and_replace"
+description = "Shiny new project"
+version = "0.0.0"
+
+executables = ["rejuvenation_find_and_replace"]
+
+[[depends-on]]
+rejuvenation = "~0.0.0"
+
+[[pins]]
+rejuvenation = { path='../../libraries/Rejuvenation_Lib' }

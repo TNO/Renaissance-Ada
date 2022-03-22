@@ -1,0 +1,9 @@
+name = "rejuvenation_workshop"
+description = "Shiny new project"
+version = "0.0.0"
+
+executables = ["rejuvenation_workshop"]
+[[depends-on]]
+rejuvenation = "~0.0.0"
+[[pins]]
+rejuvenation = { path='../../libraries/Rejuvenation_Lib' }

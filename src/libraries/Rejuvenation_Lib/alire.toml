@@ -1,0 +1,6 @@
+name = "rejuvenation"
+description = "Shiny new project"
+version = "0.0.0"
+
+[[depends-on]]
+libadalang = "^22.0.0"

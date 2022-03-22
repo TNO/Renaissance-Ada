@@ -1,5 +1,0 @@
-aggregate project Renaissance_Ada is
-
-   for Project_Files use ("examples/**/*.gpr", "libraries/**/*.gpr", "misc/**/*.gpr", "tools/**/*.gpr");
-
-end Renaissance_Ada;

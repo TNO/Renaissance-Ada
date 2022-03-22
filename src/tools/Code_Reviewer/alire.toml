@@ -1,0 +1,13 @@
+name = "code_reviewer"
+description = "Shiny new project"
+version = "0.0.0"
+
+executables = ["code_reviewer"]
+
+[[depends-on]]
+rejuvenation = "~0.0.0"
+rewriters = "~0.0.0"
+
+[[pins]]
+rejuvenation = { path='../../libraries/Rejuvenation_Lib' }
+rewriters = { path='../../libraries/Rewriters_Lib' }

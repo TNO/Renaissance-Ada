@@ -1,0 +1,9 @@
+name = "rewriters"
+description = "Shiny new project"
+version = "0.0.0"
+
+[[depends-on]]
+libadalang = "^22.0.0"
+rejuvenation = "~0.0.0"
+[[pins]]
+rejuvenation = { path='../Rejuvenation_Lib' }
