@@ -1,9 +1,9 @@
 name = "rejuvenation_lib"
-description = "Shiny new project"
+description = "Analysis and manipulation of Ada code based on concrete patterns"
 version = "0.0.0"
 
 authors = ["Pierre van de Laar"]
 maintainers = ["Pierre van de Laar <pierre.van.de.laar@gmail.com>"]
-maintainers-logins = ["laarpjljvd"]
+maintainers-logins = ["pjljvandelaar"]
 [[depends-on]]  # Added by alr
 libadalang = "^22.0.0"  # Added by alr
