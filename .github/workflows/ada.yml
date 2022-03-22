@@ -18,32 +18,5 @@ jobs:
     - name: Alire
       uses: alire-project/setup-alire@v1
 
-    - name: install 7zip
-      run: sudo apt-get install p7zip-full
-      
-    - name: Set up GNAT toolchain
-      run: >
-        sudo apt-get update && 
-        sudo apt-get install gnat gprbuild
-            
-    - name: download libadalang
-      run : wget https://github.com/TNO/Renaissance-Ada-Dependencies/releases/download/v22.1/libadalang-22.1-x86_64-linux-bin.tar.gz.zip
-
-    - name: unzip libadalang
-      shell: bash
-      env: 
-           UNZIP_PASSWORD: ${{ secrets.UNZIP_PASSWORD }}
-      run: 7z x -p"$UNZIP_PASSWORD" libadalang-22.1-x86_64-linux-bin.tar.gz.zip
-           
-    - name: Set up libadalang
-      run: > 
-        mkdir -p /tmp &&
-        tar xzf libadalang-22.1-x86_64-linux-bin.tar.gz -C /tmp &&
-        rm -f -v libadalang-22.1-x86_64-linux-bin.tar.gz
-
     - name: Build
-      env:
-          GPR_PROJECT_PATH : /tmp/libadalang-22.1-x86_64-linux-bin/share/gpr
-      run: >
-           echo $GPR_PROJECT_PATH &&
-           gprbuild -k -s -P src/Renaissance_Ada.gpr
+      run: cd src/libraries/Rejuvenation_Lib && alr build
