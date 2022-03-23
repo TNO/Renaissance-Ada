@@ -20,4 +20,7 @@ jobs:
       uses: alire-project/setup-alire@v1
 
     - name: Build
-      run: cd src/libraries/Rejuvenation_Lib && alr build
+      run: cd src/libraries/Rejuvenation && alr build
+
+    - name: Test
+      run: cd src/libraries/Rejuvenation/tests && alr run

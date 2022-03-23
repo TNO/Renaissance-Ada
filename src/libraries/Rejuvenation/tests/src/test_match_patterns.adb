@@ -302,7 +302,6 @@ package body Test_Match_Patterns is
          "declare x : Boolean := False; begin x := True; end;");
    end Test_Back_Reference_Different_Kind;
 
-
    procedure Test_Call_Mismatch_No_Arguments (T : in out Test_Case'Class);
    procedure Test_Call_Mismatch_No_Arguments (T : in out Test_Case'Class) is
       pragma Unreferenced (T);

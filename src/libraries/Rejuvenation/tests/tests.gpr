@@ -1,27 +1,19 @@
-with "config/rejuvenation_lib_config.gpr";
-project Rejuvenation_Lib is
-
-   for Library_Name use "Rejuvenation_Lib";
-   for Library_Version use Project'Library_Name & ".so." & Rejuvenation_Lib_Config.Crate_Version;
-
+with "config/tests_config.gpr";
+project Tests is
    for Source_Dirs use ("src");
    for Object_Dir use "obj";
    for Create_Missing_Dirs use "True";
-   for Library_Dir use "lib";
-
-   type Library_Type_Type is ("relocatable", "static", "static-pic");
-   Library_Type : Library_Type_Type :=
-     external ("REJUVENATION_LIB_LIBRARY_TYPE", external ("LIBRARY_TYPE", "static"));
-   for Library_Kind use Library_Type;
+   for Exec_Dir use "bin";
+   for Main use ("tests.adb");
 
    type Enabled_Kind is ("enabled", "disabled");
-   Compile_Checks : Enabled_Kind := External ("REJUVENATION_LIB_COMPILE_CHECKS", "enabled");
-   Runtime_Checks : Enabled_Kind := External ("REJUVENATION_LIB_RUNTIME_CHECKS", "enabled");
-   Style_Checks : Enabled_Kind := External ("REJUVENATION_LIB_STYLE_CHECKS", "enabled");
-   Contracts_Checks : Enabled_Kind := External ("REJUVENATION_LIB_CONTRACTS", "enabled");
+   Compile_Checks : Enabled_Kind := External ("TESTS_COMPILE_CHECKS", "enabled");
+   Runtime_Checks : Enabled_Kind := External ("TESTS_RUNTIME_CHECKS", "enabled");
+   Style_Checks : Enabled_Kind := External ("TESTS_STYLE_CHECKS", "enabled");
+   Contracts_Checks : Enabled_Kind := External ("TESTS_CONTRACTS", "enabled");
 
    type Build_Kind is ("debug", "optimize");
-   Build_Mode : Build_Kind := External ("REJUVENATION_LIB_BUILD_MODE", "optimize");
+   Build_Mode : Build_Kind := External ("TESTS_BUILD_MODE", "optimize");
 
    Compile_Checks_Switches := ();
    case Compile_Checks is
@@ -85,4 +77,4 @@ project Rejuvenation_Lib is
       for Switches ("Ada") use ("-Es"); --  Symbolic traceback
    end Binder;
 
-end Rejuvenation_Lib;
+end Tests;

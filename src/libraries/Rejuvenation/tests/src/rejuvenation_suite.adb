@@ -11,7 +11,7 @@ with Test_Nested;                      use Test_Nested;
 with Test_String_Utils;                use Test_String_Utils;
 with Test_Text_Rewrites;               use Test_Text_Rewrites;
 
-package body Rejuvenation_Lib_Suite is
+package body Rejuvenation_Suite is
 
    function Suite return Access_Test_Suite is
       Ret               : constant Access_Test_Suite := new Test_Suite;
@@ -45,4 +45,4 @@ package body Rejuvenation_Lib_Suite is
       return Ret;
    end Suite;
 
-end Rejuvenation_Lib_Suite;
+end Rejuvenation_Suite;
