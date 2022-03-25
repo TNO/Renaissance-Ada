@@ -111,8 +111,8 @@ CALL
     RETURN provider
 }
 WITH provider,
-     size ((:AdaDeclaration)-[:References]->(provider)) as users
-RETURN provider, users ORDER BY users DESC
+     size ((:AdaDeclaration)-[:References]->(provider)) as userCount
+RETURN provider.relativeName, userCount ORDER BY userCount DESC
 ```
 to get a table of all declarations in "rejuvenation-string_utils.ads" and how often each declaration is directly referenced.
 ## Building
