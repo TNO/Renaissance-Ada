@@ -118,7 +118,7 @@ RETURN provider.relativeName, refCount ORDER BY refCount DESC
 ```
 to get a table of all declarations in "rejuvenation-string_utils.ads" and how often each declaration is directly referenced.
 
-#### Refering declarations
+#### Refering entities to declarations in file
 
 Run the [Cypher](https://neo4j.com/developer/cypher/) query
 ```cypher
