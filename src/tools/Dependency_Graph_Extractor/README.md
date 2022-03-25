@@ -121,7 +121,7 @@ to get a table of all declarations in "rejuvenation-string_utils.ads" and how of
 Run the [Cypher](https://neo4j.com/developer/cypher/) query
 ```cypher
 MATCH 
-   (provider)-[:Source]->(adsFile:AdaSpecificationFile),
+   (provider:AdaDeclaration)-[:Source]->(adsFile:AdaSpecificationFile),
    (user:AdaDeclaration)-[:References]->(provider)
 WHERE
    adsFile.name ENDS WITH "rejuvenation-string_utils.ads"
