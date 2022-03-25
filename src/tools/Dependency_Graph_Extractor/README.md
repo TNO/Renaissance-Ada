@@ -98,7 +98,7 @@ to find all chains of references that begin in "rejuvenation-patterns.adb" and e
 
 <img src="doc/images/references.jpg" width="250"/>
 
-#### Usage of declaration in file
+#### Number of users of declarations in file
 
 Run the [Cypher](https://neo4j.com/developer/cypher/) query
 ```cypher
@@ -111,10 +111,24 @@ CALL
     RETURN provider
 }
 WITH provider,
-     size ((:AdaDeclaration)-[:References]->(provider)) as userCount
-RETURN provider.relativeName, userCount ORDER BY userCount DESC
+     size ((:AdaDeclaration)-[:References]->(provider)) as refCount
+RETURN provider.relativeName, refCount ORDER BY refCount DESC
 ```
 to get a table of all declarations in "rejuvenation-string_utils.ads" and how often each declaration is directly referenced.
+
+#### 
+
+Run the [Cypher](https://neo4j.com/developer/cypher/) query
+```cypher
+MATCH 
+   (provider)-[:Source]->(adsFile:AdaSpecificationFile),
+   (user:AdaDeclaration)-[:References]->(provider)
+WHERE
+   adsFile.name ENDS WITH "rejuvenation-string_utils.ads"
+RETURN user, provider
+```
+to get the declarations in "rejuvenation-string_utils.ads" that are referenced together with the refering declarations.
+
 ## Building
 
 ### Prerequisites
