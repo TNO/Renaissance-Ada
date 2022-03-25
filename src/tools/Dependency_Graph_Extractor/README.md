@@ -94,7 +94,9 @@ WHERE
  file_end.relativeName = "rejuvenation-simple_factory.ads"
 RETURN p
 ```
-to find all chains of references that begin in "rejuvenation-patterns.adb" and end in "rejuvenation-simple_factory.ads"
+to find all chains of references that 
+begin with a declaration in "rejuvenation-patterns.adb" and 
+end on a declaration in "rejuvenation-simple_factory.ads"
 
 <img src="doc/images/references.jpg" width="250"/>
 
@@ -111,7 +113,7 @@ CALL
     RETURN provider
 }
 WITH provider,
-     size ((:AdaDeclaration)-[:References]->(provider)) as refCount
+     size (()-[:References]->(provider)) as refCount
 RETURN provider.relativeName, refCount ORDER BY refCount DESC
 ```
 to get a table of all declarations in "rejuvenation-string_utils.ads" and how often each declaration is directly referenced.
@@ -122,7 +124,7 @@ Run the [Cypher](https://neo4j.com/developer/cypher/) query
 ```cypher
 MATCH 
    (provider:AdaDeclaration)-[:Source]->(adsFile:AdaSpecificationFile),
-   (user:AdaDeclaration)-[:References]->(provider)
+   (user)-[:References]->(provider)
 WHERE
    adsFile.name ENDS WITH "rejuvenation-string_utils.ads"
 RETURN user, provider
