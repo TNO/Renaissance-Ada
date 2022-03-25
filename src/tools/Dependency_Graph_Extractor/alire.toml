@@ -1,0 +1,17 @@
+name = "dependency_graph_extractor"
+description = "Extract dependency information from Ada projects"
+version = "0.0.0"
+licenses = "BSD-3-Clause"
+website = "https://github.com/TNO/Renaissance-Ada"
+tags = ["extract", "dependency", "analysis", "graphml"]
+
+authors = ["Pierre van de Laar"]
+maintainers = ["Pierre van de Laar <pierre.van.de.laar@gmail.com>"]
+maintainers-logins = ["pjljvandelaar"]
+
+[[depends-on]]
+graphml_writer = "~0.0.0"
+libadalang = "^22.0.0"
+
+[[pins]]
+graphml_writer = { path='../../libraries/GraphML_Writer' }
