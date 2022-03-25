@@ -81,6 +81,8 @@ MATCH (a)-[:Calls*]->(b)-[:Calls*]->(a) RETURN *
 to find indirect recursion only.
 
 ### Analyze references
+
+#### Chain of references between two files
 Run the [Cypher](https://neo4j.com/developer/cypher/) query
 ```cypher
 MATCH
@@ -96,6 +98,23 @@ to find all chains of references that begin in "rejuvenation-patterns.adb" and e
 
 <img src="doc/images/references.jpg" width="250"/>
 
+#### Usage of declaration in file
+
+Run the [Cypher](https://neo4j.com/developer/cypher/) query
+```cypher
+CALL 
+{
+    MATCH 
+       (provider:AdaDeclaration)-[:Source]->(adsFile:AdaSpecificationFile)
+    WHERE
+       adsFile.name ENDS WITH "rejuvenation-string_utils.ads"
+    RETURN provider
+}
+WITH provider,
+     size ((:AdaDeclaration)-[:References]->(provider)) as users
+RETURN provider, users ORDER BY users DESC
+```
+to get a table of all declarations in "rejuvenation-string_utils.ads" and how often each declaration is directly referenced.
 ## Building
 
 ### Prerequisites
