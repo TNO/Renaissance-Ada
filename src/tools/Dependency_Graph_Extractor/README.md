@@ -38,6 +38,10 @@ This will create the GraphML file `rejuvenation_lib.graphml` in the current dire
 
 ## Usage
 Open the generated `graphml` file with [Neo4j](https://neo4j.com) according to [the import instructions](https://neo4j.com/labs/apoc/4.1/import/graphml/).
+Note, your cypher query should resemble
+```cypher
+CALL apoc.import.graphml("movies.graphml", {readLabels: true})
+```
 
 Prepare yourself by reading the [Node and Edge Types](Ada_Node_and_Edge_Types.docx?raw=true) present in the graph database.
 
