@@ -1,0 +1,142 @@
++RAbort_Statements                                     --  abort statements --  MEDIUM
++RAbstract_Type_Declarations                           --  abstract types --  MEDIUM
++RAccess_To_Local_Objects                              --  access attribute for local objects --  MEDIUM
++RAddress_Attribute_For_Non_Volatile_Objects           --  address attribute for non-volatile data objects --  MEDIUM
++RAddress_Specifications_For_Initialized_Objects       --  address specifications for initialized objects --  MEDIUM
++RAddress_Specifications_For_Local_Objects             --  address specifications for local objects --  MEDIUM
+-- Annotated_Comments                                  --  use of comment annotations --  EASY
++RAnonymous_Arrays                                     --  anonymous array types --  MEDIUM
++RAnonymous_Subtypes                                   --  anonymous subtypes --  MEDIUM
++RBinary_Case_Statements                               --  CASE statements that can be replaced with IF statements --  MEDIUM
++RBit_Records_Without_Layout_Definition                --  record with modular component without representation clause --  MEDIUM
++RBlocks                                               --  block statements --  MEDIUM
++RBoolean_Relational_Operators                         --  comparisons of Boolean values --  MEDIUM
++RComplex_Inlined_Subprograms:5                        --  complex inlined subprograms --  MEDIUM
++RConditional_Expressions                              --  Ada 2012 conditional expressions --  MEDIUM
++RConstant_Overlays                                    --  inproper overlay of a constant object --  MEDIUM
++RConstructors                                         --  constructors --  MEDIUM
++RControlled_Type_Declarations                         --  controlled types --  MEDIUM
++RDeclarations_In_Blocks                               --  block statements with local declarations --  MEDIUM
++RDeep_Inheritance_Hierarchies:5                       --  derivation tree is too deep --  MEDIUM
++RDeeply_Nested_Generics:2                             --  deeply nested generic declarations --  MEDIUM
++RDeep_Library_Hierarchy:2                             --  deep library hierarchy --  MEDIUM
++RDeeply_Nested_Inlining:2                             --  deeply nested inlining (global check) --  MEDIUM
+-- Default_Parameters                                  --  declarations of default subprogram parameters --  MEDIUM
++RDefault_Values_For_Record_Components                 --  default values for record components --  MEDIUM
++RDeriving_From_Predefined_Type                        --  types derived from predefined types --  MEDIUM
++RDirect_Calls_To_Primitives                           --  non-- dispatching calls to primitives --  MEDIUM
++RDiscriminated_Records                                --  discriminated records --  MEDIUM
++RDownward_View_Conversions                            --  downward view conversions --  MEDIUM
++REnumeration_Ranges_In_CASE_Statements                --  enumeration ranges as choices in case statements --  MEDIUM
++REnumeration_Representation_Clauses                   --  enumeration representation clauses --  MEDIUM
++RExceptions_As_Control_Flow                           --  exceptions for control flow --  MEDIUM
++RExits_From_Conditional_Loops                         --  exit from conditional loops --  MEDIUM
++REXIT_Statements_With_No_Loop_Name                    --  exit statements with no loop name --  MEDIUM
++RExpanded_Loop_Exit_Names                             --  expanded loop names in exit statements --  MEDIUM
++RExplicit_Full_Discrete_Ranges                        --  explicit discrete ranges --  MEDIUM
++RExpression_Functions                                 --  expression function in package specifications --  MEDIUM
++RFixed_Equality_Checks                                --  equality for fixed values --  MEDIUM
++RFloat_Equality_Checks                                --  equality for float values --  MEDIUM
+-- Forbidden_Attributes                                --  usage of specified attributes --  MEDIUM
+-- Forbidden_Pragmas                                   --  usage of specified pragmas --  MEDIUM
++RFunction_Style_Procedures                            --  procedures looking like functions --  MEDIUM
++RGeneric_IN_OUT_Objects                               --  generic objects of mode IN OUT --  MEDIUM
++RGenerics_In_Subprograms                              --  definitions of generic units in  subprogram bodies --  MEDIUM
++RGlobal_Variables                                     --  declarations of global variables --  MEDIUM
++RGOTO_Statements                                      --  goto statements --  MEDIUM
++RIdentifier_Casing:Type=mixed                         --  casing of defining names --  EASY
++RIdentifier_Casing:Enum=mixed                         --  casing of defining names --  EASY
++RIdentifier_Casing:Constant=upper                     --  casing of defining names --  EASY
++RIdentifier_Casing:Exception=mixed                    --  casing of defining names --  EASY
++RIdentifier_Casing:Others=mixed                       --  casing of defining names --  EASY
++RIdentifier_Casing:Exclude=dictionary_file.txt        --  casing of defining names --  EASY
++RIdentifier_Suffixes                                  --  suffixes in defining names --  EASY
++RIdentifier_Prefixes                                  --  prefixes in defining names --  EASY
+-- Implicit_IN_Mode_Parameters                         --  implicit IN mode in parameter specifications --  TRIVIAL
++RImplicit_SMALL_For_Fixed_Point_Types                 --  fixed point type declarations with no 'Small clause --  MEDIUM
++RImproper_Returns                                     --  improper use of return statements --  MEDIUM
++RImproperly_Located_Instantiations                    --  instantiations that can cause problems --  MEDIUM
++RIncomplete_Representation_Specifications             --  record types with layout specification but without size and pack specification --  MEDIUM
++RLibrary_Level_Subprograms                            --  library level subprograms --  MEDIUM
++RLocal_Packages                                       --  local packages --  MEDIUM
++RLocal_USE_Clauses                                    --  local use clauses --  MEDIUM
+-- Max_Identifier_Length                               --  maximal identifier length --  EASY
++RMetrics_Cyclomatic_Complexity:7                      --  (metrics) high cyclomatic complexity --  MAJOR
++RMetrics_Essential_Complexity:5                       --  (metrics) high essential complexity --  MAJOR
++RMetrics_LSLOC:500                                    --  (metrics) high LSLOC value --  MAJOR
++RMetrics_LSLOC:50,Subprograms                         --  (metrics) high LSLOC value --  MAJOR
++RMaximum_Parameters:7                                 --  maximum number of subprogram parameters --  MEDIUM
++RMembership_Tests                                     --  membership test --  MEDIUM
++RMisnamed_Controlling_Parameters                      --  Badly formatted profile of a primitive operation --  EASY
++RMisplaced_Representation_Items                       --  representation items out of order --  MEDIUM
++RMultiple_Entries_In_Protected_Definitions            --  protected definitions with more than one entry --  MEDIUM
+-- Name_Clashes                                        --  restrictions on name space --  MEDIUM
++RNested_Subprograms                                   --  nested subprograms --  MEDIUM
++RNo_Inherited_Classwide_Pre                           --  overridden operation has no Pre'Class --  MEDIUM
++RNo_Explicit_Real_Range                               --  real types with no range definition --  MEDIUM
++RNo_Scalar_Storage_Order_Specified                    --  a record/record extension type has record representation clause but no Scalar_Storage_Order attribute clause --  EASY
++RNon_Constant_Overlays                                --  inproper overlay of a variable object --  MEDIUM
++RNonoverlay_Address_Specifications                    --  nonoverlay address specifications --  MEDIUM
++RNot_Imported_Overlays                                --  not imported overlays --  MEDIUM
++RNon_Qualified_Aggregates                             --  non-qualified aggregates --  EASY
++RNon_Short_Circuit_Operators                          --  use of predefined AND and OR for boolean types --  EASY
+--  Non_SPARK_Attributes                               --  attributes that are not from the SPARK subset --  MEDIUM
++RNon_Tagged_Derived_Types                             --  derived types that are not type extensions --  MEDIUM
++RNon_Visible_Exceptions                               --  potential propagations of non-- visible exceptions --  MEDIUM
++RNull_Paths                                           --  null paths in control statements --  EASY
++RNumber_Declarations                                  --  number declarations --  MEDIUM
++RNumeric_Indexing                                     --  use integer literals as indexes --  MEDIUM
++RNumeric_Literals                                     --  numeric literals --  MEDIUM
++RObject_Declarations_Out_Of_Order                     --  object declarations should precede program unit declarations --  EASY
++RObjects_Of_Anonymous_Types                           --  data objects of anonymous types --  EASY
++ROne_Construct_Per_Line                               --  each statement or declaration should use separate code line --  EASY
++ROTHERS_In_Aggregates                                 --  OTHERS choices in aggregates --  EASY
++ROTHERS_In_CASE_Statements                            --  OTHERS choices in case statements --  EASY
++ROTHERS_In_Exception_Handlers                         --  OTHERS choices in exception handlers --  MEDIUM
++ROutbound_Protected_Assignments                       --  assignments from protected bodiesto outside objects --  MEDIUM
++ROuter_Loop_Exits                                     --  exiting more than one loop at once --  MEDIUM
++ROutside_References_From_Subprograms                  --  outside references from subprograms --  MEDIUM
++ROverloaded_Operators                                 --  operator overloading --  MEDIUM
++ROverly_Nested_Control_Structures:4                   --  deep nesting level of control structures --  MEDIUM
++RParameters_Out_Of_Order                              --  formal parameters ordering --  EASY
++RPositional_Actuals_For_Defaulted_Generic_Parameters  --  positional generic actuals for defaulted generic parameters --  EASY
++RPositional_Actuals_For_Defaulted_Parameters          --  positional actuals for defaulted parameters --  EASY
++RPOS_On_Enumeration_Types                             --  attribute 'POS applied to enumeration types --  MEDIUM
++RPositional_Components                                --  positional components associations in aggregates --  EASY
++RPositional_Generic_Parameters                        --  positional generic associations --  EASY
+--  RPositional_Parameters                             --  positional associations in subprogram and entry calls --  EASY
+--  Predefined_Numeric_Types                           --  explicit references to predefined numeric subtypes --  MEDIUM
++RPredicate_Testing                                    --  expressions need subtype predicate evaluation --  MEDIUM
++RPrintable_ASCII                                      --  non-- printable characters --  EASY
++RQuantified_Expressions                               --  Ada 2012 quantified expressions --  MEDIUM
++RRaising_External_Exceptions                          --  visibility of exceptions raised by routines declared in library package --  MEDIUM
++RRaising_Predefined_Exceptions                        --  explicit raise of predefined exceptions --  MEDIUM
++RRecursive_Subprograms                                --  recursion (call graph cycles) --  MEDIUM
++RRelative_Delay_Statements                            --  relative delay statements --  MEDIUM
++RRenamings                                            --  renaming declarations --  MEDIUM
++RRepresentation_Specifications                        --  representation specification (clause, aspect or pragma) --  MEDIUM
++RSeparate_Numeric_Error_Handlers                      --  Numeric_Error and Constraint error are not handled together --  MEDIUM
++RSingle_Value_Enumeration_Types                       --  enumeration type definitions with a single enumeration literal --  MEDIUM
++RSize_Attribute_For_Types                             --  'Size attribute for types and subtypes --  MEDIUM
++RSlices                                               --  slices --  MEDIUM
++RSpecific_Parent_Type_Invariant                       --  derivation from a type with specific Type_Invariant aspect --  MEDIUM
++RSpecific_Pre_Post                                    --  definition of non class-- wide Pre and Post aspects for tagged type primitives --  MEDIUM
++RSpecific_Type_Invariants                             --  non class-- wide Type_Invariant aspect --  MEDIUM
++RSubprogram_Access                                    --  access to subprogram definition --  MEDIUM
++RToo_Many_Dependencies:20                             --  compilation unit has too many dependencies --  MAJOR
++RToo_Many_Parents:4                                   --  type/object has too many parents --  MAJOR
++RToo_Many_Primitives:10                               --  tagged type has too many primitives --  MAJOR
++RUnassigned_OUT_Parameters                            --  OUT parameters do not get values in procedure bodies --  MEDIUM
++RUnchecked_Address_Conversions                        --  unchecked conversions from System.Address into access type --  MEDIUM
++RUnchecked_Conversions_As_Actuals                     --  passing instance of Unchecked_Conversion as actual --  MEDIUM
++RUncommented_BEGIN_In_Package_Bodies                  --  BEGIN keywords in package bodies non-- marked with comment with package name --  EASY
++RUnconstrained_Array_Returns                          --  functions returning unconstrained arrays --  MEDIUM
++RUnconditional_Exits                                  --  Exit statement with no condition --  MEDIUM
++RUnconstrained_Arrays                                 --  unconstrained array definitions --  MEDIUM
++RUninitialized_Global_Variables                       --  uninitialized variables in packages --  MEDIUM
++RUniversal_Ranges                                     --  ranges with universal integer bounds --  MEDIUM
++RUnnamed_Blocks_And_Loops                             --  compound statements naming --  EASY
+-- USE_Clauses                                         --  use clauses --  MEDIUM
+-- USE_PACKAGE_Clauses                                 --  use clause for packages --  MEDIUM
++RVisible_Components                                   --  Types with publicly accessible components --  MEDIUM
++RVolatile_Objects_Without_Address_Clauses             --  volatile objects with no address clause --  MEDIUM

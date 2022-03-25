@@ -15,4 +15,9 @@ project Code_Reviewer is
       for Switches ("Ada") use ("-Es"); --  Symbolic traceback
    end Binder;
 
+   package Check is
+      for Default_Switches ("Ada") use
+        ("-rules", "-from=" & Project'Project_dir & "../../gnatcheck.rules");
+   end Check;
+
 end Code_Reviewer;
