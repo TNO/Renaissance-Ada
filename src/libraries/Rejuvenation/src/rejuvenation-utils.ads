@@ -34,9 +34,12 @@ package Rejuvenation.Utils is
    function Are_Equal_In_Ada
      (Node1, Node2 : Ada_Node'Class) return Boolean;
    --  Return whether two AST nodes are equal in Ada.
-   --  Ada is case insensitive, except for string and character literal.
    --  Of course, white spaces and comments are ignored.
-   --  Semantic equally is supported for integers.
+   --
+   --  Semantic equality is supported for identifiers: Ada is case insensitive
+   --  Of course, string and character literal are compared case sensitive.
+   --  Semantic equality is supported for integers,
+   --  e.g. 1000, 1_000, 1E3, and 1e+3 are all equal.
    --  TODO: add semantic equality for float
    --        waiting for https://gt3-prod-1.adacore.com/#/tickets/U922-027
    --  TODO: add semantic equality for dotted names and renames.

@@ -4,6 +4,7 @@
 # Directories with generated files
 obj/
 lib/
+bin/
 
 # Ada Library Information
 *.ali
@@ -12,3 +13,7 @@ lib/
 .clang-format
 .clangd/
 *-loc.xml
+
+# Alire
+alire/
+config/

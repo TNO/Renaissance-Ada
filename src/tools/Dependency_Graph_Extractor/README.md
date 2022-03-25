@@ -38,6 +38,10 @@ This will create the GraphML file `rejuvenation_lib.graphml` in the current dire
 
 ## Usage
 Open the generated `graphml` file with [Neo4j](https://neo4j.com) according to [the import instructions](https://neo4j.com/labs/apoc/4.1/import/graphml/).
+Note, your cypher query should resemble
+```cypher
+CALL apoc.import.graphml("movies.graphml", {readLabels: true})
+```
 
 Prepare yourself by reading the [Node and Edge Types](Ada_Node_and_Edge_Types.docx?raw=true) present in the graph database.
 
@@ -77,6 +81,8 @@ MATCH (a)-[:Calls*]->(b)-[:Calls*]->(a) RETURN *
 to find indirect recursion only.
 
 ### Analyze references
+
+#### Chain of references between two files
 Run the [Cypher](https://neo4j.com/developer/cypher/) query
 ```cypher
 MATCH
@@ -88,9 +94,42 @@ WHERE
  file_end.relativeName = "rejuvenation-simple_factory.ads"
 RETURN p
 ```
-to find all chains of references that begin in "rejuvenation-patterns.adb" and end in "rejuvenation-simple_factory.ads"
+to find all chains of references that 
+begin with a declaration in "rejuvenation-patterns.adb" and 
+end on a declaration in "rejuvenation-simple_factory.ads"
 
 <img src="doc/images/references.jpg" width="250"/>
+
+#### Number of references to declarations in file
+
+Run the [Cypher](https://neo4j.com/developer/cypher/) query
+```cypher
+CALL 
+{
+    MATCH 
+       (provider:AdaDeclaration)-[:Source]->(adsFile:AdaSpecificationFile)
+    WHERE
+       adsFile.name ENDS WITH "rejuvenation-string_utils.ads"
+    RETURN provider
+}
+WITH provider,
+     size (()-[:References]->(provider)) as refCount
+RETURN provider.relativeName, refCount ORDER BY refCount DESC
+```
+to get a table of all declarations in "rejuvenation-string_utils.ads" and how often each declaration is directly referenced.
+
+#### Refering entities to declarations in file
+
+Run the [Cypher](https://neo4j.com/developer/cypher/) query
+```cypher
+MATCH 
+   (provider:AdaDeclaration)-[:Source]->(adsFile:AdaSpecificationFile),
+   (user)-[:References]->(provider)
+WHERE
+   adsFile.name ENDS WITH "rejuvenation-string_utils.ads"
+RETURN user, provider
+```
+to get the declarations in "rejuvenation-string_utils.ads" that are referenced together with the refering entities.
 
 ## Building
 
