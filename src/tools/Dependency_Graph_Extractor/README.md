@@ -129,7 +129,7 @@ WHERE
    adsFile.name ENDS WITH "rejuvenation-string_utils.ads"
 RETURN user, provider
 ```
-to get the declarations in "rejuvenation-string_utils.ads" that are referenced together with the refering declarations.
+to get the declarations in "rejuvenation-string_utils.ads" that are referenced together with the refering entities.
 
 ## Building
 
