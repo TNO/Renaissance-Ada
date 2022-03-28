@@ -3,12 +3,12 @@ with GNATCOLL.Projects;
 with GNATCOLL.VFS;
 with Libadalang.Analysis;
 with Libadalang.Common;
-with GraphML_Writers;
+with GraphML_Writer;
 
 package Extraction is
 
    package GPR   renames GNATCOLL.Projects;
-   package GW    renames GraphML_Writers;
+   package GW    renames GraphML_Writer;
    package LAL   renames Libadalang.Analysis;
    package LALCO renames Libadalang.Common;
    package SU    renames Ada.Strings.Unbounded;

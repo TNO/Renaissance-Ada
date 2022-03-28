@@ -5,10 +5,10 @@ with Ada.Text_IO;
 with GNATCOLL.VFS;
 with Command_Line;
 with Extraction;
-with GraphML_Writers;
+with GraphML_Writer;
 
 procedure Dependency_Graph_Extractor is
-   package G_W renames GraphML_Writers;
+   package G_W renames GraphML_Writer;
    package S_U renames Ada.Strings.Unbounded;
    package V_F_S renames GNATCOLL.VFS;
 

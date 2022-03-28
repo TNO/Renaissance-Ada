@@ -2,7 +2,7 @@ pragma Assertion_Policy (Check);
 
 with Ada.Strings.Fixed;
 
-package body GraphML_Writers is
+package body GraphML_Writer is
 
    package S_F renames Ada.Strings.Fixed;
 
@@ -346,4 +346,4 @@ package body GraphML_Writers is
          Edge_Attributes);
    end Write_Edge;
 
-end GraphML_Writers;
+end GraphML_Writer;

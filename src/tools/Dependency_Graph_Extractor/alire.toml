@@ -10,8 +10,4 @@ maintainers = ["Pierre van de Laar <pierre.van.de.laar@gmail.com>"]
 maintainers-logins = ["pjljvandelaar"]
 
 [[depends-on]]
-graphml_writer = "~0.0.0"
 libadalang = "^22.0.0"
-
-[[pins]]
-graphml_writer = { path='../../libraries/GraphML_Writer' }

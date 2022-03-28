@@ -74,7 +74,7 @@ package body Extraction.Graph_Operations is
 
    procedure Write_Edge
      (Graph          : Graph_Context; Source_Project : GPR.Project_Type;
-      Target_Project : GPR.Project_Type; Edge_Ty : GraphML_Writers.Edge_Type;
+      Target_Project : GPR.Project_Type; Edge_Ty : GW.Edge_Type;
       Edge_Attrs     : GW.Attribute_Value_Sets.Map :=
         GW.Attribute_Value_Sets.Empty)
    is
@@ -89,7 +89,7 @@ package body Extraction.Graph_Operations is
 
    procedure Write_Edge
      (Graph       : Graph_Context; Source_Project : GPR.Project_Type;
-      Target_File : VFS.Virtual_File; Edge_Ty : GraphML_Writers.Edge_Type;
+      Target_File : VFS.Virtual_File; Edge_Ty : GW.Edge_Type;
       Edge_Attrs  : GW.Attribute_Value_Sets.Map :=
         GW.Attribute_Value_Sets.Empty)
    is
@@ -104,7 +104,7 @@ package body Extraction.Graph_Operations is
 
    procedure Write_Edge
      (Graph          : Graph_Context; Source_File : VFS.Virtual_File;
-      Target_Project : GPR.Project_Type; Edge_Ty : GraphML_Writers.Edge_Type;
+      Target_Project : GPR.Project_Type; Edge_Ty : GW.Edge_Type;
       Edge_Attrs     : GW.Attribute_Value_Sets.Map :=
         GW.Attribute_Value_Sets.Empty)
    is
@@ -119,7 +119,7 @@ package body Extraction.Graph_Operations is
 
    procedure Write_Edge
      (Graph       : Graph_Context; Source_File : VFS.Virtual_File;
-      Target_File : VFS.Virtual_File; Edge_Ty : GraphML_Writers.Edge_Type;
+      Target_File : VFS.Virtual_File; Edge_Ty : GW.Edge_Type;
       Edge_Attrs  : GW.Attribute_Value_Sets.Map :=
         GW.Attribute_Value_Sets.Empty)
    is
@@ -135,7 +135,7 @@ package body Extraction.Graph_Operations is
    procedure Write_Edge
      (Graph       : Graph_Context; Source_Unit : LAL.Analysis_Unit;
       Target_Name : LAL.Defining_Name; Target_Decl : LAL.Basic_Decl'Class;
-      Edge_Ty     : GraphML_Writers.Edge_Type;
+      Edge_Ty     : GW.Edge_Type;
       Edge_Attrs  : GW.Attribute_Value_Sets.Map :=
         GW.Attribute_Value_Sets.Empty)
    is
@@ -152,7 +152,7 @@ package body Extraction.Graph_Operations is
    procedure Write_Edge
      (Graph       : Graph_Context; Source_Name : LAL.Defining_Name;
       Source_Decl : LAL.Basic_Decl'Class; Target_Unit : LAL.Analysis_Unit;
-      Edge_Ty     : GraphML_Writers.Edge_Type;
+      Edge_Ty     : GW.Edge_Type;
       Edge_Attrs  : GW.Attribute_Value_Sets.Map :=
         GW.Attribute_Value_Sets.Empty)
    is
@@ -168,7 +168,7 @@ package body Extraction.Graph_Operations is
 
    procedure Write_Edge
      (Graph       : Graph_Context; Source_Decl : LAL.Basic_Decl'Class;
-      Target_Decl : LAL.Basic_Decl'Class; Edge_Ty : GraphML_Writers.Edge_Type;
+      Target_Decl : LAL.Basic_Decl'Class; Edge_Ty : GW.Edge_Type;
       Edge_Attrs  : GW.Attribute_Value_Sets.Map :=
         GW.Attribute_Value_Sets.Empty)
    is
@@ -186,7 +186,7 @@ package body Extraction.Graph_Operations is
    procedure Write_Edge
      (Graph       : Graph_Context; Source_Name : LAL.Defining_Name;
       Source_Decl : LAL.Basic_Decl'Class; Target_Decl : LAL.Basic_Decl'Class;
-      Edge_Ty     : GraphML_Writers.Edge_Type;
+      Edge_Ty     : GW.Edge_Type;
       Edge_Attrs  : GW.Attribute_Value_Sets.Map :=
         GW.Attribute_Value_Sets.Empty)
    is
@@ -204,7 +204,7 @@ package body Extraction.Graph_Operations is
    procedure Write_Edge
      (Graph       : Graph_Context; Source_Decl : LAL.Basic_Decl'Class;
       Target_Name : LAL.Defining_Name; Target_Decl : LAL.Basic_Decl'Class;
-      Edge_Ty     : GraphML_Writers.Edge_Type;
+      Edge_Ty     : GW.Edge_Type;
       Edge_Attrs  : GW.Attribute_Value_Sets.Map :=
         GW.Attribute_Value_Sets.Empty)
    is
@@ -222,7 +222,7 @@ package body Extraction.Graph_Operations is
    procedure Write_Edge
      (Graph       : Graph_Context; Source_Name : LAL.Defining_Name;
       Source_Decl : LAL.Basic_Decl'Class; Target_Name : LAL.Defining_Name;
-      Target_Decl : LAL.Basic_Decl'Class; Edge_Ty : GraphML_Writers.Edge_Type;
+      Target_Decl : LAL.Basic_Decl'Class; Edge_Ty : GW.Edge_Type;
       Edge_Attrs  : GW.Attribute_Value_Sets.Map :=
         GW.Attribute_Value_Sets.Empty)
    is

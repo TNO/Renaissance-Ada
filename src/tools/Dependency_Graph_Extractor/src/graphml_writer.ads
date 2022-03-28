@@ -5,7 +5,7 @@ with Ada.Strings.Unbounded;
 with Ada.Strings.Unbounded.Hash;
 with Ada.Streams.Stream_IO;
 
-package GraphML_Writers is
+package GraphML_Writer is
 
    package S_U renames Ada.Strings.Unbounded;
 
@@ -91,4 +91,4 @@ private
       Known_Edges     : Known_Edge_Sets.Set;
    end record;
 
-end GraphML_Writers;
+end GraphML_Writer;
