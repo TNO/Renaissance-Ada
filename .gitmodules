@@ -1,0 +1,4 @@
+[submodule "src/libraries/Rejuvenation"]
+	path = src/libraries/Rejuvenation
+	url = https://github.com/TNO/Rejuvenation-Ada.git
+	branch = main
