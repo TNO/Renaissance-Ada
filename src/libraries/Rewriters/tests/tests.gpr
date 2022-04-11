@@ -1,0 +1,18 @@
+with "config/tests_config.gpr";
+with "../rewriters_settings.gpr";
+project Tests is
+
+   for Source_Dirs use ("src");
+   for Object_Dir use "obj";
+   for Exec_Dir use "bin";
+   for Main use ("tests.adb");
+
+   package Builder renames Rejuvenation_Settings.Builder;
+   package Compiler renames Rejuvenation_Settings.Compiler;
+   package Binder renames Rejuvenation_Settings.Binder;
+   package Linker renames Rejuvenation_Settings.Linker;
+   package Check renames Rejuvenation_Settings.Check;
+   package CodePeer renames Rejuvenation_Settings.CodePeer;
+   package Pretty_Printer renames Rejuvenation_Settings.Pretty_Printer;
+   
+end Tests;

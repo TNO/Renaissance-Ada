@@ -1,0 +1,19 @@
+# Object file
+*.o
+
+# Ada Library Information
+*.ali
+
+# Directories with generated files
+obj/
+lib/
+bin/
+
+# Alire
+alire/
+config/
+
+# GNAT Studio files
+.clang-format
+.clangd/
+*-loc.xml

@@ -1,0 +1,14 @@
+name = "rewriters"
+description = "Advanced manipulation of Ada code"
+version = "0.0.0"
+licenses = "BSD-3-Clause"
+website = "https://github.com/TNO/Rewriters-Ada"
+tags = ["manipulation", "transformation"]
+
+authors = ["Pierre van de Laar"]
+maintainers = ["Pierre van de Laar <pierre.van.de.laar@gmail.com>"]
+maintainers-logins = ["pjljvandelaar"]
+
+[[depends-on]]
+libadalang = "^22.0.0"
+rejuvenation = "*"
