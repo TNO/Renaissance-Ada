@@ -5,4 +5,4 @@
 [submodule "src/tools/Dependency_Graph_Extractor"]
 	path = src/tools/Dependency_Graph_Extractor
 	url = https://github.com/TNO/Dependency_Graph_Extractor-Ada
-    branch = main
+	branch = main
