@@ -1,9 +1,10 @@
 # Renaissance-Ada
 The Renaissance-Ada project develops tooling for analysis and manipulation of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software.
 The Renaissance-Ada project builds on top of [LibAdalang](https://adaco.re/libadalang) and includes the following functionality
-* [Dependency Graph Extractor](/src/tools/Dependency_Graph_Extractor) that produces a [graphml](http://graphml.graphdrawing.org) file for visualization and querying 
+* [Dependency Graph Extractor](https://github.com/TNO/Dependency_Graph_Extractor-Ada) 
+that produces a [graphml](http://graphml.graphdrawing.org) file for visualization and querying 
 with e.g. [yEd](https://www.yworks.com/products/yed) and [Neo4J](https://neo4j.com/).
-* [Rejuvenation Library](/src/libraries/Rejuvenation) that 
+* [Rejuvenation Library](https://github.com/TNO/Rejuvenation-Ada) that 
 allow analysis and manipulation of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language))  code based on concrete syntax.
 * [Rewriters Library](/src/libraries/Rewriters) that
 enables automatic rewriting of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) code based on concrete syntax.
@@ -13,8 +14,8 @@ based on a large list of rewrite rules.
 ## Examples
 
 The image below shows the dependencies of Find-related subprograms of 
-the [Rejuvenation Library](/src/libraries/Rejuvenation)
-as extracted by the [Dependency Graph Extractor](/src/tools/Dependency_Graph_Extractor) and 
+the [Rejuvenation Library](https://github.com/TNO/Rejuvenation-Ada)
+as extracted by the [Dependency Graph Extractor](https://github.com/TNO/Dependency_Graph_Extractor-Ada) and 
 queried using [Neo4J](https://neo4j.com/).
 ![Dependencies of Find-related subprograms of the Rejuvenation Library](/doc/Relations_Of_Find.jpg)
 
