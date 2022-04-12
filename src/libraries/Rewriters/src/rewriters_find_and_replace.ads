@@ -31,10 +31,9 @@ package Rewriters_Find_And_Replace is
    --  you can just check whether the location of the found instance occurs
    --  in the list of reported locations by the linter.
 
-
    function Make_Rewriter_Find_And_Replace
      (Find_Pattern, Replace_Pattern : Pattern;
-      Accept_Match : Match_Accepter            := Accept_All_Matches'Access;
+      Accept_Match : Match_Accepter         := Accept_All_Matches'Access;
       Rewriters : Rewriters_Sequence.Vector := Rewriters_Sequence.Empty_Vector)
       return Rewriter_Find_And_Replace;
    --  TODO: Enforce compatibility between find and replace pattern

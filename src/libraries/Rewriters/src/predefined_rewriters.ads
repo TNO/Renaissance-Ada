@@ -222,7 +222,6 @@ private
      (N : Name)
       return Boolean;
 
-
    function Accept_Boolean (Match : Match_Pattern) return Boolean is
      (Is_Boolean_Expression (Match, "$S_Expr"));
 

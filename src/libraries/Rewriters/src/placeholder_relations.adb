@@ -244,7 +244,7 @@ package body Placeholder_Relations is
    function Has_Side_Effect
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean
    is
-      --  basic implementation:
+      --  Basic implementation:
       --  statement and declarations always have side effects
       --  e.g. change variable and introduce definition
       Nodes : constant Node_List.Vector :=
@@ -256,30 +256,31 @@ package body Placeholder_Relations is
    end Has_Side_Effect;
 
    function Has_Effect_On (A, B : Ada_Node) return Boolean;
+   pragma Extensions_Allowed (On);
    function Has_Effect_On (A : Ada_Node;
                            B : Ada_Node with Unreferenced)
    return Boolean
    is
-   --  Basic implementation
+   --  Basic implementation:
    --  When an expression has no side effects,
    --  it has no effect on B
    --
-   --  All Nodes A that effect Node B are reported as True
-   --  Yet not all nodes A that do not effect node B are reported as False
+   --  All Nodes A that effect Node B are reported as True.
+   --  Yet, not all nodes A that do not effect node B are reported as False.
    --
-   --  TODO: use the variables that written by A and
-   --        read by B
-   --        to make it more accurate
+   --  TODO: use the variables that are written by A and
+   --        read by B to make it more accurate.
    --
    --        Note: dependent effects include
    --       * output parameter of a function
-   --         used in the other placeholder
+   --         used in the other AST Node
    --       * side effect of a function (i.e. state change)
-   --         used in the other placeholder
+   --         used in the other AST Node
    begin
       return A.Kind not in Ada_Expr
         or else Has_Side_Effect (A.As_Expr);
    end Has_Effect_On;
+   pragma Extensions_Allowed (Off);
 
    function Has_Effect_On
      (Match : Match_Pattern; Placeholder_A, Placeholder_B : String)
