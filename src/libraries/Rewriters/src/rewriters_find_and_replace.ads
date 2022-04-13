@@ -59,7 +59,7 @@ private
 
    function Make_Rewriter_Find_And_Replace
      (Find_Pattern, Replace_Pattern : Pattern;
-      Accept_Match : Match_Accepter            := Accept_All_Matches'Access;
+      Accept_Match : Match_Accepter         := Accept_All_Matches'Access;
       Rewriters : Rewriters_Sequence.Vector := Rewriters_Sequence.Empty_Vector)
       return Rewriter_Find_And_Replace is
      (Rewriter with Find_Pattern, Replace_Pattern, Accept_Match, Rewriters);
