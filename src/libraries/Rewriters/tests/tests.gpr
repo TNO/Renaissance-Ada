@@ -7,12 +7,12 @@ project Tests is
    for Exec_Dir use "bin";
    for Main use ("tests.adb");
 
-   package Builder renames Rejuvenation_Settings.Builder;
-   package Compiler renames Rejuvenation_Settings.Compiler;
-   package Binder renames Rejuvenation_Settings.Binder;
-   package Linker renames Rejuvenation_Settings.Linker;
-   package Check renames Rejuvenation_Settings.Check;
-   package CodePeer renames Rejuvenation_Settings.CodePeer;
-   package Pretty_Printer renames Rejuvenation_Settings.Pretty_Printer;
+   package Builder renames Rewriters_Settings.Builder;
+   package Compiler renames Rewriters_Settings.Compiler;
+   package Binder renames Rewriters_Settings.Binder;
+   package Linker renames Rewriters_Settings.Linker;
+   package Check renames Rewriters_Settings.Check;
+   package CodePeer renames Rewriters_Settings.CodePeer;
+   package Pretty_Printer renames Rewriters_Settings.Pretty_Printer;
    
 end Tests;
