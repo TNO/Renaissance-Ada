@@ -15,5 +15,5 @@ rejuvenation = "*"
 rewriters = "*"
 
 [[pins]]
-rewriters = { path = ".." } 
+rewriters = { path = ".." }
 

@@ -5,27 +5,11 @@ with Rejuvenation.Text_Rewrites;  use Rejuvenation.Text_Rewrites;
 
 package body Rewriters_Minimal_Parentheses is
 
-   overriding function Rewrite_Context
-     (RMP : Rewriter_Minimal_Parentheses; Node : Ada_Node'Class)
-      return Ada_Node
-   is
-   begin
-      if Node.Is_Null
-        or else Node.Kind not in Ada_Expr
-        or else Node.Parent.Is_Null
-      then
-         return Node.As_Ada_Node;
-      else
-         return Node.Parent;
-      end if;
-   end Rewrite_Context;
-
    function Are_Brackets_Syntactically_Mandatory
      (ParenExpr : Paren_Expr) return Boolean;
    function Are_Brackets_Syntactically_Mandatory
      (ParenExpr : Paren_Expr) return Boolean
       --  for more info: see https://gt3-prod-2.adacore.com/#/tickets/U908-032
-
    is
       Parent : constant Ada_Node := ParenExpr.Parent;
    begin

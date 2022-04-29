@@ -31,8 +31,4 @@ package body Rewriters_Repeat is
       return To_String (Current_String);
    end Rewrite;
 
-   overriding function Rewrite_Context
-     (R_R : Rewriter_Repeat; Node : Ada_Node'Class) return Ada_Node is
-     (R_R.F_Rewriter.Rewrite_Context (Node));
-
 end Rewriters_Repeat;

@@ -17,9 +17,10 @@ abstract project Rewriters_Settings is
    case Compile_Checks is
       when "enabled" =>
          Compile_Checks_Switches :=
-           ("-gnatwa",  -- All warnings
-            "-gnatVa",  -- All validity checks
-            "-gnatwe"); -- Warnings as errors
+           ("-gnatwa"  -- All warnings
+           ,"-gnatVa"  -- All validity checks
+           ,"-gnatwe"  -- Warnings as errors
+           );
       when others => null;
    end case;
 

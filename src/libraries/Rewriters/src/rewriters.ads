@@ -1,5 +1,4 @@
 with Libadalang.Analysis;         use Libadalang.Analysis;
-with Rejuvenation.Navigation;     use Rejuvenation.Navigation;
 
 package Rewriters is
 
@@ -12,12 +11,6 @@ package Rewriters is
       Node      : Ada_Node'Class;
       Top_Level : Boolean := True)
       return String;
-
-   function Rewrite_Context
-     (R         : Rewriter;
-      Node      : Ada_Node'Class)
-      return Ada_Node
-     with Post => Is_Reflexive_Ancestor (Rewrite_Context'Result, Node);
 
    type Any_Rewriter is access Rewriter'Class;
    type Any_Constant_Rewriter is access constant Rewriter'Class;

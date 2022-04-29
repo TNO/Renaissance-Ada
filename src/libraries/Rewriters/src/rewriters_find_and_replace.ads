@@ -1,6 +1,5 @@
 with Libadalang.Analysis;            use Libadalang.Analysis;
 with Rejuvenation.Find_And_Replacer; use Rejuvenation.Find_And_Replacer;
-with Rejuvenation.Navigation;        use Rejuvenation.Navigation;
 with Rejuvenation.Patterns;          use Rejuvenation.Patterns;
 with Rewriters;                      use Rewriters;
 with Rewriters_Sequence;             use Rewriters_Sequence;
@@ -12,11 +11,6 @@ package Rewriters_Find_And_Replace is
    overriding function Rewrite
      (RFR       : Rewriter_Find_And_Replace; Node : Ada_Node'Class;
       Top_Level : Boolean := True) return String;
-
-   overriding function Rewrite_Context
-     (RFR : Rewriter_Find_And_Replace; Node : Ada_Node'Class)
-      return Ada_Node with
-      Post => Is_Reflexive_Ancestor (Rewrite_Context'Result, Node);
 
    function Find_Pattern (RFR : Rewriter_Find_And_Replace) return Pattern;
 
