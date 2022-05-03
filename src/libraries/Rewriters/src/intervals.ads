@@ -35,6 +35,8 @@ package Intervals is
       --  Does interval I_A overlap with interval I_B?
       --  Note: Overlaps (I_A, I_B) = Overlaps (I_B, I_A)
 
+   function Image (I : Interval) return String;
+
 private
 
    type Interval is tagged record
@@ -65,4 +67,6 @@ private
    --     325933/determine-whether-two-date-ranges-overlap
    --     3269434/whats-the-most-efficient-way-to-test-if-two-ranges-overlap
 
+   function Image (I : Interval) return String is
+      (I.F_First'Image & "-" & I.F_Last'Image);
 end Intervals;
