@@ -1,5 +1,5 @@
 with "config/tests_config.gpr";
-with "../rewriters_settings.gpr";
+with "../settings/rewriters_settings.gpr";
 project Tests is
 
    for Source_Dirs use ("src");
