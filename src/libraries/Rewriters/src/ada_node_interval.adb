@@ -1,6 +1,4 @@
 with Ada.Assertions;    use Ada.Assertions;
-with Ada.Text_IO;       use Ada.Text_IO;
-with Libadalang.Common; use Libadalang.Common;
 
 package body Ada_Node_Interval is
 

@@ -1,23 +1,26 @@
-with Libadalang.Analysis;     use Libadalang.Analysis;
-with Rewriters;               use Rewriters;
+with Libadalang.Analysis; use Libadalang.Analysis;
+with Rewriters;           use Rewriters;
 
 package Rewriters_Repeat is
 
    type Rewriter_Repeat is new Rewriter with private;
 
-   overriding function Rewrite
-     (R_R       : Rewriter_Repeat; Node : Ada_Node'Class;
-      Top_Level : Boolean := True) return String;
+   overriding procedure Rewrite
+     (R_R : Rewriter_Repeat; Unit : in out Analysis_Unit);
 
-   function Make_Rewriter_Repeat (R : Rewriter) return Rewriter_Repeat;
+   function Make_Rewriter_Repeat
+     (R : Rewriter'Class) return Rewriter_Repeat;
 
 private
 
+   type Any_Rewriter is not null access Rewriter'Class;
+
    type Rewriter_Repeat is new Rewriter with record
-      F_Rewriter : Rewriter;
+      F_Rewriter : Any_Rewriter;
    end record;
 
-   function Make_Rewriter_Repeat (R : Rewriter) return Rewriter_Repeat is
-      (Rewriter with R);
+   function Make_Rewriter_Repeat
+     (R : Rewriter'Class) return Rewriter_Repeat is
+     (F_Rewriter => new Rewriter'Class'(R));
 
 end Rewriters_Repeat;

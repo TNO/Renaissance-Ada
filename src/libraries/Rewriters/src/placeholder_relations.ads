@@ -49,4 +49,29 @@ package Placeholder_Relations is
    function Is_Within_Base_Subp_Body
      (Match : Match_Pattern; Subp_Name : String) return Boolean;
 
+   function Is_Boolean_Expression
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
+
+   function Is_Integer_Expression
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
+
+   function Is_Float_Expression
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
+
+   function Is_String_Expression
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
+
+   function Is_Unbounded_String
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
+
+   function Is_Referenced_Decl_Defined_In_AStrUnb
+     (N : Name)
+      return Boolean;
+   --  For each function call, the function with the given name
+   --  and type of arguments is matched.
+   --  However the found function depends on the particular
+   --  import relations,
+   --  so we need to check if the defining file is right
+   --  even when the name and types are checked!
+
 end Placeholder_Relations;

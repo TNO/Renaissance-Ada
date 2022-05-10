@@ -14,5 +14,6 @@ rejuvenation = "*"
 rewriters = "*"
 
 [[pins]]
-rewriters = { path = "../../libraries/rewriters" } 
+rewriters = { path = ".." }
+rejuvenation = { path = "../../rejuvenation" }     # remove before release
 

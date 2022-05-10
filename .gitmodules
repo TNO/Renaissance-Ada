@@ -1,8 +1,8 @@
-[submodule "src/libraries/Rejuvenation"]
-	path = src/libraries/Rejuvenation
+[submodule "src/libraries/rejuvenation"]
+	path = src/libraries/rejuvenation
 	url = https://github.com/TNO/Rejuvenation-Ada.git
 	branch = main
-[submodule "src/tools/Dependency_Graph_Extractor"]
-	path = src/tools/Dependency_Graph_Extractor
+[submodule "src/tools/dependency_graph_extractor"]
+	path = src/tools/dependency_graph_extractor
 	url = https://github.com/TNO/Dependency_Graph_Extractor-Ada
 	branch = main

@@ -2,29 +2,14 @@ with Libadalang.Analysis;         use Libadalang.Analysis;
 
 package Rewriters is
 
-   type Rewriter is tagged private;
-   --  To be usable in an Ada.Containers.Vectors,
-   --  a Rewriter can't be abstract and can't be an interface
+   type Rewriter is interface;
 
-   function Rewrite
-     (R         : Rewriter;
-      Node      : Ada_Node'Class;
-      Top_Level : Boolean := True)
-      return String;
-
-   type Any_Rewriter is access Rewriter'Class;
-   type Any_Constant_Rewriter is access constant Rewriter'Class;
-
-private
-
-   type Rewriter is
-      tagged null record;
-
-   function Rewrite_Context
-     (R         : Rewriter;
-      Node      : Ada_Node'Class)
-      return Ada_Node
-   is
-      (Node.As_Ada_Node);
+   procedure Rewrite
+     (R         :        Rewriter;
+      Unit      : in out Analysis_Unit) is abstract;
+   --  Rewrite Unit
+   --  Rewrites should be limited to marked nodes (including their children)
+   --
+   --  We use unit (instead of filename) since it can also contain project info
 
 end Rewriters;

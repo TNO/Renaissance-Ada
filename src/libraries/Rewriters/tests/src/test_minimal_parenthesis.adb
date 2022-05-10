@@ -1,40 +1,74 @@
 with AUnit.Assertions;              use AUnit.Assertions;
 with Libadalang.Analysis;           use Libadalang.Analysis;
 with Libadalang.Common;             use Libadalang.Common;
+with Rejuvenation;                  use Rejuvenation;
+with Rejuvenation.Finder;           use Rejuvenation.Finder;
 with Rejuvenation.Simple_Factory;   use Rejuvenation.Simple_Factory;
 with Rewriters_Minimal_Parentheses; use Rewriters_Minimal_Parentheses;
 
 package body Test_Minimal_Parenthesis is
 
    procedure Assert_Unchanged
-     (Expected : String; Rule : Grammar_Rule; Message : String);
+     (Input : String; Rule : Grammar_Rule; Message : String);
    procedure Assert_Unchanged
-     (Expected : String; Rule : Grammar_Rule; Message : String)
+     (Input : String; Rule : Grammar_Rule; Message : String)
    is
-      Unit : constant Analysis_Unit := Analyze_Fragment (Expected, Rule);
-      RMP  : constant Rewriter_Minimal_Parentheses :=
-        Make_Rewriter_Minimal_Parentheses;
-      Actual : constant String := RMP.Rewrite (Unit.Root);
+      Unit : constant Analysis_Unit := Analyze_Fragment (Input, Rule);
+      P_Es : constant Node_List.Vector := Find (Unit.Root, Ada_Paren_Expr);
    begin
-      Assert (Actual, Expected, Message);
+      Assert ((for all P_E of P_Es =>
+                 Are_Parentheses_Necessary (P_E.As_Paren_Expr)),
+                 Message);
    end Assert_Unchanged;
+
+   procedure Assert_Changed
+     (Input : String; Rule : Grammar_Rule; Message : String);
+   procedure Assert_Changed
+     (Input : String; Rule : Grammar_Rule; Message : String)
+   is
+      Unit : constant Analysis_Unit := Analyze_Fragment (Input, Rule);
+      P_Es : constant Node_List.Vector := Find (Unit.Root, Ada_Paren_Expr);
+   begin
+      Assert ((for some P_E of P_Es =>
+                  not Are_Parentheses_Necessary (P_E.As_Paren_Expr)),
+                 Message);
+   end Assert_Changed;
 
    --  Test Functions
 
-   procedure Test_Mandatory_Brackets (T : in out Test_Case'Class);
-   procedure Test_Mandatory_Brackets (T : in out Test_Case'Class) is
+   procedure Test_Mandatory_Parenthesis (T : in out Test_Case'Class);
+   procedure Test_Mandatory_Parenthesis (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
    begin
       Assert_Unchanged
         ("function f return Integer is (2);", Expr_Fn_Rule,
-         "Brackets are mandatory for Expression Functions");
+         "Parenthesis are mandatory for Expression Functions");
       Assert_Unchanged
         ("Code'(Dec)", Expr_Rule,
-         "Brackets are mandatory for Qualified Expressions");
+         "Parenthesis are mandatory for Qualified Expressions");
       Assert_Unchanged ("2 * (2/3)", Expr_Rule, "Multiply Divide order");
       Assert_Unchanged ("2 * (1 + 4)", Expr_Rule, "Multiply Addition order");
-   end Test_Mandatory_Brackets;
+      Assert_Unchanged ("not (not v)", Expr_Rule,
+                        "brackets need to parse correctly");
+   end Test_Mandatory_Parenthesis;
+
+   procedure Test_Removable_Parenthesis (T : in out Test_Case'Class);
+   procedure Test_Removable_Parenthesis (T : in out Test_Case'Class) is
+      pragma Unreferenced (T);
+
+   begin
+      Assert_Changed
+        ("((2))", Expr_Rule,
+         "Nested Parenthesis are optional");
+      Assert_Changed
+        ("f((1))", Expr_Rule,
+         "Parenthesis directly in function call are optional");
+      Assert_Changed
+        ("not (f)", Expr_Rule,
+         "Parenthesis are not necessary for not operator");
+
+   end Test_Removable_Parenthesis;
 
    --  Test plumbing
 
@@ -51,7 +85,9 @@ package body Test_Minimal_Parenthesis is
    is
    begin
       Registration.Register_Routine
-        (T, Test_Mandatory_Brackets'Access, "Mandatory_Brackets");
+        (T, Test_Mandatory_Parenthesis'Access, "Mandatory_Parenthesis");
+      Registration.Register_Routine
+        (T, Test_Removable_Parenthesis'Access, "Removable_Parenthesis");
    end Register_Tests;
 
 end Test_Minimal_Parenthesis;

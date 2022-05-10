@@ -1,5 +1,5 @@
 with "config/code_reviewer_config.gpr";
-with "../../libraries/Rewriters/rewriters_settings.gpr";
+with "../settings/rewriters_settings.gpr";
 
 project Code_Reviewer is
 
