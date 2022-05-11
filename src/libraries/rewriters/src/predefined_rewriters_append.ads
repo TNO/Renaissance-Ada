@@ -1,12 +1,13 @@
-with Libadalang.Analysis;         use Libadalang.Analysis;
-with Libadalang.Common;           use Libadalang.Common;
-with Placeholder_Relations;       use Placeholder_Relations;
-with Rejuvenation;                use Rejuvenation;
-with Rejuvenation.Match_Patterns; use Rejuvenation.Match_Patterns;
-with Rejuvenation.Patterns;       use Rejuvenation.Patterns;
-with Rewriters_Find_And_Replace;  use Rewriters_Find_And_Replace;
-with Rewriters_Sequence;          use Rewriters_Sequence;
-with Rewriters_Vectors;           use Rewriters_Vectors;
+with Libadalang.Analysis;             use Libadalang.Analysis;
+with Libadalang.Common;               use Libadalang.Common;
+with Placeholder_Relations;           use Placeholder_Relations;
+with Rejuvenation;                    use Rejuvenation;
+with Rejuvenation.Match_Patterns;     use Rejuvenation.Match_Patterns;
+with Rejuvenation.Patterns;           use Rejuvenation.Patterns;
+with Rewriters_Find_And_Replace;      use Rewriters_Find_And_Replace;
+with Rewriters_Sequence;              use Rewriters_Sequence;
+with Rewriters_Vectors;               use Rewriters_Vectors;
+with Match_Accepters_Function_Access; use Match_Accepters_Function_Access;
 
 package Predefined_Rewriters_Append is
 
@@ -30,14 +31,16 @@ package Predefined_Rewriters_Append is
            Call_Stmt_Rule),
         Make_Pattern
           ("Append ($S_Var, $S_Expr);", Call_Stmt_Rule),
-        Accept_Append_To_Unbounded_String'Access);
+        Make_Match_Accepter_Function_Access
+          (Accept_Append_To_Unbounded_String'Access));
 
    Rewriter_Ampersand_Prefer_Append :
    aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Var := $S_Var & $S_Tail;", Assignment_Stmt_Rule),
         Make_Pattern ("Append ($S_Var, $S_Tail);", Call_Stmt_Rule),
-        Accept_Var_Unbounded_String'Access);
+        Make_Match_Accepter_Function_Access
+          (Accept_Var_Unbounded_String'Access));
 
    Rewriter_Append : aliased constant Rewriter_Sequence :=
      Make_Rewriter_Sequence

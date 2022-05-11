@@ -1,7 +1,9 @@
-with Ada.Containers;              use Ada.Containers;
-with Libadalang.Common;           use Libadalang.Common;
-with Rejuvenation.Finder;         use Rejuvenation.Finder;
-with Rejuvenation.Text_Rewrites;  use Rejuvenation.Text_Rewrites;
+with Ada.Containers;                 use Ada.Containers;
+with Libadalang.Common;              use Libadalang.Common;
+with Rejuvenation.Finder;            use Rejuvenation.Finder;
+with Rejuvenation.Find_And_Replacer; use Rejuvenation.Find_And_Replacer;
+with Rejuvenation.Match_Patterns;    use Rejuvenation.Match_Patterns;
+with Rejuvenation.Text_Rewrites;     use Rejuvenation.Text_Rewrites;
 
 package body Rewriters_Find_And_Replace is
 
@@ -17,7 +19,7 @@ package body Rewriters_Find_And_Replace is
       Return_Value : Node_List.Vector;
    begin
       for Match of Matches loop
-         if RFR.F_Match_Accepter (Match) then
+         if RFR.A_Match_Accepter.Is_Match_Acceptable (Match) then
             declare
                Match_Nodes : constant Node_List.Vector := Match.Get_Nodes;
                Match_Node  : constant Ada_Node         :=
@@ -34,11 +36,14 @@ package body Rewriters_Find_And_Replace is
    overriding procedure Rewrite
      (RFR : Rewriter_Find_And_Replace; Unit : in out Analysis_Unit)
    is
+      function Accept_Match (M_P : Match_Pattern) return Boolean is
+        (RFR.A_Match_Accepter.Is_Match_Acceptable (M_P));
+
       T_R : Text_Rewrite_Unit := Make_Text_Rewrite_Unit (Unit);
    begin
       Find_And_Replace
         (T_R, Unit.Root, RFR.F_Find_Pattern, RFR.F_Replace_Pattern,
-         RFR.F_Match_Accepter);
+         Accept_Match'Access);
       T_R.Apply;
       Unit.Reparse;
    end Rewrite;

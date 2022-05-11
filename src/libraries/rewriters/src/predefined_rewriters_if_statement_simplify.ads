@@ -1,9 +1,10 @@
-with Libadalang.Common;           use Libadalang.Common;
-with Placeholder_Relations;       use Placeholder_Relations;
-with Rejuvenation;                use Rejuvenation;
-with Rejuvenation.Match_Patterns; use Rejuvenation.Match_Patterns;
-with Rejuvenation.Patterns;       use Rejuvenation.Patterns;
-with Rewriters_Find_And_Replace;  use Rewriters_Find_And_Replace;
+with Libadalang.Common;               use Libadalang.Common;
+with Placeholder_Relations;           use Placeholder_Relations;
+with Rejuvenation;                    use Rejuvenation;
+with Rejuvenation.Match_Patterns;     use Rejuvenation.Match_Patterns;
+with Rejuvenation.Patterns;           use Rejuvenation.Patterns;
+with Rewriters_Find_And_Replace;      use Rewriters_Find_And_Replace;
+with Match_Accepters_Function_Access; use Match_Accepters_Function_Access;
 
 package Predefined_Rewriters_If_Statement_Simplify is
    --  TODO:
@@ -99,7 +100,8 @@ package Predefined_Rewriters_If_Statement_Simplify is
           ("if $S_Expr then $M_Stmts; else $M_Stmts; end if;",
            If_Stmt_Rule),
         Make_Pattern ("$M_Stmts;", Stmt_Rule),
-        Accept_Expr_No_Side_Effects'Access);
+        Make_Match_Accepter_Function_Access
+          (Accept_Expr_No_Side_Effects'Access));
    --  We can't rewrite when $S_Expr has a side effect,
    --  because it would change the behaviour of the program.
 

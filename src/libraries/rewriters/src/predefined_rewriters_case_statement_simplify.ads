@@ -1,9 +1,10 @@
-with Libadalang.Common;           use Libadalang.Common;
-with Placeholder_Relations;       use Placeholder_Relations;
-with Rejuvenation;                use Rejuvenation;
-with Rejuvenation.Match_Patterns; use Rejuvenation.Match_Patterns;
-with Rejuvenation.Patterns;       use Rejuvenation.Patterns;
-with Rewriters_Find_And_Replace;  use Rewriters_Find_And_Replace;
+with Libadalang.Common;               use Libadalang.Common;
+with Placeholder_Relations;           use Placeholder_Relations;
+with Rejuvenation;                    use Rejuvenation;
+with Rejuvenation.Match_Patterns;     use Rejuvenation.Match_Patterns;
+with Rejuvenation.Patterns;           use Rejuvenation.Patterns;
+with Rewriters_Find_And_Replace;      use Rewriters_Find_And_Replace;
+with Match_Accepters_Function_Access; use Match_Accepters_Function_Access;
 
 package Predefined_Rewriters_Case_Statement_Simplify is
 
@@ -17,7 +18,8 @@ package Predefined_Rewriters_Case_Statement_Simplify is
           ("case $S_Expr is when $M_Values => $M_Stmts; end case;",
            Case_Stmt_Rule),
         Make_Pattern ("$M_Stmts;", Stmt_Rule),
-        Accept_Expr_No_Side_Effects'Access);
+        Make_Match_Accepter_Function_Access
+          (Accept_Expr_No_Side_Effects'Access));
    --  In case of a case statement with a single alternative
    --  (single when branch),
    --  the condition "($S_Expr) in $M_Values" is True:
@@ -34,7 +36,8 @@ package Predefined_Rewriters_Case_Statement_Simplify is
                "when $M_2_Vals => $M_Stmts;" & "end case;",
            Case_Stmt_Rule),
         Make_Pattern ("$M_Stmts;", Stmt_Rule),
-        Accept_Expr_No_Side_Effects'Access);
+        Make_Match_Accepter_Function_Access
+          (Accept_Expr_No_Side_Effects'Access));
    --  TODO: How to make a concrete pattern matching
    --  an arbitrary number of alternatives?
    --  Or at least 2..N, where N is the largest number of alternatives

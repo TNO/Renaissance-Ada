@@ -1,9 +1,10 @@
-with Libadalang.Common;           use Libadalang.Common;
-with Placeholder_Relations;       use Placeholder_Relations;
-with Rejuvenation;                use Rejuvenation;
-with Rejuvenation.Match_Patterns; use Rejuvenation.Match_Patterns;
-with Rejuvenation.Patterns;       use Rejuvenation.Patterns;
-with Rewriters_Find_And_Replace;  use Rewriters_Find_And_Replace;
+with Libadalang.Common;               use Libadalang.Common;
+with Placeholder_Relations;           use Placeholder_Relations;
+with Rejuvenation;                    use Rejuvenation;
+with Rejuvenation.Match_Patterns;     use Rejuvenation.Match_Patterns;
+with Rejuvenation.Patterns;           use Rejuvenation.Patterns;
+with Rewriters_Find_And_Replace;      use Rewriters_Find_And_Replace;
+with Match_Accepters_Function_Access; use Match_Accepters_Function_Access;
 
 package Predefined_Rewriters_Operator_Definition_Equivalence is
 
@@ -15,7 +16,8 @@ package Predefined_Rewriters_Operator_Definition_Equivalence is
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr + $S_Expr", Expr_Rule),
         Make_Pattern ("2 * ($S_Expr)", Expr_Rule),
-        Accept_Expr_No_Side_Effects'Access);
+        Make_Match_Accepter_Function_Access
+          (Accept_Expr_No_Side_Effects'Access));
    --  Rewriter makes performance faster,
    --  especially when expression consumes a lot of time.
    --

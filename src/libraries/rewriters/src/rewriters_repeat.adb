@@ -12,7 +12,7 @@ package body Rewriters_Repeat is
    begin
       while Start_String /= Current_String loop
          Start_String := Current_String;
-         R_R.F_Rewriter.Rewrite (Unit);
+         R_R.Get_Rewriter.Rewrite (Unit);
          Current_String :=
            To_Unbounded_String (Encode (Unit.Text, Unit.Get_Charset));
       end loop;

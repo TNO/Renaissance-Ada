@@ -3,6 +3,7 @@ with Rejuvenation;            use Rejuvenation;
 with Rewriters;               use Rewriters;
 
 package Rewriters_Minimal_Parentheses is
+   --  TODO: move to find_and_replace rewriter using pattern "($S_EXPR)"
 
    type Node_Accepter is not null access function
      (Node : Ada_Node) return Boolean;

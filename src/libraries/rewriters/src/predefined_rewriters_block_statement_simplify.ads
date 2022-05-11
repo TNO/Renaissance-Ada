@@ -1,9 +1,10 @@
-with Libadalang.Common;           use Libadalang.Common;
-with Placeholder_Relations;       use Placeholder_Relations;
-with Rejuvenation;                use Rejuvenation;
-with Rejuvenation.Match_Patterns; use Rejuvenation.Match_Patterns;
-with Rejuvenation.Patterns;       use Rejuvenation.Patterns;
-with Rewriters_Find_And_Replace;  use Rewriters_Find_And_Replace;
+with Libadalang.Common;               use Libadalang.Common;
+with Placeholder_Relations;           use Placeholder_Relations;
+with Rejuvenation;                    use Rejuvenation;
+with Rejuvenation.Match_Patterns;     use Rejuvenation.Match_Patterns;
+with Rejuvenation.Patterns;           use Rejuvenation.Patterns;
+with Rewriters_Find_And_Replace;      use Rewriters_Find_And_Replace;
+with Match_Accepters_Function_Access; use Match_Accepters_Function_Access;
 
 package Predefined_Rewriters_Block_Statement_Simplify is
 
@@ -48,6 +49,6 @@ package Predefined_Rewriters_Block_Statement_Simplify is
            "(if $S_Cond then $S_Val_True else $S_Val_False); " &
            "begin $M_Stmts; end;",
            Block_Stmt_Rule),
-        Accept_Variable'Access);
+        Make_Match_Accepter_Function_Access (Accept_Variable'Access));
 
 end Predefined_Rewriters_Block_Statement_Simplify;

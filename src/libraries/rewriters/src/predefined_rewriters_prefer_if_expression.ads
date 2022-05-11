@@ -1,9 +1,10 @@
-with Libadalang.Common;           use Libadalang.Common;
-with Placeholder_Relations;       use Placeholder_Relations;
-with Rejuvenation;                use Rejuvenation;
-with Rejuvenation.Match_Patterns; use Rejuvenation.Match_Patterns;
-with Rejuvenation.Patterns;       use Rejuvenation.Patterns;
-with Rewriters_Find_And_Replace;  use Rewriters_Find_And_Replace;
+with Libadalang.Common;               use Libadalang.Common;
+with Placeholder_Relations;           use Placeholder_Relations;
+with Rejuvenation;                    use Rejuvenation;
+with Rejuvenation.Match_Patterns;     use Rejuvenation.Match_Patterns;
+with Rejuvenation.Patterns;           use Rejuvenation.Patterns;
+with Rewriters_Find_And_Replace;      use Rewriters_Find_And_Replace;
+with Match_Accepters_Function_Access; use Match_Accepters_Function_Access;
 
 package Predefined_Rewriters_Prefer_If_Expression is
    --  TODO: Don't prefer If Expression when one of
@@ -33,7 +34,7 @@ package Predefined_Rewriters_Prefer_If_Expression is
            "$M_Name => (if $S_Cond then $S_Val_True else $S_Val_False)," &
            "$M_Args_After);",
            Call_Stmt_Rule),
-        Accept_All_Independent'Access);
+        Make_Match_Accepter_Function_Access (Accept_All_Independent'Access));
    --  Note that our current implementation doesn't handle this pattern
    --  as one might expect, since we have not implemented multi matching.
    --  So, any match in the current implementation will have
