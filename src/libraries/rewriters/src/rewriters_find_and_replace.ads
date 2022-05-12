@@ -10,8 +10,9 @@ package Rewriters_Find_And_Replace is
 
    type Rewriter_Find_And_Replace is new Rewriter with private;
 
-   overriding procedure Rewrite
-     (RFR : Rewriter_Find_And_Replace; Unit : in out Analysis_Unit);
+   overriding function Rewrite
+     (RFR : Rewriter_Find_And_Replace; Unit : in out Analysis_Unit)
+   return Boolean;
 
    function Get_Find_Pattern (RFR : Rewriter_Find_And_Replace) return Pattern;
 

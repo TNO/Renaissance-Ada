@@ -77,13 +77,13 @@ package Predefined_Rewriters_Not is
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not ($S_Left <= $S_Right)", Expr_Rule),
         Make_Pattern ("($S_Left > $S_Right)", Expr_Rule),
-        Make_Match_Accepter_Function_Access (Accept_Usage_Greater_Than'Access));
+        Make_Match_Accepter_Function_Access
+          (Accept_Usage_Greater_Than'Access));
 
    Rewriter_Not : aliased constant Rewriter_Sequence :=
      Make_Rewriter_Sequence
-       (Rewriter_Not_Not & Rewriter_Not_Equal &
-        Rewriter_Not_Different & Rewriter_Not_In &
-        Rewriter_Not_Not_In & Rewriter_Not_Greater_Than &
+       (Rewriter_Not_Not & Rewriter_Not_Equal & Rewriter_Not_Different &
+        Rewriter_Not_In & Rewriter_Not_Not_In & Rewriter_Not_Greater_Than &
         Rewriter_Not_Greater_Equal & Rewriter_Not_Less_Than &
         Rewriter_Not_Less_Equal);
    --  Rewriter for patterns involving the `not` operator

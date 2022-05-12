@@ -79,8 +79,9 @@ package body Rewriters_Minimal_Parentheses is
       return Return_Value;
    end Matching_Nodes;
 
-   overriding procedure Rewrite
+   overriding function Rewrite
      (RMP : Rewriter_Minimal_Parentheses; Unit : in out Analysis_Unit)
+     return Boolean
    is
       T_R : Text_Rewrite_Unit := Make_Text_Rewrite_Unit (Unit);
    begin
@@ -98,8 +99,13 @@ package body Rewriters_Minimal_Parentheses is
             end if;
          end;
       end loop;
-      T_R.Apply;
-      Unit.Reparse;
+      if T_R.HasReplacements then
+         T_R.Apply;
+         Unit.Reparse;
+         return True;
+      else
+         return False;
+      end if;
    end Rewrite;
 
 end Rewriters_Minimal_Parentheses;

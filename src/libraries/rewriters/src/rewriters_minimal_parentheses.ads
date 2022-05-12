@@ -19,8 +19,9 @@ package Rewriters_Minimal_Parentheses is
      (RMP : Rewriter_Minimal_Parentheses)
       return Node_Accepter;
 
-   overriding procedure Rewrite
-     (RMP : Rewriter_Minimal_Parentheses; Unit : in out Analysis_Unit);
+   overriding function Rewrite
+     (RMP : Rewriter_Minimal_Parentheses; Unit : in out Analysis_Unit)
+   return Boolean;
 
    function Matching_Nodes
      (RMP : Rewriter_Minimal_Parentheses; Unit : Analysis_Unit)

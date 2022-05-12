@@ -6,8 +6,9 @@ package Rewriters_Sequence is
 
    type Rewriter_Sequence is new Rewriter with private;
 
-   overriding procedure Rewrite
-     (R_S : Rewriter_Sequence; Unit : in out Analysis_Unit);
+   overriding function Rewrite
+     (R_S : Rewriter_Sequence; Unit : in out Analysis_Unit)
+   return Boolean;
 
    function Get_Vector
      (R_S : Rewriter_Sequence)
