@@ -20,7 +20,7 @@ package Predefined_Rewriters_Prefer_If_Expression is
    --  hence also $M_Args_After might be effected and might have an effect!
 
    Rewriter_If_Stmt_Subprogram_Single_Diffent_Argument :
-   aliased constant Rewriter_Find_And_Replace :=
+   aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
         ("if $S_Cond then " &
@@ -43,7 +43,7 @@ package Predefined_Rewriters_Prefer_If_Expression is
    --  of the rejuvenation library
 
    Rewriter_If_Stmt_Assignment :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then" & " $S_Var := $S_Val_True;" & "else" &
@@ -53,7 +53,7 @@ package Predefined_Rewriters_Prefer_If_Expression is
           ("$S_Var := (if $S_Cond then $S_Val_True else $S_Val_False);",
            Stmt_Rule));
 
-   Rewriter_If_Stmt_Return : aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_If_Stmt_Return : aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then return $S_Expr_True; " &
@@ -63,7 +63,7 @@ package Predefined_Rewriters_Prefer_If_Expression is
           ("return (if $S_Cond then $S_Expr_True else $S_Expr_False);",
            Return_Stmt_Rule));
 
-   Rewriter_If_Stmt_Return_Stmt : aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_If_Stmt_Return_Stmt : aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then return $S_Expr_True; end if; " &

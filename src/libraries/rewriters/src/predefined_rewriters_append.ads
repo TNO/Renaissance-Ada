@@ -24,7 +24,7 @@ package Predefined_Rewriters_Append is
         (Match.Get_Nodes.First_Element.As_Call_Stmt.F_Call));
 
    Rewriter_Append_To_Unbounded_String :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("Append ($S_Var, To_Unbounded_String ($M_Source => $S_Expr));",
@@ -35,7 +35,7 @@ package Predefined_Rewriters_Append is
           (Accept_Append_To_Unbounded_String'Access));
 
    Rewriter_Ampersand_Prefer_Append :
-   aliased constant Rewriter_Find_And_Replace :=
+   aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Var := $S_Var & $S_Tail;", Assignment_Stmt_Rule),
         Make_Pattern ("Append ($S_Var, $S_Tail);", Call_Stmt_Rule),

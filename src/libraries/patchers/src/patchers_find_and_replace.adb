@@ -15,7 +15,8 @@ package body Patchers_Find_And_Replace is
    is
    begin
       if (P.F_Rewriter.Rewrite (Unit) or else True)  -- Trigger issue!
-        and then P.F_Post_Process /= null then
+        and then P.F_Post_Process /= null
+      then
          declare
             Changed : constant Boolean := P.F_Post_Process.Rewrite (Unit);
          begin

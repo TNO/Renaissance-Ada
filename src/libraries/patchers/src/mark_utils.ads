@@ -23,6 +23,4 @@ package Mark_Utils is
    --  Is some parent marked?
    --  With_Self determines whether marking of this node is included
 
-   function Make_Rewriter_Mark_Aware (R : Rewriter'Class) return Rewriter'Class;
-
 end Mark_Utils;

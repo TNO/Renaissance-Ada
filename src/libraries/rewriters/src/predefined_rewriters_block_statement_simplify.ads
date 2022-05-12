@@ -9,7 +9,7 @@ with Match_Accepters_Function_Access; use Match_Accepters_Function_Access;
 package Predefined_Rewriters_Block_Statement_Simplify is
 
    Rewriter_Return_Expression :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : constant $S_Type := $S_Expr; " &
@@ -37,7 +37,7 @@ package Predefined_Rewriters_Block_Statement_Simplify is
    --  TODO: can we split this rewriter?
    --        Also add the constant keyword when appropriate!
    Rewriter_Declare_And_Overwrite :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : $S_Type := $S_Val_False; " &

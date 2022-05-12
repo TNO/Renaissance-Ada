@@ -10,18 +10,18 @@ package Predefined_Rewriters_Boolean_Expression_De_Morgan is
    --  Rewriters for patterns that can be rewriting using De Morgan's laws
    --  https://en.wikipedia.org/wiki/De_Morgan%27s_laws
 
-   Rewrite_De_Morgan_Not_And : aliased constant Rewriter_Find_And_Replace :=
+   Rewrite_De_Morgan_Not_And : aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not ($S_A and then $S_B)", Expr_Rule),
         Make_Pattern ("(not ($S_A)) or else (not ($S_B))", Expr_Rule));
 
-   Rewrite_De_Morgan_Not_Or : aliased constant Rewriter_Find_And_Replace :=
+   Rewrite_De_Morgan_Not_Or : aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not ($S_A or else $S_B)", Expr_Rule),
         Make_Pattern ("(not ($S_A)) and then (not ($S_B))", Expr_Rule));
 
    Rewrite_De_Morgan_Not_All_Range :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not (for all $S_I in $S_Range => $S_Cond)",
                       Expr_Rule),
@@ -29,7 +29,7 @@ package Predefined_Rewriters_Boolean_Expression_De_Morgan is
           ("(for some $S_I in $S_Range => not ($S_Cond))", Expr_Rule));
 
    Rewrite_De_Morgan_Not_All_Elements :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("not (for all $S_E of $S_Elements => $S_Cond)", Expr_Rule),
@@ -37,7 +37,7 @@ package Predefined_Rewriters_Boolean_Expression_De_Morgan is
           ("(for some $S_E of $S_Elements => not ($S_Cond))", Expr_Rule));
 
    Rewrite_De_Morgan_Not_Some_Range :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not (for some $S_I in $S_Range => $S_Cond)",
                       Expr_Rule),
@@ -45,7 +45,7 @@ package Predefined_Rewriters_Boolean_Expression_De_Morgan is
           ("(for all $S_I in $S_Range => not ($S_Cond))", Expr_Rule));
 
    Rewrite_De_Morgan_Not_Some_Elements :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("not (for some $S_E of $S_Elements => $S_Cond)", Expr_Rule),

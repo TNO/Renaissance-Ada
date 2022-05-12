@@ -12,7 +12,7 @@ package Predefined_Rewriters_Case_Statement_Simplify is
    is
      (not Has_Side_Effect (Match, "$S_Expr"));
 
-   Rewriter_Case_Single : aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_Case_Single : aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("case $S_Expr is when $M_Values => $M_Stmts; end case;",
@@ -29,7 +29,7 @@ package Predefined_Rewriters_Case_Statement_Simplify is
    --  we can't leave it out.
 
    Rewriter_Case_Identical_Branches :
-   aliased constant Rewriter_Find_And_Replace :=
+   aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("case $S_Expr is " & "when $M_1_Vals => $M_Stmts;" &
@@ -44,7 +44,7 @@ package Predefined_Rewriters_Case_Statement_Simplify is
    --  in a case statement in the code base
 
    Rewriter_Case_Binary_With_Others :
-   aliased constant Rewriter_Find_And_Replace :=
+   aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("case $S_Expr is when $M_Values => $M_Stmts_In; " &

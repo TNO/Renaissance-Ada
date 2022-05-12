@@ -13,7 +13,7 @@ package Predefined_Rewriters_Declaration_Simplify is
      (not Has_Side_Effect (Match, "$M_Expr"));
 
    Rewriter_Declarations_Combine :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$M_X : $S_Type := $M_Expr;" & "$M_Y : $S_Type := $M_Expr;",

@@ -6,7 +6,7 @@ with Rewriters_Find_And_Replace;  use Rewriters_Find_And_Replace;
 package Predefined_Rewriters_Null_Statement is
 
    Rewriter_Unnecessary_Null_Stmt :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Stmt; null;", Stmts_Rule),
         Make_Pattern ("$S_Stmt;", Stmt_Rule));

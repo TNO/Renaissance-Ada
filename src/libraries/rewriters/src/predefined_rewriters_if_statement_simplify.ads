@@ -12,7 +12,7 @@ package Predefined_Rewriters_If_Statement_Simplify is
    --  all patterns in which the two branches can be swapped
    --  in a single pattern.
 
-   Rewriter_If_True_Stmt : aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_If_True_Stmt : aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if true then $M_Stmts_True; else $M_Stmts_False; end if;",
@@ -22,7 +22,7 @@ package Predefined_Rewriters_If_Statement_Simplify is
    --           might become obsolete and the compiler will
    --           produce warnings!
 
-   Rewriter_If_False_Stmt : aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_If_False_Stmt : aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if false then $M_Stmts_True; else $M_Stmts_False; end if;",
@@ -33,7 +33,7 @@ package Predefined_Rewriters_If_Statement_Simplify is
    --           produce warnings!
 
    Rewriter_If_Different_Stmt :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_A /= $S_B then $M_Stmts_True; " &
@@ -46,7 +46,7 @@ package Predefined_Rewriters_If_Statement_Simplify is
    --  Rewrite only when else branch is NOT empty
 
    Rewriter_If_Not_Condition_Stmt :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if not $S_Cond then $M_Stmts_True; " &
@@ -61,7 +61,7 @@ package Predefined_Rewriters_If_Statement_Simplify is
    --  The resulting code might still be simplified using
    --  * Minimal Parenthesis
 
-   Rewriter_If_Not_In_Stmt : aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_If_Not_In_Stmt : aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Expr not in $M_Values " & "then $M_Stmts_True; " &
@@ -74,7 +74,7 @@ package Predefined_Rewriters_If_Statement_Simplify is
            If_Stmt_Rule));
    --  Rewrite only when else branch is NOT empty
 
-   Rewriter_Null_Then_Branch : aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_Null_Then_Branch : aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then null; else $S_Stmt; $M_Stmts; end if;",
@@ -83,7 +83,7 @@ package Predefined_Rewriters_If_Statement_Simplify is
           ("if not ($S_Cond) then $S_Stmt; $M_Stmts; end if;",
            If_Stmt_Rule));
 
-   Rewriter_Null_Else_Branch : aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_Null_Else_Branch : aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then $M_Stmts; else null; end if;", If_Stmt_Rule),
@@ -94,7 +94,7 @@ package Predefined_Rewriters_If_Statement_Simplify is
      (not Has_Side_Effect (Match, "$S_Expr"));
 
    Rewriter_If_Identical_Branches_Stmt :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Expr then $M_Stmts; else $M_Stmts; end if;",
@@ -105,7 +105,7 @@ package Predefined_Rewriters_If_Statement_Simplify is
    --  We can't rewrite when $S_Expr has a side effect,
    --  because it would change the behaviour of the program.
 
-   Rewriter_Use_Elsif : aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_Use_Elsif : aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond1 then $M_Stmts_True1; else " &

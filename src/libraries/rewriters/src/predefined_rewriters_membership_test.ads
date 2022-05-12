@@ -17,7 +17,7 @@ package Predefined_Rewriters_Membership_Test is
      (not Has_Side_Effect (Match, "$S_Var"));
 
    Rewriter_Equals_To_In_Range :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Var = $S_Val1 or else $S_Var = $S_Val2",
                       Expr_Rule),
@@ -26,7 +26,7 @@ package Predefined_Rewriters_Membership_Test is
           (Accept_Var_No_Side_Effects'Access));
 
    Rewriter_Combine_In_Range_And_Equal_Step :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Var in $M_Vals or else $S_Var = $S_Val",
                       Expr_Rule),
@@ -35,7 +35,7 @@ package Predefined_Rewriters_Membership_Test is
           (Accept_Var_No_Side_Effects'Access));
 
    Rewriter_Combine_Equal_And_In_Range_Step :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Var = $S_Val or else $S_Var in $M_Vals",
                       Expr_Rule),
@@ -44,7 +44,7 @@ package Predefined_Rewriters_Membership_Test is
           (Accept_Var_No_Side_Effects'Access));
 
    Rewriter_Combine_In_Ranges_Step :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var in $M_Vals_1 or else $S_Var in $M_Vals_2", Expr_Rule),
@@ -53,7 +53,7 @@ package Predefined_Rewriters_Membership_Test is
           (Accept_Var_No_Side_Effects'Access));
 
    Rewriter_Differents_To_Not_In_Range :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var /= $S_Val1 and then $S_Var /= $S_Val2", Expr_Rule),
@@ -62,7 +62,7 @@ package Predefined_Rewriters_Membership_Test is
           (Accept_Var_No_Side_Effects'Access));
 
    Rewriter_Combine_Not_In_Range_And_Different_Step :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var not in $M_Vals and then $S_Var /= $S_Val", Expr_Rule),
@@ -71,7 +71,7 @@ package Predefined_Rewriters_Membership_Test is
           (Accept_Var_No_Side_Effects'Access));
 
    Rewriter_Combine_Different_And_Not_In_Range_Step :
-       aliased constant Rewriter_Find_And_Replace :=
+       aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var /= $S_Val and then $S_Var not in $M_Vals", Expr_Rule),
@@ -80,7 +80,7 @@ package Predefined_Rewriters_Membership_Test is
           (Accept_Var_No_Side_Effects'Access));
 
    Rewriter_Combine_Not_In_Ranges_Step :
-   aliased constant Rewriter_Find_And_Replace :=
+   aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var not in $M_Vals_1 and then $S_Var not in $M_Vals_2",

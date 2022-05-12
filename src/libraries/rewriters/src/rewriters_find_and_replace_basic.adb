@@ -6,9 +6,9 @@ with Rejuvenation.Find_And_Replacer; use Rejuvenation.Find_And_Replacer;
 with Rejuvenation.Match_Patterns;    use Rejuvenation.Match_Patterns;
 with Rejuvenation.Text_Rewrites;     use Rejuvenation.Text_Rewrites;
 
-package body Rewriters_Find_And_Replace is
+package body Rewriters_Find_And_Replace_Basic is
 
-   function Matching_Nodes
+   overriding function Matching_Nodes
      (RFR : Rewriter_Find_And_Replace_Basic; Unit : Analysis_Unit)
       return Node_List.Vector
    is
@@ -64,4 +64,4 @@ package body Rewriters_Find_And_Replace is
       end;
    end Rewrite;
 
-end Rewriters_Find_And_Replace;
+end Rewriters_Find_And_Replace_Basic;

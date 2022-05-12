@@ -7,7 +7,7 @@ with Rewriters_Repeat;            use Rewriters_Repeat;
 package Predefined_Rewriters_If_Statement_Distribution is
 
    Rewriter_If_Stmt_Identical_Tail :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then $M_Stmts_True; $S_Stmt; " &

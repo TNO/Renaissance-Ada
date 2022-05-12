@@ -23,7 +23,7 @@ package Predefined_Rewriters_If_Expression_Distribution is
      (Are_Independent (Match, "$S_Cond", "$S_Expr"));
 
    Rewriter_Concat_Before_If_Expression_Step :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then $S_Expr & $S_True else $S_Expr & $S_False",
@@ -36,7 +36,7 @@ package Predefined_Rewriters_If_Expression_Distribution is
      Make_Rewriter_Repeat (Rewriter_Concat_Before_If_Expression_Step);
 
    Rewriter_Concat_After_If_Expression_Step :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then $S_True & $S_Expr else $S_False & $S_Expr",
@@ -48,7 +48,7 @@ package Predefined_Rewriters_If_Expression_Distribution is
      Make_Rewriter_Repeat (Rewriter_Concat_After_If_Expression_Step);
 
    Rewriter_Plus_Before_If_Expression_Step :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then $S_Expr + $S_True else $S_Expr + $S_False",
@@ -61,7 +61,7 @@ package Predefined_Rewriters_If_Expression_Distribution is
      Make_Rewriter_Repeat (Rewriter_Plus_Before_If_Expression_Step);
 
    Rewriter_Plus_After_If_Expression_Step :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Cond then $S_True + $S_Expr else $S_False + $S_Expr",

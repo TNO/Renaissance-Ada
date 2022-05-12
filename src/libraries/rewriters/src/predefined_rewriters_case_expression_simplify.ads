@@ -6,7 +6,7 @@ with Rewriters_Find_And_Replace;  use Rewriters_Find_And_Replace;
 package Predefined_Rewriters_Case_Expression_Simplify is
 
    Rewriter_Case_Expression_Binary_With_Others :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("case $S_Expr is when $M_Values => $S_Val_In, " &

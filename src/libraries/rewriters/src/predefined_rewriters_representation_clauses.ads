@@ -12,7 +12,7 @@ package Predefined_Rewriters_Representation_Clauses is
    --   Rewriter_For_Attribute_Use_Pragma_All)
 
    Rewriter_For_Attribute_Use :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var : $S_Type := $M_Value with $M_Aspects;" &
@@ -24,7 +24,7 @@ package Predefined_Rewriters_Representation_Clauses is
            Basic_Decl_Rule));
 
    Rewriter_For_Attribute_Use_Aliased :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var : aliased $S_Type := $M_Value with $M_Aspects;" &
@@ -36,7 +36,7 @@ package Predefined_Rewriters_Representation_Clauses is
            Basic_Decl_Rule));
 
    Rewriter_For_Attribute_Use_Array :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var : array ($M_Ranges) of $S_Type := " &
@@ -49,7 +49,7 @@ package Predefined_Rewriters_Representation_Clauses is
            Basic_Decl_Rule));
 
    Rewriter_For_Attribute_Use_Pragma_Var :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var : $S_Type := $M_Value with $M_Aspects;" &
@@ -63,7 +63,7 @@ package Predefined_Rewriters_Representation_Clauses is
            Basic_Decls_Rule));
 
    Rewriter_For_Attribute_Use_Pragma_All :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("$S_Var : $S_Type := $M_Value with $M_Aspects;" &

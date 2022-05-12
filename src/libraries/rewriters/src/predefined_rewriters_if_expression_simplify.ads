@@ -14,12 +14,12 @@ package Predefined_Rewriters_If_Expression_Simplify is
    --  all patterns in which the two alternatives can be swapped
    --  in a single pattern.
 
-   Rewriter_If_True_Expression : aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_If_True_Expression : aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if true then $S_Val_True else $S_Val_False", Expr_Rule),
         Make_Pattern ("$S_Val_True", Expr_Rule));
 
-   Rewriter_If_False_Expression : aliased constant Rewriter_Find_And_Replace :=
+   Rewriter_If_False_Expression : aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if false then $S_Val_True else $S_Val_False", Expr_Rule),
@@ -30,7 +30,7 @@ package Predefined_Rewriters_If_Expression_Simplify is
      (not Has_Side_Effect (Match, "$S_Cond"));
 
    Rewriter_If_Identical_Expression :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_Cond then $S_Expr else $S_Expr", Expr_Rule),
         Make_Pattern ("$S_Expr", Expr_Rule),
@@ -38,14 +38,14 @@ package Predefined_Rewriters_If_Expression_Simplify is
           (Accept_Cond_No_Side_Effects'Access));
 
    Rewriter_Boolean_If_Condition_Expression :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_Cond then true else false", Expr_Rule),
         Make_Pattern ("$S_Cond", Expr_Rule));
    --  TODO: check expression is boolean (true and/or false are booleans)
 
    Rewriter_Boolean_If_Not_Condition_Expression :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_Cond then false else true", Expr_Rule),
         Make_Pattern ("not ($S_Cond)", Expr_Rule));
@@ -56,7 +56,7 @@ package Predefined_Rewriters_If_Expression_Simplify is
    --  TODO: variants of the previous two cases
 
    Rewriter_If_Different_Expression :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_A /= $S_B then $S_Val_True else $S_Val_False", Expr_Rule),
@@ -64,7 +64,7 @@ package Predefined_Rewriters_If_Expression_Simplify is
           ("if $S_A = $S_B then $S_Val_False else $S_Val_True", Expr_Rule));
 
    Rewriter_If_Not_Condition_Expression :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if not $S_Cond then $S_Val_True else $S_Val_False", Expr_Rule),
@@ -72,7 +72,7 @@ package Predefined_Rewriters_If_Expression_Simplify is
           ("if $S_Cond then $S_Val_False else $S_Val_True", Expr_Rule));
 
    Rewriter_If_Not_In_Expression :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("if $S_Expr not in $M_Values then $S_Val_True else $S_Val_False",
@@ -88,56 +88,56 @@ package Predefined_Rewriters_If_Expression_Simplify is
       and then not Has_Side_Effect (Match, "$S_Y"));
 
    Rewriter_Integer_Max_Greater_Than :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X > $S_Y then $S_X else $S_Y", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Make_Match_Accepter_Function_Access (Accept_Extreme'Access));
 
    Rewriter_Integer_Max_Greater_Equal :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X >= $S_Y then $S_X else $S_Y", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Make_Match_Accepter_Function_Access (Accept_Extreme'Access));
 
    Rewriter_Integer_Max_Less_Than :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X < $S_Y then $S_Y else $S_X", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Make_Match_Accepter_Function_Access (Accept_Extreme'Access));
 
    Rewriter_Integer_Max_Less_Equal :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X <= $S_Y then $S_Y else $S_X", Expr_Rule),
         Make_Pattern ("Integer'Max ($S_X, $S_Y)", Expr_Rule),
         Make_Match_Accepter_Function_Access (Accept_Extreme'Access));
 
    Rewriter_Integer_Min_Greater_Than :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X > $S_Y then $S_Y else $S_X", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Make_Match_Accepter_Function_Access (Accept_Extreme'Access));
 
    Rewriter_Integer_Min_Greater_Equal :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X >= $S_Y then $S_Y else $S_X", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Make_Match_Accepter_Function_Access (Accept_Extreme'Access));
 
    Rewriter_Integer_Min_Less_Than :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X < $S_Y then $S_X else $S_Y", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
         Make_Match_Accepter_Function_Access (Accept_Extreme'Access));
 
    Rewriter_Integer_Min_Less_Equal :
-     aliased constant Rewriter_Find_And_Replace :=
+     aliased constant Rewriter_Find_And_Replace_Basic :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_X <= $S_Y then $S_X else $S_Y", Expr_Rule),
         Make_Pattern ("Integer'Min ($S_X, $S_Y)", Expr_Rule),
