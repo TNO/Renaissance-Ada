@@ -15,21 +15,21 @@ package Predefined_Rewriters_Boolean_Expression_Simplify is
    is
      (not Has_Side_Effect (Match, "$S_Expr"));
 
-   Rewriter_Idempotence_And : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Idempotence_And : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr and then $S_Expr", Expr_Rule),
         Make_Pattern ("$S_Expr", Expr_Rule),
         Make_Match_Accepter_Function_Access
           (Accept_Expr_No_Side_Effects'Access));
 
-   Rewriter_Idempotence_Or : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Idempotence_Or : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr or else $S_Expr", Expr_Rule),
         Make_Pattern ("$S_Expr", Expr_Rule),
         Make_Match_Accepter_Function_Access
           (Accept_Expr_No_Side_Effects'Access));
 
-   Rewriter_Complementation_And : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Complementation_And : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr and then not $S_Expr", Expr_Rule),
         Make_Pattern ("false", Expr_Rule),
@@ -41,7 +41,7 @@ package Predefined_Rewriters_Boolean_Expression_Simplify is
    --              (only needed when additional parenthesis
    --               are allowed, e.g. for readability)
 
-   Rewriter_Complementation_Or : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Complementation_Or : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr or else not $S_Expr", Expr_Rule),
         Make_Pattern ("true", Expr_Rule),
@@ -53,7 +53,7 @@ package Predefined_Rewriters_Boolean_Expression_Simplify is
    --              (only needed when additional parenthesis
    --               are allowed, e.g. for readability)
 
-   Rewriter_Equal_True : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Equal_True : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr = true", Expr_Rule),
         Make_Pattern ("$S_Expr", Expr_Rule),
@@ -61,21 +61,21 @@ package Predefined_Rewriters_Boolean_Expression_Simplify is
           (Accept_Expr_Boolean'Access));
    --  TODO: do we also need the symmetric variant: true = $S_Expr?
 
-   Rewriter_Equal_False : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Equal_False : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr = false", Expr_Rule),
         Make_Pattern ("not $S_Expr", Expr_Rule),
         Make_Match_Accepter_Function_Access (Accept_Expr_Boolean'Access));
    --  TODO: do we also need the symmetric variant: false = $S_Expr?
 
-   Rewriter_Different_True : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Different_True : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr /= true", Expr_Rule),
         Make_Pattern ("not $S_Expr", Expr_Rule),
         Make_Match_Accepter_Function_Access (Accept_Expr_Boolean'Access));
    --  TODO: do we also need the symmetric variant: true /= $S_Expr?
 
-   Rewriter_Different_False : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Different_False : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr /= false", Expr_Rule),
         Make_Pattern ("$S_Expr", Expr_Rule),

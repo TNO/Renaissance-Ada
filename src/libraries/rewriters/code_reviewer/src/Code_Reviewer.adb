@@ -103,9 +103,9 @@ procedure Code_Reviewer is
    procedure Create_Patch (patch : String) is
       File_Name : constant String :=
         Compose ("C:\path\to\patches",
-                                          --  Note: path must exist
+      --  Note: path must exist
       --  Path is NOT created by this program!
-                                          patch, "patch");
+      patch, "patch");
    begin
       case Source_Version_Control is
          when SVN =>
@@ -117,39 +117,33 @@ procedure Code_Reviewer is
 
    procedure Change_Files (Units : Analysis_Units.Vector; P : Patcher'Class);
    procedure Change_Files (Units : Analysis_Units.Vector; P : Patcher'Class) is
-      pragma Unreferenced (Units);
-      Unit : Analysis_Unit :=
-        Analyze_File_In_Project
-          ("C:\bright\itecembed\Source\Applic\Adat\adat_configdef.adb",
-           --  Unit.Get_Filename,
-           Project_Filename);
    begin
-      --  for Unit of Units loop
-      begin
-         Put_Line ("--- " & Unit.Get_Filename & " ---");
-         P.Mark (Unit);
-         Put_Line ("Marked");
-         P.Rewrite (Unit);
-         Put_Line ("Rewriten");
-         --  TODO remove marks & pretty print
-      exception
-         when Error : others =>
-            declare
-               Error_File_Name : constant String :=
-                 "c:\Temp\error" & Trim (Error_Count'Image, Both) & ".adx";
-            begin
-               Put_Line
-                 ("Error in Change_Files - " & Unit.Get_Filename & " " &
-                  Exception_Message (Error));
-               Execute_Command
-                 ("move " & Unit.Get_Filename & " " & Error_File_Name);
-               Put_Line ("See " & Error_File_Name);
-               Write_String_To_File
-                 (Encode (Unit.Text, Unit.Get_Charset), Unit.Get_Filename);
-               Error_Count := Error_Count + 1;
-            end;
-      end;
-      --  end loop;
+      for Unit of Units loop
+         declare
+            Current_Unit : Analysis_Unit := Unit;
+            --  prevent error: actual for "Unit" must be a variable
+         begin
+            P.Mark (Current_Unit);
+            P.Rewrite (Current_Unit);
+            --  TODO remove marks & pretty print
+         exception
+            when Error : others =>
+               declare
+                  Error_File_Name : constant String :=
+                    "c:\Temp\error" & Trim (Error_Count'Image, Both) & ".adx";
+               begin
+                  Put_Line
+                    ("Error in Change_Files - " & Unit.Get_Filename & " " &
+                     Exception_Message (Error));
+                  Execute_Command
+                    ("move " & Unit.Get_Filename & " " & Error_File_Name);
+                  Put_Line ("See " & Error_File_Name);
+                  Write_String_To_File
+                    (Encode (Unit.Text, Unit.Get_Charset), Unit.Get_Filename);
+                  Error_Count := Error_Count + 1;
+               end;
+         end;
+      end loop;
    end Change_Files;
 
    procedure Create_Patches
@@ -173,11 +167,11 @@ procedure Code_Reviewer is
    function Get_Units return Analysis_Units.Vector is
    begin
       --  --  Handle alr project
-      --  Execute_Command ("alr printenv");
-      --  --  ensure printenv doesn't generate unexpected output
-      --  --  for details: see https://github.com/alire-project/alire/issues/989
-      --  Execute_Command
-      --  ("for /F ""usebackq delims="" %x in (`alr printenv --wincmd`) DO %x");
+   --  Execute_Command ("alr printenv");
+   --  --  ensure printenv doesn't generate unexpected output
+   --  --  for details: see https://github.com/alire-project/alire/issues/989
+   --  Execute_Command
+   --  ("for /F ""usebackq delims="" %x in (`alr printenv --wincmd`) DO %x");
       return Analyze_Project (Project_Filename);
    end Get_Units;
 

@@ -17,7 +17,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
      (not Has_Side_Effect (Match, "$S_Expr"));
 
    Rewriter_For_All_Range_And_Then :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("for $S_I in $S_Range " &
@@ -29,7 +29,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
         Make_Match_Accepter_Function_Access (Accept_Single_Variable'Access));
 
    Rewriter_For_All_Elements_And_Then :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("for $S_E of $S_Elements loop " &
@@ -41,7 +41,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
            Stmt_Rule));
 
    Rewriter_For_Some_Range_Or_Else :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("for $S_I in $S_Range " &
@@ -53,7 +53,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
         Make_Match_Accepter_Function_Access (Accept_Single_Variable'Access));
 
    Rewriter_For_Some_Elements_Or_Else :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("for $S_E of $S_Elements loop " &
@@ -65,7 +65,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
            Stmt_Rule));
 
    Rewriter_For_All_Range_Exit :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : Boolean := true; begin " &
@@ -80,7 +80,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
            Block_Stmt_Rule));
 
    Rewriter_For_All_Elements_Exit :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : Boolean := true; begin " &
@@ -95,7 +95,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
            Block_Stmt_Rule));
 
    Rewriter_For_Some_Range_Exit :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : Boolean := false; begin " &
@@ -110,7 +110,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
            Block_Stmt_Rule));
 
    Rewriter_For_Some_Elements_Exit :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : Boolean := false; begin " &
@@ -125,7 +125,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
            Block_Stmt_Rule));
 
    Rewriter_For_All_Range_Return :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("for $S_I in $S_Range " &
@@ -137,7 +137,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
            Return_Stmt_Rule));
 
    Rewriter_For_All_Elements_Return :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("for $S_E of $S_Elements " &
@@ -149,7 +149,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
            Return_Stmt_Rule));
 
    Rewriter_For_Some_Range_Return :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("for $S_I in $S_Range " &
@@ -161,7 +161,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
            Return_Stmt_Rule));
 
    Rewriter_For_Some_Elements_Return :
-   aliased constant Rewriter_Find_And_Replace_Basic :=
+   aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("for $S_E of $S_Elements " &
@@ -173,7 +173,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
            Return_Stmt_Rule));
 
    Rewriter_For_All_Range_All :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : Boolean := true; begin " &
@@ -190,7 +190,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
           (Accept_Expr_No_Side_Effects'Access));
 
    Rewriter_For_All_Elements_All :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : Boolean := true; begin " &
@@ -207,7 +207,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
           (Accept_Expr_No_Side_Effects'Access));
 
    Rewriter_For_Some_Range_All :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : Boolean := false; begin " &
@@ -224,7 +224,7 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
           (Accept_Expr_No_Side_Effects'Access));
 
    Rewriter_For_Some_Elements_All :
-     aliased constant Rewriter_Find_And_Replace_Basic :=
+     aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
           ("declare $S_Var : Boolean := false; begin " &

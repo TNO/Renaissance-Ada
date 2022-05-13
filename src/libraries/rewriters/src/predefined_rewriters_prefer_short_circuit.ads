@@ -15,7 +15,7 @@ package Predefined_Rewriters_Prefer_Short_Circuit is
      (Is_Boolean_Expression (Match, "$S_Right")
       and then not Has_Side_Effect (Match, "$S_Right"));
 
-   Rewriter_And_Then : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_And_Then : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Left and $S_Right", Expr_Rule),
         Make_Pattern ("$S_Left and then $S_Right", Expr_Rule),
@@ -23,7 +23,7 @@ package Predefined_Rewriters_Prefer_Short_Circuit is
           (Accept_Right_Boolean_No_Side_Effects'Access));
    --  Use short circuit form of logical `and` operator
 
-   Rewriter_Or_Else : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Or_Else : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Left or $S_Right", Expr_Rule),
         Make_Pattern ("$S_Left or else $S_Right", Expr_Rule),

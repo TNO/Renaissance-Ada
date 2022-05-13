@@ -4,7 +4,6 @@ with Ada.Strings.Unbounded;      use Ada.Strings.Unbounded;
 with Patchers;                   use Patchers;
 with Rewriters;                  use Rewriters;
 with Rewriters_Find_And_Replace; use Rewriters_Find_And_Replace;
-with Rewriters_Mark_Aware;       use Rewriters_Mark_Aware;
 
 package Patchers_Find_And_Replace is
 
@@ -22,12 +21,12 @@ package Patchers_Find_And_Replace is
 
    function Make_Patcher_Find_And_Replace
      (N : String;
-      R : Rewriter_Find_And_Replace_Basic)
+      R : Rewriter_Find_And_Replace)
       return Patcher_Find_And_Replace;
 
    function Make_Patcher_Find_And_Replace
      (N : String;
-      R : Rewriter_Find_And_Replace_Basic;
+      R : Rewriter_Find_And_Replace;
       P : Rewriter'Class)
       return Patcher_Find_And_Replace;
 
@@ -37,7 +36,7 @@ private
 
    type Patcher_Find_And_Replace is new Patcher with record
       F_Name         : Unbounded_String;
-      F_Rewriter     : Rewriter_Find_And_Replace_Basic;
+      F_Rewriter     : Rewriter_Find_And_Replace;
       F_Post_Process : Any_Rewriter;
    end record;
 
@@ -47,14 +46,14 @@ private
 
    function Make_Patcher_Find_And_Replace
      (N : String;
-      R : Rewriter_Find_And_Replace_Basic)
+      R : Rewriter_Find_And_Replace)
       return Patcher_Find_And_Replace
    is
      (To_Unbounded_String (N), R, null);
 
    function Make_Patcher_Find_And_Replace
      (N : String;
-      R : Rewriter_Find_And_Replace_Basic;
+      R : Rewriter_Find_And_Replace;
       P : Rewriter'Class)
       return Patcher_Find_And_Replace
    is

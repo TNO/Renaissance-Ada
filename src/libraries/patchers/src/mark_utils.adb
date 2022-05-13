@@ -10,7 +10,9 @@ with Rewriters_Find_And_Replace;      use Rewriters_Find_And_Replace;
 with Rewriters_Repeat;                use Rewriters_Repeat;
 with Rewriters_Sequence;              use Rewriters_Sequence;
 with Rewriters_Vectors;               use Rewriters_Vectors;
+with Match_Accepters_Combine;         use Match_Accepters_Combine;
 with Match_Accepters_Function_Access; use Match_Accepters_Function_Access;
+with Match_Accepters_Marked;          use Match_Accepters_Marked;
 
 package body Mark_Utils is
 
@@ -100,22 +102,68 @@ package body Mark_Utils is
    function Is_Some_Parent_Marked
      (Node : Ada_Node; With_Self : Boolean := True) return Boolean
    is
-      Return_Value : Boolean;
    begin
-      Put_Line ("### Is_Some_Parent_Marked In " & Image (Node.Full_Sloc_Image));
       if With_Self and then Is_Marked (Node) then
-         Return_Value := True;
+         return True;
       else
          declare
             Parent : constant Ada_Node := Node.Parent;
          begin
-            Return_Value :=
-              not Parent.Is_Null
-              and then Is_Some_Parent_Marked (Parent);
+            return not Parent.Is_Null and then Is_Some_Parent_Marked (Parent);
          end;
       end if;
-      Put_Line ("### Is_Some_Parent_Marked Out ");
-      return Return_Value;
    end Is_Some_Parent_Marked;
+
+   function Make_Rewriter_Find_And_Replace_Mark_Aware
+     (R : Rewriter_Find_And_Replace) return Rewriter_Find_And_Replace;
+   function Make_Rewriter_Find_And_Replace_Mark_Aware
+     (R : Rewriter_Find_And_Replace) return Rewriter_Find_And_Replace
+   is
+   begin
+      return
+        Make_Rewriter_Find_And_Replace
+          (R.Get_Find_Pattern, R.Get_Replace_Pattern,
+           Make_Match_Accepter_Combine
+             (R.Get_Match_Accepter, Make_Match_Accepter_Marked));
+   end Make_Rewriter_Find_And_Replace_Mark_Aware;
+
+   function Make_Rewriter_Repeat_Mark_Aware
+     (R : Rewriter_Repeat) return Rewriter_Repeat;
+   function Make_Rewriter_Repeat_Mark_Aware
+     (R : Rewriter_Repeat) return Rewriter_Repeat
+   is
+   begin
+      return Make_Rewriter_Repeat (Make_Rewriter_Mark_Aware (R.Get_Rewriter));
+   end Make_Rewriter_Repeat_Mark_Aware;
+
+   function Make_Rewriter_Sequence_Mark_Aware
+     (R : Rewriter_Sequence) return Rewriter_Sequence;
+   function Make_Rewriter_Sequence_Mark_Aware
+     (R : Rewriter_Sequence) return Rewriter_Sequence
+   is
+      Return_Value : Rewriters_Vectors.Vector;
+   begin
+      for Rewriter of R.Get_Vector loop
+         Return_Value.Append (Make_Rewriter_Mark_Aware (Rewriter));
+      end loop;
+      return Make_Rewriter_Sequence (Return_Value);
+   end Make_Rewriter_Sequence_Mark_Aware;
+
+   function Make_Rewriter_Mark_Aware (R : Rewriter'Class) return Rewriter'Class
+   is
+   begin
+      if R in Rewriter_Find_And_Replace'Class then
+         return
+           Make_Rewriter_Find_And_Replace_Mark_Aware
+             (Rewriter_Find_And_Replace (R));
+      elsif R in Rewriter_Repeat'Class then
+         return Make_Rewriter_Repeat_Mark_Aware (Rewriter_Repeat (R));
+      elsif R in Rewriter_Sequence'Class then
+         return Make_Rewriter_Sequence_Mark_Aware (Rewriter_Sequence (R));
+      else
+         Assert (False, "Unknown Rewriter class");
+         return R;
+      end if;
+   end Make_Rewriter_Mark_Aware;
 
 end Mark_Utils;

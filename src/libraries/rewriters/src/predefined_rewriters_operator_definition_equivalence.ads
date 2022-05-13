@@ -12,7 +12,7 @@ package Predefined_Rewriters_Operator_Definition_Equivalence is
    is
      (not Has_Side_Effect (Match, "$S_Expr"));
 
-   Rewriter_Double : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Double : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr + $S_Expr", Expr_Rule),
         Make_Pattern ("2 * ($S_Expr)", Expr_Rule),

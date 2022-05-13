@@ -11,28 +11,28 @@ with Match_Accepters_Function_Access; use Match_Accepters_Function_Access;
 
 package Predefined_Rewriters_Not is
 
-   Rewriter_Not_Not : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Not_Not : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not (not $S_Cond)", Expr_Rule),
         Make_Pattern ("$S_Cond", Expr_Rule));
    --  also known as "Double negation"
 
-   Rewriter_Not_Equal : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Not_Equal : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not ($S_Left = $S_Right)", Expr_Rule),
         Make_Pattern ("($S_Left /= $S_Right)", Expr_Rule));
 
-   Rewriter_Not_Different : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Not_Different : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not ($S_Left /= $S_Right)", Expr_Rule),
         Make_Pattern ("($S_Left = $S_Right)", Expr_Rule));
 
-   Rewriter_Not_In : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Not_In : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not ($S_Var in $M_Values)", Expr_Rule),
         Make_Pattern ("($S_Var not in $M_Values)", Expr_Rule));
 
-   Rewriter_Not_Not_In : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Not_Not_In : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not ($S_Var not in $M_Values)", Expr_Rule),
         Make_Pattern ("($S_Var in $M_Values)", Expr_Rule));
@@ -41,7 +41,7 @@ package Predefined_Rewriters_Not is
      (not Is_Within_Base_Subp_Body (Match, "<="));
    --  do not change the implementation of the "<=" operator
 
-   Rewriter_Not_Greater_Than : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Not_Greater_Than : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not ($S_Left > $S_Right)", Expr_Rule),
         Make_Pattern ("($S_Left <= $S_Right)", Expr_Rule),
@@ -51,7 +51,7 @@ package Predefined_Rewriters_Not is
      (not Is_Within_Base_Subp_Body (Match, "<"));
    --  do not change the implementation of the "<" operator
 
-   Rewriter_Not_Greater_Equal : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Not_Greater_Equal : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not ($S_Left >= $S_Right)", Expr_Rule),
         Make_Pattern ("($S_Left < $S_Right)", Expr_Rule),
@@ -62,7 +62,7 @@ package Predefined_Rewriters_Not is
      (not Is_Within_Base_Subp_Body (Match, ">="));
    --  do not change the implementation of the ">=" operator
 
-   Rewriter_Not_Less_Than : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Not_Less_Than : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not ($S_Left < $S_Right)", Expr_Rule),
         Make_Pattern ("($S_Left >= $S_Right)", Expr_Rule),
@@ -73,7 +73,7 @@ package Predefined_Rewriters_Not is
      (not Is_Within_Base_Subp_Body (Match, ">"));
    --  do not change the implementation of the ">" operator
 
-   Rewriter_Not_Less_Equal : aliased constant Rewriter_Find_And_Replace_Basic :=
+   Rewriter_Not_Less_Equal : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("not ($S_Left <= $S_Right)", Expr_Rule),
         Make_Pattern ("($S_Left > $S_Right)", Expr_Rule),
