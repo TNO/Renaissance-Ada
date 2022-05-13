@@ -78,6 +78,13 @@ The development of Renaissance tooling to target [Ada](https://en.wikipedia.org/
 started in Bright, a public-private research project together with [ITEC](https://itecequipment.com), 
 an independent subsidiary of [Nexperia](https://nexperia.com).
 
+## Clone archive
+
+Use
+```
+git clone --recurse-submodules https://github.com/TNO/Renaissance-Ada.git
+```
+
 ## Related technologies
 * [HayStack-Ada](https://github.com/BurritoZz/Haystack-Ada) is a GNATStudio plug-in for AST-based Find and Replace. 
 [HayStack-Ada](https://github.com/BurritoZz/Haystack-Ada) uses a re-implementation of the rejuvenation library in python.
