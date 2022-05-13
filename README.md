@@ -81,6 +81,7 @@ an independent subsidiary of [Nexperia](https://nexperia.com).
 ## Related technologies
 * [HayStack-Ada](https://github.com/BurritoZz/Haystack-Ada) is a GNATStudio plug-in for AST-based Find and Replace. 
 [HayStack-Ada](https://github.com/BurritoZz/Haystack-Ada) uses a re-implementation of the rejuvenation library in python.
+* [OpenRewrite](https://docs.openrewrite.org) is a semantic code search and transformation ecosystem for Java and other source code.
 * [Rascal MPL](https://www.rascal-mpl.org) is a metaprogramming language that 
 integrates source code analysis, transformation, and generation primitives on the language level.
 Unfortunately, [Rascal MPL](https://www.rascal-mpl.org) still lacks support for [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)).
