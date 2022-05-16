@@ -2,21 +2,20 @@
 --  Performance can be limited by speed of virus scanner ;-(
 --                         running in a single thread...
 
-with Ada.Containers;              use Ada.Containers;
+with Ada.Containers; use Ada.Containers;
 with Ada.Containers.Indefinite_Vectors;
-with Ada.Directories;             use Ada.Directories;
-with Ada.Exceptions;              use Ada.Exceptions;
-with Ada.Strings;                 use Ada.Strings;
-with Ada.Strings.Fixed;           use Ada.Strings.Fixed;
-with Ada.Text_IO;                 use Ada.Text_IO;
-with Interfaces.C;                use Interfaces.C;
-with Langkit_Support.Text;        use Langkit_Support.Text;
-with Libadalang.Analysis;         use Libadalang.Analysis;
-with Rejuvenation;                use Rejuvenation;
-with Rejuvenation.File_Utils;     use Rejuvenation.File_Utils;
+with Ada.Directories; use Ada.Directories;
+with Ada.Exceptions; use Ada.Exceptions;
+with Ada.Strings; use Ada.Strings;
+with Ada.Strings.Fixed; use Ada.Strings.Fixed;
+with Ada.Text_IO; use Ada.Text_IO;
+with Langkit_Support.Text; use Langkit_Support.Text;
+with Libadalang.Analysis; use Libadalang.Analysis;
+with Rejuvenation; use Rejuvenation;
+with Rejuvenation.File_Utils; use Rejuvenation.File_Utils;
 with Rejuvenation.Simple_Factory; use Rejuvenation.Simple_Factory;
-with Rewriters_Sequence;          use Rewriters_Sequence;
-with Rewriters_Vectors;           use Rewriters_Vectors;
+with Rewriters_Sequence; use Rewriters_Sequence;
+with Rewriters_Vectors; use Rewriters_Vectors;
 with Predefined_Rewriters_Block_Statement_Simplify;
 use Predefined_Rewriters_Block_Statement_Simplify;
 with Predefined_Rewriters_Declaration_Simplify;
@@ -25,9 +24,11 @@ with Predefined_Rewriters_If_Expression_Distribution;
 use Predefined_Rewriters_If_Expression_Distribution;
 with Predefined_Rewriters_If_Expression_Simplify;
 use Predefined_Rewriters_If_Expression_Simplify;
-with Predefined_Rewriters_Not;  use Predefined_Rewriters_Not;
-with Patchers;                  use Patchers;
+with Predefined_Rewriters_Not; use Predefined_Rewriters_Not;
+with Patchers; use Patchers;
 with Patchers_Find_And_Replace; use Patchers_Find_And_Replace;
+
+with Commands; use Commands;
 
 procedure Code_Reviewer is
 
@@ -48,32 +49,44 @@ procedure Code_Reviewer is
    --  "\dependency_graph_extractor.gpr";
    --  Example to review the Dependency_Graph_Extractor project
 
-   Invocation_Exception : exception;
-
-   procedure Execute_Command (Command : String);
-   procedure Execute_Command (Command : String) is
-      function Sys (Arg : char_array) return Integer;
-      pragma Import (C, Sys, "system");
-
-      Ret_Val : Integer;
+   function Is_Under_SVN_Control (File_Name : String) return Boolean;
+   function Is_Under_SVN_Control (File_Name : String) return Boolean is
+      Command : constant String := "svn info " & File_Name & No_Output;
    begin
-      Ret_Val := Sys (To_C (Command));
-      if Ret_Val /= 0 then
-         raise Invocation_Exception
-           with Ret_Val'Image & " for '" & Command & "'";
-      end if;
-   end Execute_Command;
+      return Execute_Command (Command) = 0;
+   end Is_Under_SVN_Control;
+
+   function Is_Under_GIT_Control (File_Name : String) return Boolean;
+   function Is_Under_GIT_Control (File_Name : String) return Boolean is
+      Command : constant String :=
+        "git ls-files --error-unmatch " & File_Name & No_Output;
+   begin
+      return Execute_Command (Command) = 0;
+   end Is_Under_GIT_Control;
+
+   function Is_Under_Version_Control (File_Name : String) return Boolean;
+   function Is_Under_Version_Control (File_Name : String) return Boolean is
+   begin
+      case Source_Version_Control is
+         when SVN =>
+            return Is_Under_SVN_Control (File_Name);
+         when GIT =>
+            return Is_Under_GIT_Control (File_Name);
+      end case;
+   end Is_Under_Version_Control;
 
    procedure Revert_SVN;
    procedure Revert_SVN is
    begin
-      Execute_Command ("svn revert --recursive " & Source_Directory);
+      Execute_Command
+        ("svn revert --recursive " & Source_Directory & No_Output);
    end Revert_SVN;
 
    procedure Restore_GIT;
    procedure Restore_GIT is
    begin
-      Execute_Command ("cd """ & Source_Directory & """ & git restore *");
+      Execute_Command
+        ("cd """ & Source_Directory & """ & git restore *" & No_Output);
    end Restore_GIT;
 
    procedure Rewind_Not_Committed_Changes;
@@ -103,9 +116,9 @@ procedure Code_Reviewer is
    procedure Create_Patch (patch : String) is
       File_Name : constant String :=
         Compose ("C:\path\to\patches",
-      --  Note: path must exist
-      --  Path is NOT created by this program!
-      patch, "patch");
+                 --  Note: path must exist
+                 --  Path is NOT created by this program!
+                 patch, "patch");
    begin
       case Source_Version_Control is
          when SVN =>
@@ -119,30 +132,34 @@ procedure Code_Reviewer is
    procedure Change_Files (Units : Analysis_Units.Vector; P : Patcher'Class) is
    begin
       for Unit of Units loop
-         declare
-            Current_Unit : Analysis_Unit := Unit;
-            --  prevent error: actual for "Unit" must be a variable
-         begin
-            P.Mark (Current_Unit);
-            P.Rewrite (Current_Unit);
-            --  TODO remove marks & pretty print
-         exception
-            when Error : others =>
-               declare
-                  Error_File_Name : constant String :=
-                    "c:\Temp\error" & Trim (Error_Count'Image, Both) & ".adx";
-               begin
-                  Put_Line
-                    ("Error in Change_Files - " & Unit.Get_Filename & " " &
-                     Exception_Message (Error));
-                  Execute_Command
-                    ("move " & Unit.Get_Filename & " " & Error_File_Name);
-                  Put_Line ("See " & Error_File_Name);
-                  Write_String_To_File
-                    (Encode (Unit.Text, Unit.Get_Charset), Unit.Get_Filename);
-                  Error_Count := Error_Count + 1;
-               end;
-         end;
+         if Is_Under_Version_Control (Unit.Get_Filename) then
+            declare
+               Current_Unit : Analysis_Unit := Unit;
+               --  prevent error: actual for "Unit" must be a variable
+            begin
+               P.Mark (Current_Unit);
+               P.Rewrite (Current_Unit);
+               --  TODO remove marks & pretty print
+            exception
+               when Error : others =>
+                  declare
+                     Error_File_Name : constant String :=
+                       "c:\Temp\error" & Trim (Error_Count'Image, Both)
+                       & ".adx";
+                  begin
+                     Put_Line
+                       ("Error in Change_Files - " & Unit.Get_Filename & " " &
+                          Exception_Message (Error));
+                     Execute_Command
+                       ("move " & Unit.Get_Filename & " " & Error_File_Name);
+                     Put_Line ("See " & Error_File_Name);
+                     Write_String_To_File
+                       (Encode (Unit.Text, Unit.Get_Charset),
+                        Unit.Get_Filename);
+                     Error_Count := Error_Count + 1;
+                  end;
+            end;
+         end if;
       end loop;
    end Change_Files;
 
@@ -167,11 +184,11 @@ procedure Code_Reviewer is
    function Get_Units return Analysis_Units.Vector is
    begin
       --  --  Handle alr project
-   --  Execute_Command ("alr printenv");
-   --  --  ensure printenv doesn't generate unexpected output
-   --  --  for details: see https://github.com/alire-project/alire/issues/989
-   --  Execute_Command
-   --  ("for /F ""usebackq delims="" %x in (`alr printenv --wincmd`) DO %x");
+      --  Execute_Command ("alr printenv");
+      --  --  ensure printenv doesn't generate unexpected output
+      --  --  for details: see https://github.com/alire-project/alire/issues/989
+      --  Execute_Command
+      --  ("for /F ""usebackq delims="" %x in (`alr printenv --wincmd`) DO %x");
       return Analyze_Project (Project_Filename);
    end Get_Units;
 
@@ -213,6 +230,8 @@ procedure Code_Reviewer is
       Vector.Append
         (Make_Patcher_Find_And_Replace
            ("Declarations_Combine", Rewriter_Declarations_Combine));
+
+      --  Rewriter_Membership_Test
 
       return Vector;
    end Get_Patchers;
@@ -458,7 +477,7 @@ procedure Code_Reviewer is
    --    ("For_Attribute_Use_Pragma_All",
    --     Rewriter_For_Attribute_Use_Pragma_All);
 
-   Units    : constant Analysis_Units.Vector   := Get_Units;
+   Units : constant Analysis_Units.Vector := Get_Units;
    Patchers : constant Patchers_Vectors.Vector := Get_Patchers;
 begin
    Rewind_Not_Committed_Changes;
