@@ -2,6 +2,7 @@ package Commands is
 
    type OS_Kind is (WINDOWS, LINUX);
    Operating_System : constant OS_Kind := WINDOWS;
+   --  Set platform correctly before running Code_Reviewer
 
    No_Output : constant String :=
      (case Operating_System is
@@ -13,6 +14,6 @@ package Commands is
    function Execute_Command (Command : String) return Integer;
 
    procedure Execute_Command (Command : String);
-   --  Throws exception when return code is not equal to zero
+   --  Throws invocation exception when return code is not equal to zero
 
 end Commands;

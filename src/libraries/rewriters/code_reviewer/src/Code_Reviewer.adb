@@ -29,6 +29,9 @@ with Patchers; use Patchers;
 with Patchers_Find_And_Replace; use Patchers_Find_And_Replace;
 
 with Commands; use Commands;
+with Version_Controls; use Version_Controls;
+with SVN_Version_Controls; use SVN_Version_Controls;
+--  with Git_Version_Controls; use Git_Version_Controls;
 
 procedure Code_Reviewer is
 
@@ -37,102 +40,24 @@ procedure Code_Reviewer is
    package Patchers_Vectors is new Ada.Containers.Indefinite_Vectors
      (Positive, Patcher'Class);
 
-   type Version_Control_Kind is (GIT, SVN);
-   Source_Version_Control : constant Version_Control_Kind := SVN;
-
    Source_Directory : constant String :=
    --  "C:\path\to\Dependency_Graph_Extractor-Ada";
    "C:\bright\itecembed";
    --  Example to review the code within Dependency_Graph_Extractor-Ada
 
+   V_C : constant Version_Control'Class :=
+     Make_SVN_Version_Control (Source_Directory);
+     --  Make_Git_Version_Control (Source_Directory);
+
    Project_Filename : constant String := Source_Directory & "\Source\itec.gpr";
    --  "\dependency_graph_extractor.gpr";
    --  Example to review the Dependency_Graph_Extractor project
-
-   function Is_Under_SVN_Control (File_Name : String) return Boolean;
-   function Is_Under_SVN_Control (File_Name : String) return Boolean is
-      Command : constant String := "svn info " & File_Name & No_Output;
-   begin
-      return Execute_Command (Command) = 0;
-   end Is_Under_SVN_Control;
-
-   function Is_Under_GIT_Control (File_Name : String) return Boolean;
-   function Is_Under_GIT_Control (File_Name : String) return Boolean is
-      Command : constant String :=
-        "git ls-files --error-unmatch " & File_Name & No_Output;
-   begin
-      return Execute_Command (Command) = 0;
-   end Is_Under_GIT_Control;
-
-   function Is_Under_Version_Control (File_Name : String) return Boolean;
-   function Is_Under_Version_Control (File_Name : String) return Boolean is
-   begin
-      case Source_Version_Control is
-         when SVN =>
-            return Is_Under_SVN_Control (File_Name);
-         when GIT =>
-            return Is_Under_GIT_Control (File_Name);
-      end case;
-   end Is_Under_Version_Control;
-
-   procedure Revert_SVN;
-   procedure Revert_SVN is
-   begin
-      Execute_Command
-        ("svn revert --recursive " & Source_Directory & No_Output);
-   end Revert_SVN;
-
-   procedure Restore_GIT;
-   procedure Restore_GIT is
-   begin
-      Execute_Command
-        ("cd """ & Source_Directory & """ & git restore *" & No_Output);
-   end Restore_GIT;
-
-   procedure Rewind_Not_Committed_Changes;
-   procedure Rewind_Not_Committed_Changes is
-   begin
-      case Source_Version_Control is
-         when SVN =>
-            Revert_SVN;
-         when GIT =>
-            Restore_GIT;
-      end case;
-   end Rewind_Not_Committed_Changes;
-
-   procedure Diff_SVN (File_Name : String);
-   procedure Diff_SVN (File_Name : String) is
-   begin
-      Execute_Command ("svn diff " & Source_Directory & " > " & File_Name);
-   end Diff_SVN;
-
-   procedure Diff_GIT (File_Name : String);
-   procedure Diff_GIT (File_Name : String) is
-   begin
-      Execute_Command ("cd " & Source_Directory & "& git diff > " & File_Name);
-   end Diff_GIT;
-
-   procedure Create_Patch (patch : String);
-   procedure Create_Patch (patch : String) is
-      File_Name : constant String :=
-        Compose ("C:\path\to\patches",
-                 --  Note: path must exist
-                 --  Path is NOT created by this program!
-                 patch, "patch");
-   begin
-      case Source_Version_Control is
-         when SVN =>
-            Diff_SVN (File_Name);
-         when GIT =>
-            Diff_GIT (File_Name);
-      end case;
-   end Create_Patch;
 
    procedure Change_Files (Units : Analysis_Units.Vector; P : Patcher'Class);
    procedure Change_Files (Units : Analysis_Units.Vector; P : Patcher'Class) is
    begin
       for Unit of Units loop
-         if Is_Under_Version_Control (Unit.Get_Filename) then
+         if V_C.Is_Under_Version_Control (Unit.Get_Filename) then
             declare
                Current_Unit : Analysis_Unit := Unit;
                --  prevent error: actual for "Unit" must be a variable
@@ -171,11 +96,16 @@ procedure Code_Reviewer is
    begin
       for P of Ps loop
          declare
+            File_Name : constant String :=
+              Compose ("C:\path\to\patches",
+                       --  Note: path must exist
+                       --  Path is NOT created by this program!
+                       P.Name, "patch");
          begin
             Put_Line ("==== " & P.Name & " ====");
             Change_Files (Units, P);
-            Create_Patch (P.Name);
-            Rewind_Not_Committed_Changes;
+            V_C.Create_Patch (File_Name);
+            V_C.Rewind_Not_Committed_Changes;
          end;
       end loop;
    end Create_Patches;
@@ -480,6 +410,6 @@ procedure Code_Reviewer is
    Units : constant Analysis_Units.Vector := Get_Units;
    Patchers : constant Patchers_Vectors.Vector := Get_Patchers;
 begin
-   Rewind_Not_Committed_Changes;
+   V_C.Rewind_Not_Committed_Changes;
    Create_Patches (Units, Patchers);
 end Code_Reviewer;
