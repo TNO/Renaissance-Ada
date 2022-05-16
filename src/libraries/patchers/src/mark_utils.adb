@@ -16,17 +16,17 @@ with Match_Accepters_Marked;          use Match_Accepters_Marked;
 
 package body Mark_Utils is
 
-   Comment_Open  : constant String := "--";
    Comment_Close : constant String := (1 => ASCII.LF);
 
-   Mark_Open_Comment_Text  : constant String := " { --";
-   Mark_Close_Comment_Text : constant String := " } --";
+   Mark_Open_Comment_Text  : constant String := "-- { --";
+   Mark_Close_Comment_Text : constant String := "-- } --";
+   --  Libadalang includes `--` Comment Open in the Comment Text
 
    Mark_Open : constant String :=
-     ASCII.LF & Comment_Open & Mark_Open_Comment_Text & Comment_Close;
+     ASCII.LF & Mark_Open_Comment_Text & Comment_Close;
    Mark_Close : constant String :=
-     ASCII.LF & Comment_Open & Mark_Close_Comment_Text & Comment_Close;
-   --  for readability Mark Open and close are placed on a new line
+     ASCII.LF & Mark_Close_Comment_Text & Comment_Close;
+   --  for readability Mark Open and Close are placed on a new line
 
    procedure Mark (Unit : in out Analysis_Unit; Nodes : Node_List.Vector) is
       --  Since rewriters will only make changes to marked nodes
