@@ -117,10 +117,10 @@ package Predefined_Rewriters_Membership_Test is
    --  Rewriter for patterns involving membership tests
    --  that can be simplified.
 
-   function Matching_Membership_Test_Nodes
+   function Membership_Rewrite_Context
      (Unit : Analysis_Unit)
       return Node_List.Vector;
-   --  Nodes within the unit that are marked as membership test nodes
+   --  Nodes within the unit that are rewriten based on the membership rewrite
    --  Note: overestimation since repeating rewriters are involved
 
 end Predefined_Rewriters_Membership_Test;

@@ -96,8 +96,8 @@ package body Placeholder_Relations is
       return Is_Constant_Expression (E);
    end Is_Constant_Expression;
 
-   function Has_Side_Effect (E : Expr) return Boolean;
-   function Has_Side_Effect (E : Expr) return Boolean is
+   function Has_Side_Effect (E : Expr'Class) return Boolean;
+   function Has_Side_Effect (E : Expr'Class) return Boolean is
    --  conservative implementation, see details in code.
    begin
       case E.Kind is
@@ -169,19 +169,36 @@ package body Placeholder_Relations is
                if C_E.P_Is_Call then
                   return True;
                else
-                  --   array access
-                  Assert
-                    (Check   => C_E.F_Suffix.Kind = Ada_Assoc_List,
-                     Message =>
-                       "Has_Side_Effects unexpected kind for Suffix: " &
-                       C_E.F_Suffix.Kind'Image);
-                  declare
-                     A_L : constant Assoc_List := C_E.F_Suffix.As_Assoc_List;
-                  begin
-                     return
-                       (for some A of A_L.Children =>
-                          Has_Side_Effect (A.As_Param_Assoc.F_R_Expr));
-                  end;
+                  case C_E.F_Suffix.Kind is
+                     when Ada_Assoc_List =>
+                        --   array access
+                        declare
+                           A_L : constant Assoc_List :=
+                             C_E.F_Suffix.As_Assoc_List;
+                        begin
+                           return
+                             (for some A of A_L.Children =>
+                                Has_Side_Effect (A.As_Param_Assoc.F_R_Expr));
+                        end;
+                     when Ada_Bin_Op =>
+                        --   array slice
+                        declare
+                           B_O : constant Bin_Op :=
+                             C_E.F_Suffix.As_Bin_Op;
+                        begin
+                           Assert (Check => B_O.F_Op.Kind = Ada_Op_Double_Dot,
+                                   Message => "Has Side Effects - Suffix "
+                                   & "- Unexpected operator "
+                                   & B_O.F_Op.Kind'Image);
+                           return Has_Side_Effect (B_O);
+                        end;
+                     when others =>
+                        Assert (Check => False,
+                                Message => "Has Side Effects - Suffix "
+                                & "- Unexpected kind "
+                                & C_E.F_Suffix.Kind'Image);
+                        return True;
+                  end case;
                end if;
             end;
          when Ada_Paren_Expr =>
@@ -231,7 +248,7 @@ package body Placeholder_Relations is
             declare
                E_D : constant Explicit_Deref := E.As_Explicit_Deref;
             begin
-               return Has_Side_Effect (E_D.F_Prefix.As_Expr);
+               return Has_Side_Effect (E_D.F_Prefix);
             end;
          when others =>
             Put_Line

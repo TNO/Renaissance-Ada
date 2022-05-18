@@ -1,6 +1,5 @@
 with Ada.Assertions;                  use Ada.Assertions;
 with Ada.Containers;                  use Ada.Containers;
-with Ada.Text_IO;                     use Ada.Text_IO;
 with Langkit_Support.Text;            use Langkit_Support.Text;
 with Libadalang.Common;               use Libadalang.Common;
 with Rejuvenation.Match_Patterns;     use Rejuvenation.Match_Patterns;

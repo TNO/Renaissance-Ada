@@ -1,5 +1,4 @@
 with Ada.Containers;                 use Ada.Containers;
-with Ada.Text_IO;                    use Ada.Text_IO;
 with Libadalang.Common;              use Libadalang.Common;
 with Rejuvenation.Finder;            use Rejuvenation.Finder;
 with Rejuvenation.Find_And_Replacer; use Rejuvenation.Find_And_Replacer;

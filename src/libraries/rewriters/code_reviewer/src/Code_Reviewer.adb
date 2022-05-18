@@ -14,24 +14,27 @@ with Libadalang.Analysis; use Libadalang.Analysis;
 with Rejuvenation; use Rejuvenation;
 with Rejuvenation.File_Utils; use Rejuvenation.File_Utils;
 with Rejuvenation.Simple_Factory; use Rejuvenation.Simple_Factory;
-with Rewriters_Sequence; use Rewriters_Sequence;
-with Rewriters_Vectors; use Rewriters_Vectors;
-with Predefined_Rewriters_Block_Statement_Simplify;
-use Predefined_Rewriters_Block_Statement_Simplify;
-with Predefined_Rewriters_Declaration_Simplify;
-use Predefined_Rewriters_Declaration_Simplify;
-with Predefined_Rewriters_If_Expression_Distribution;
-use Predefined_Rewriters_If_Expression_Distribution;
-with Predefined_Rewriters_If_Expression_Simplify;
-use Predefined_Rewriters_If_Expression_Simplify;
-with Predefined_Rewriters_Not; use Predefined_Rewriters_Not;
+--  with Rewriters_Sequence; use Rewriters_Sequence;
+--  with Rewriters_Vectors; use Rewriters_Vectors;
+--  with Predefined_Rewriters_Block_Statement_Simplify;
+--  use Predefined_Rewriters_Block_Statement_Simplify;
+--  with Predefined_Rewriters_Declaration_Simplify;
+--  use Predefined_Rewriters_Declaration_Simplify;
+--  with Predefined_Rewriters_If_Expression_Distribution;
+--  use Predefined_Rewriters_If_Expression_Distribution;
+--  with Predefined_Rewriters_If_Expression_Simplify;
+--  use Predefined_Rewriters_If_Expression_Simplify;
+with Predefined_Rewriters_Membership_Test;
+use Predefined_Rewriters_Membership_Test;
+--  with Predefined_Rewriters_Not; use Predefined_Rewriters_Not;
 with Patchers; use Patchers;
-with Patchers_Find_And_Replace; use Patchers_Find_And_Replace;
 
 with Commands; use Commands;
 with Version_Controls; use Version_Controls;
 with SVN_Version_Controls; use SVN_Version_Controls;
 --  with Git_Version_Controls; use Git_Version_Controls;
+with Post_Processing_Contexts_Function_Access;
+use Post_Processing_Contexts_Function_Access;
 
 procedure Code_Reviewer is
 
@@ -57,15 +60,19 @@ procedure Code_Reviewer is
    procedure Change_Files (Units : Analysis_Units.Vector; P : Patcher'Class) is
    begin
       for Unit of Units loop
-         if V_C.Is_Under_Version_Control (Unit.Get_Filename) then
-            declare
-               Current_Unit : Analysis_Unit := Unit;
-               --  prevent error: actual for "Unit" must be a variable
-            begin
-               P.Mark (Current_Unit);
-               P.Rewrite (Current_Unit);
-               --  TODO remove marks & pretty print
-            exception
+         begin
+            Put_Line ("--- " & Unit.Get_Filename & " ---");
+            if V_C.Is_Under_Version_Control (Unit.Get_Filename) then
+               declare
+                  Current_Unit : Analysis_Unit := Unit;
+                  --  prevent error: actual for "Unit" must be a variable
+               begin
+                  P.Mark (Current_Unit);
+                  P.Rewrite (Current_Unit);
+                  --  TODO remove marks & pretty print
+               end;
+            end if;
+         exception
                when Error : others =>
                   declare
                      Error_File_Name : constant String :=
@@ -83,8 +90,7 @@ procedure Code_Reviewer is
                         Unit.Get_Filename);
                      Error_Count := Error_Count + 1;
                   end;
-            end;
-         end if;
+         end;
       end loop;
    end Change_Files;
 
@@ -120,6 +126,12 @@ procedure Code_Reviewer is
       --  Execute_Command
       --  ("for /F ""usebackq delims="" %x in (`alr printenv --wincmd`) DO %x");
       return Analyze_Project (Project_Filename);
+      --  return Analysis_Units.To_Vector
+      --    (Analyze_File_In_Project
+      --       ("C:\bright\itecembed\Source\General\Inspections\" &
+      --          "Framework\inspections-calibration.adb",
+      --        Project_Filename),
+      --     1);
    end Get_Units;
 
    --  function Get_Units return Analysis_Units.Vector is
@@ -148,20 +160,25 @@ procedure Code_Reviewer is
       Vector : Patchers_Vectors.Vector := Patchers_Vectors.Empty;
    begin
       --  TODO: make Predefined Patchers?
-      Vector.Append
-        (Make_Patcher_Find_And_Replace
-           ("Declare_And_Overwrite", Rewriter_Declare_And_Overwrite,
-            Make_Rewriter_Sequence
-              (Rewriter_If_Expression_Distribution &
-               Rewriter_If_Expression_Simplify &
-               Rewriter_Not    -- TODO add Minimal Parentheses
-      )));
+      --  Vector.Append
+      --    (Make_Patcher
+      --       ("Declare_And_Overwrite", Rewriter_Declare_And_Overwrite,
+      --        Make_Rewriter_Sequence
+      --          (Rewriter_If_Expression_Distribution &
+      --           Rewriter_If_Expression_Simplify &
+      --           Rewriter_Not    -- TODO add Minimal Parentheses
+      --  )));
+      --
+      --  Vector.Append
+      --    (Make_Patcher
+      --       ("Declarations_Combine", Rewriter_Declarations_Combine));
 
       Vector.Append
-        (Make_Patcher_Find_And_Replace
-           ("Declarations_Combine", Rewriter_Declarations_Combine));
-
-      --  Rewriter_Membership_Test
+        (Make_Patcher (
+         "Membership_Test",
+         Make_Post_Processing_Context_Function_Access
+           (Membership_Rewrite_Context'Access),
+         Rewriter_Membership_Test));
 
       return Vector;
    end Get_Patchers;
@@ -412,4 +429,7 @@ procedure Code_Reviewer is
 begin
    V_C.Rewind_Not_Committed_Changes;
    Create_Patches (Units, Patchers);
+exception
+   when Error : others =>
+      Put_Line (Exception_Message (Error));
 end Code_Reviewer;
