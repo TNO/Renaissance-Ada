@@ -1,8 +1,4 @@
-with Libadalang.Common;           use Libadalang.Common;
-with Rejuvenation.Finder;         use Rejuvenation.Finder;
-with Rejuvenation.Text_Rewrites;  use Rejuvenation.Text_Rewrites;
-
-package body Rewriters_Minimal_Parentheses is
+package body Predefined_Rewriters_Minimal_Parentheses is
 
    function Are_Parentheses_Syntactically_Mandatory
      (P_E : Paren_Expr) return Boolean;
@@ -59,53 +55,4 @@ package body Rewriters_Minimal_Parentheses is
      (Are_Parentheses_Syntactically_Mandatory (P_E)
       or else Are_Parenthesis_Semantically_Necessary (P_E));
 
-   function Matching_Nodes
-     (RMP : Rewriter_Minimal_Parentheses; Unit : Analysis_Unit)
-      return Node_List.Vector
-   is
-      Return_Value : Node_List.Vector;
-   begin
-      for PE_Node of Find (Unit.Root, Ada_Paren_Expr) loop
-         declare
-            ParenExpr : constant Paren_Expr := PE_Node.As_Paren_Expr;
-         begin
-            if not Are_Parentheses_Necessary (ParenExpr)
-              and then RMP.F_Node_Accepter (PE_Node)
-            then
-               Return_Value.Append (PE_Node);
-            end if;
-         end;
-      end loop;
-      return Return_Value;
-   end Matching_Nodes;
-
-   overriding function Rewrite
-     (RMP : Rewriter_Minimal_Parentheses; Unit : in out Analysis_Unit)
-     return Boolean
-   is
-      T_R : Text_Rewrite_Unit := Make_Text_Rewrite_Unit (Unit);
-   begin
-      for PE_Node of Find (Unit.Root, Ada_Paren_Expr) loop
-         declare
-            ParenExpr : constant Paren_Expr := PE_Node.As_Paren_Expr;
-         begin
-            if not Are_Parentheses_Necessary (ParenExpr) and then
-              RMP.F_Node_Accepter (PE_Node)
-            then
-                  T_R.ReplaceAround
-                    (Node      => ParenExpr, Before_Text => "",
-                     Innernode => ParenExpr.F_Expr, After_Text => "",
-                     Charset   => Unit.Get_Charset);
-            end if;
-         end;
-      end loop;
-      if T_R.HasReplacements then
-         T_R.Apply;
-         Unit.Reparse;
-         return True;
-      else
-         return False;
-      end if;
-   end Rewrite;
-
-end Rewriters_Minimal_Parentheses;
+end Predefined_Rewriters_Minimal_Parentheses;
