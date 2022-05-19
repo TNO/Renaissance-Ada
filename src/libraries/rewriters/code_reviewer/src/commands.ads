@@ -6,8 +6,8 @@ package Commands is
 
    No_Output : constant String :=
      (case Operating_System is
-        when WINDOWS => " 1> nul 2>&1",
-        when LINUX => " 1> /dev/null 2>&1");
+        when WINDOWS => " > nul 2>&1",
+        when LINUX => " > /dev/null 2>&1");
 
    Invocation_Exception : exception;
 

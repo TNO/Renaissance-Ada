@@ -20,6 +20,7 @@ package body SVN_Version_Controls is
 
    overriding function Is_Under_Version_Control
      (S : SVN_Version_Control; File_Name : String) return Boolean
+     --  TODO:  investigate ways to speed up
    is
       Command : constant String := "svn info " & File_Name & No_Output;
    begin

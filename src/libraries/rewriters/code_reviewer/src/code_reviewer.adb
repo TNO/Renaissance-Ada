@@ -13,7 +13,10 @@ with Langkit_Support.Text; use Langkit_Support.Text;
 with Libadalang.Analysis; use Libadalang.Analysis;
 with Rejuvenation; use Rejuvenation;
 with Rejuvenation.File_Utils; use Rejuvenation.File_Utils;
+with Rejuvenation.Finder; use Rejuvenation.Finder;
+with Rejuvenation.Pretty_Print; use Rejuvenation.Pretty_Print;
 with Rejuvenation.Simple_Factory; use Rejuvenation.Simple_Factory;
+with Rejuvenation.Text_Rewrites; use Rejuvenation.Text_Rewrites;
 --  with Rewriters_Sequence; use Rewriters_Sequence;
 --  with Rewriters_Vectors; use Rewriters_Vectors;
 --  with Predefined_Rewriters_Block_Statement_Simplify;
@@ -35,6 +38,7 @@ with SVN_Version_Controls; use SVN_Version_Controls;
 --  with Git_Version_Controls; use Git_Version_Controls;
 with Post_Processing_Contexts_Function_Access;
 use Post_Processing_Contexts_Function_Access;
+with Mark_Utils; use Mark_Utils;
 
 procedure Code_Reviewer is
 
@@ -56,22 +60,44 @@ procedure Code_Reviewer is
    --  "\dependency_graph_extractor.gpr";
    --  Example to review the Dependency_Graph_Extractor project
 
+   procedure Add_Pretty_Print (Unit : Analysis_Unit);
+   procedure Add_Pretty_Print (Unit : Analysis_Unit)
+   is
+      T_R : Text_Rewrite_Unit := Make_Text_Rewrite_Unit (Unit);
+      Nodes : constant Node_List.Vector :=
+        Find_Non_Contained (Unit.Root, Is_Marked'Access);
+   begin
+      for Node of Nodes loop
+         Surround_Node_By_Pretty_Print_Section (T_R, Node);
+      end loop;
+      Turn_Pretty_Printing_Initially_Off (T_R);
+      T_R.Apply;
+   end Add_Pretty_Print;
+
    procedure Change_Files (Units : Analysis_Units.Vector; P : Patcher'Class);
-   procedure Change_Files (Units : Analysis_Units.Vector; P : Patcher'Class) is
+   procedure Change_Files (Units : Analysis_Units.Vector; P : Patcher'Class)
+     --  Note Pretty Printing (using gnatpp) is line based.
+     --  Rewrite contexts can be more precise,
+     --  so we have separate marks for (post processing by) rewriters
+     --  and pretty printing
+   is
    begin
       for Unit of Units loop
          begin
-            Put_Line ("--- " & Unit.Get_Filename & " ---");
-            if V_C.Is_Under_Version_Control (Unit.Get_Filename) then
-               declare
-                  Current_Unit : Analysis_Unit := Unit;
-                  --  prevent error: actual for "Unit" must be a variable
-               begin
-                  P.Mark (Current_Unit);
+            declare
+               Current_Unit : Analysis_Unit := Unit;
+               --  prevent error: actual for "Unit" must be a variable
+            begin
+               if P.Mark (Current_Unit) then
+                  Put_Line ("--- " & Unit.Get_Filename & " ---");
                   P.Rewrite (Current_Unit);
-                  --  TODO remove marks & pretty print
-               end;
-            end if;
+                  Add_Pretty_Print (Current_Unit);
+                  Remove_Marks (Current_Unit.Get_Filename);
+                  Pretty_Print_Sections
+                    (Current_Unit.Get_Filename, Project_Filename);
+                  Remove_Pretty_Print_Flags (Current_Unit.Get_Filename);
+               end if;
+            end;
          exception
                when Error : others =>
                   declare
@@ -117,43 +143,19 @@ procedure Code_Reviewer is
    end Create_Patches;
 
    function Get_Units return Analysis_Units.Vector;
-   function Get_Units return Analysis_Units.Vector is
+   function Get_Units return Analysis_Units.Vector
+   is
+      Project_Units : constant Analysis_Units.Vector :=
+        Analyze_Project (Project_Filename);
+      Return_Value : Analysis_Units.Vector;
    begin
-      --  --  Handle alr project
-      --  Execute_Command ("alr printenv");
-      --  --  ensure printenv doesn't generate unexpected output
-      --  --  for details: see https://github.com/alire-project/alire/issues/989
-      --  Execute_Command
-      --  ("for /F ""usebackq delims="" %x in (`alr printenv --wincmd`) DO %x");
-      return Analyze_Project (Project_Filename);
-      --  return Analysis_Units.To_Vector
-      --    (Analyze_File_In_Project
-      --       ("C:\bright\itecembed\Source\General\Inspections\" &
-      --          "Framework\inspections-calibration.adb",
-      --        Project_Filename),
-      --     1);
+      for Project_Unit of Project_Units loop
+         if V_C.Is_Under_Version_Control (Project_Unit.Get_Filename) then
+            Return_Value.Append (Project_Unit);
+         end if;
+      end loop;
+      return Return_Value;
    end Get_Units;
-
-   --  function Get_Units return Analysis_Units.Vector is
-   --     UFiles : constant Unbounded_Strings.Vector :=
-   --       Get_Ada_Source_Files_From_Directory (Source_Directory);
-   --     Units : Analysis_Units.Vector;
-   --  begin
-   --     for UFile of UFiles loop
-   --        begin
-   --           declare
-   --              File : constant String        := To_String (UFile);
-   --              Unit : constant Analysis_Unit := Analyze_File (File);
-   --           begin
-   --              Units.Append (Unit);
-   --           end;
-   --        exception
-   --           when Parse_Exception =>
-   --              null;
-   --        end;
-   --     end loop;
-   --     return Units;
-   --  end Get_Units;
 
    function Get_Patchers return Patchers_Vectors.Vector;
    function Get_Patchers return Patchers_Vectors.Vector is
@@ -166,7 +168,8 @@ procedure Code_Reviewer is
       --        Make_Rewriter_Sequence
       --          (Rewriter_If_Expression_Distribution &
       --           Rewriter_If_Expression_Simplify &
-      --           Rewriter_Not    -- TODO add Minimal Parentheses
+      --           Rewriter_Not &
+      --           Rewriter_Minimal_Parentheses
       --  )));
       --
       --  Vector.Append
