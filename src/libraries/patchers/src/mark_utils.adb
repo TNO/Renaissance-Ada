@@ -2,8 +2,10 @@ with Ada.Assertions;                  use Ada.Assertions;
 with Ada.Containers;                  use Ada.Containers;
 with Langkit_Support.Text;            use Langkit_Support.Text;
 with Libadalang.Common;               use Libadalang.Common;
+with Rejuvenation.File_Utils;         use Rejuvenation.File_Utils;
 with Rejuvenation.Match_Patterns;     use Rejuvenation.Match_Patterns;
 with Rejuvenation.Node_Locations;     use Rejuvenation.Node_Locations;
+with Rejuvenation.String_Utils;       use Rejuvenation.String_Utils;
 with Rejuvenation.Text_Rewrites;      use Rejuvenation.Text_Rewrites;
 with Rewriters_Find_And_Replace;      use Rewriters_Find_And_Replace;
 with Rewriters_Repeat;                use Rewriters_Repeat;
@@ -29,7 +31,8 @@ package body Mark_Utils is
 
    procedure Mark (Unit : in out Analysis_Unit; Nodes : Node_List.Vector) is
       --  Since rewriters will only make changes to marked nodes
-      --  including their children, we could remove children from
+      --  including their children / descendants,
+      --  we could remove children / descendants from
       --  the vector of nodes to be marked.
       --  Currently, unclear whether that is beneficial, so not done.
       T_R : Text_Rewrite_Unit := Make_Text_Rewrite_Unit (Unit);
@@ -42,7 +45,16 @@ package body Mark_Utils is
       Unit.Reparse;
    end Mark;
 
-   function Is_Marked (Node : Ada_Node) return Boolean is
+   procedure Remove_Marks (Filename : String)
+   is
+      Contents     : constant String := Get_String_From_File (Filename);
+      New_Contents : constant String :=
+         Replace_All (Replace_All (Contents, Mark_Open, ""),  Mark_Close, "");
+   begin
+      Write_String_To_File (New_Contents, Filename);
+   end Remove_Marks;
+
+   function Is_Marked (Node : Ada_Node'Class) return Boolean is
 
       function Has_Mark_Open_Before (Token : Token_Reference) return Boolean;
       function Has_Mark_Open_Before (Token : Token_Reference) return Boolean is

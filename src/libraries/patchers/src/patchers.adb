@@ -2,11 +2,18 @@ with Rejuvenation; use Rejuvenation;
 
 package body Patchers is
 
-   procedure Mark (P : Patcher; Unit : in out Analysis_Unit) is
+   function Mark (P : Patcher; Unit : in out Analysis_Unit)
+                  return Boolean
+   is
       Nodes : constant Node_List.Vector :=
         P.A_Context.Get_Post_Processing_Context (Unit);
    begin
-      Mark (Unit, Nodes);
+      if Nodes.Is_Empty then
+         return False;
+      else
+         Mark (Unit, Nodes);
+         return True;
+      end if;
    end Mark;
 
    procedure Rewrite (P : Patcher; Unit : in out Analysis_Unit) is

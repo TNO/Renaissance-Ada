@@ -13,10 +13,12 @@ package Patchers is
 
    function Name (P : Patcher) return String;
 
-   procedure Mark
+   function Mark
      (P         :        Patcher;
-      Unit      : in out Analysis_Unit);
+      Unit      : in out Analysis_Unit)
+   return Boolean;
    --  Mark relevant nodes within the unit
+   --  Return value signals whether any mark was added.
 
    procedure Rewrite
      (P         :        Patcher;

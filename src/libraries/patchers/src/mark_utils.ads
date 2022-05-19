@@ -14,7 +14,11 @@ package Mark_Utils is
    --  Rewriters will only make changes to marked nodes (and their children).
    --  Note the file associated with the Unit of the Nodes will be changed.
 
-   function Is_Marked (Node : Ada_Node) return Boolean;
+   procedure Remove_Marks (Filename : String);
+   --  Remove Marks from Filename
+   --  Note the file will be changed (if marks are present).
+
+   function Is_Marked (Node : Ada_Node'Class) return Boolean;
    --  Is Node Marked?
 
    function Is_Some_Parent_Marked
