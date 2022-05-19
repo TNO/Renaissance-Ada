@@ -47,4 +47,8 @@ package Predefined_Rewriters_Append is
        (Rewriter_Ampersand_Prefer_Append & Rewriter_Append_To_Unbounded_String);
    --  Rewriter for patterns to improve the usage of the `Append` function.
 
+   function Append_Rewrite_Context
+     (Unit : Analysis_Unit)
+      return Node_List.Vector;
+
 end Predefined_Rewriters_Append;

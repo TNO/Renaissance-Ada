@@ -1,3 +1,4 @@
+with Libadalang.Analysis;         use Libadalang.Analysis;
 with Libadalang.Common;           use Libadalang.Common;
 with Rejuvenation;                use Rejuvenation;
 with Rejuvenation.Patterns;       use Rejuvenation.Patterns;
@@ -52,7 +53,7 @@ package Predefined_Rewriters_Boolean_Expression_De_Morgan is
         Make_Pattern
           ("(for all $S_E of $S_Elements => not ($S_Cond))", Expr_Rule));
 
-   Rewrite_DeMorgan : constant Rewriter_Sequence :=
+   Rewrite_De_Morgan : constant Rewriter_Sequence :=
      Make_Rewriter_Sequence
        (Rewrite_De_Morgan_Not_And
         & Rewrite_De_Morgan_Not_Or
@@ -67,5 +68,9 @@ package Predefined_Rewriters_Boolean_Expression_De_Morgan is
    --  The resulting code might still be simplified using
    --  * Not
    --  * Minimal Parenthesis
+
+   function De_Morgan_Rewrite_Context
+     (Unit : Analysis_Unit)
+      return Node_List.Vector;
 
 end Predefined_Rewriters_Boolean_Expression_De_Morgan;

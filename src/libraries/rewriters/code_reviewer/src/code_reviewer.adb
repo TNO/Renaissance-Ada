@@ -2,8 +2,6 @@
 --  Performance can be limited by speed of virus scanner ;-(
 --                         running in a single thread...
 
-with Ada.Containers; use Ada.Containers;
-with Ada.Containers.Indefinite_Vectors;
 with Ada.Directories; use Ada.Directories;
 with Ada.Exceptions; use Ada.Exceptions;
 with Ada.Strings; use Ada.Strings;
@@ -17,35 +15,18 @@ with Rejuvenation.Finder; use Rejuvenation.Finder;
 with Rejuvenation.Pretty_Print; use Rejuvenation.Pretty_Print;
 with Rejuvenation.Simple_Factory; use Rejuvenation.Simple_Factory;
 with Rejuvenation.Text_Rewrites; use Rejuvenation.Text_Rewrites;
---  with Rewriters_Sequence; use Rewriters_Sequence;
---  with Rewriters_Vectors; use Rewriters_Vectors;
---  with Predefined_Rewriters_Block_Statement_Simplify;
---  use Predefined_Rewriters_Block_Statement_Simplify;
---  with Predefined_Rewriters_Declaration_Simplify;
---  use Predefined_Rewriters_Declaration_Simplify;
---  with Predefined_Rewriters_If_Expression_Distribution;
---  use Predefined_Rewriters_If_Expression_Distribution;
---  with Predefined_Rewriters_If_Expression_Simplify;
---  use Predefined_Rewriters_If_Expression_Simplify;
-with Predefined_Rewriters_Membership_Test;
-use Predefined_Rewriters_Membership_Test;
---  with Predefined_Rewriters_Not; use Predefined_Rewriters_Not;
 with Patchers; use Patchers;
+with Predefined_Patchers; use Predefined_Patchers;
 
 with Commands; use Commands;
 with Version_Controls; use Version_Controls;
 with SVN_Version_Controls; use SVN_Version_Controls;
 --  with Git_Version_Controls; use Git_Version_Controls;
-with Post_Processing_Contexts_Function_Access;
-use Post_Processing_Contexts_Function_Access;
 with Mark_Utils; use Mark_Utils;
 
 procedure Code_Reviewer is
 
    Error_Count : Natural := 0;
-
-   package Patchers_Vectors is new Ada.Containers.Indefinite_Vectors
-     (Positive, Patcher'Class);
 
    Source_Directory : constant String :=
    --  "C:\path\to\Dependency_Graph_Extractor-Ada";
@@ -94,7 +75,11 @@ procedure Code_Reviewer is
                   Add_Pretty_Print (Current_Unit);
                   Remove_Marks (Current_Unit.Get_Filename);
                   Pretty_Print_Sections
-                    (Current_Unit.Get_Filename, Project_Filename);
+                    (Current_Unit.Get_Filename);
+                  --  , Project_Filename);
+                  --  TODO: have gnatpp use the correct project environment
+                  --        currently, we get the environment of the
+                  --        analysing i.s.o. analysed project
                   Remove_Pretty_Print_Flags (Current_Unit.Get_Filename);
                end if;
             end;
@@ -157,278 +142,8 @@ procedure Code_Reviewer is
       return Return_Value;
    end Get_Units;
 
-   function Get_Patchers return Patchers_Vectors.Vector;
-   function Get_Patchers return Patchers_Vectors.Vector is
-      Vector : Patchers_Vectors.Vector := Patchers_Vectors.Empty;
-   begin
-      --  TODO: make Predefined Patchers?
-      --  Vector.Append
-      --    (Make_Patcher
-      --       ("Declare_And_Overwrite", Rewriter_Declare_And_Overwrite,
-      --        Make_Rewriter_Sequence
-      --          (Rewriter_If_Expression_Distribution &
-      --           Rewriter_If_Expression_Simplify &
-      --           Rewriter_Not &
-      --           Rewriter_Minimal_Parentheses
-      --  )));
-      --
-      --  Vector.Append
-      --    (Make_Patcher
-      --       ("Declarations_Combine", Rewriter_Declarations_Combine));
-
-      Vector.Append
-        (Make_Patcher (
-         "Membership_Test",
-         Make_Post_Processing_Context_Function_Access
-           (Membership_Rewrite_Context'Access),
-         Rewriter_Membership_Test));
-
-      return Vector;
-   end Get_Patchers;
-
-   --  Name_To_Rewriter_Map.Include
-   --    ("Minimal_Parentheses", RMP);
-
-   --  Name_To_Rewriter_Map.Include
-   --    ("Definition_Equal", Rewriter_Definition_Equal);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Definition_Different", Rewriter_Definition_Different);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Definition_Minus", Rewriter_Definition_Minus);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Definition_Divide", Rewriter_Definition_Divide);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Definition_Modulo", Rewriter_Definition_Modulo);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Definition_Remainder", Rewriter_Definition_Remainder);
-   --
-   --  Name_To_Rewriter_Map.Include
-   --    ("Idempotence_And", Rewriter_Idempotence_And);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Idempotence_Or", Rewriter_Idempotence_Or);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Complementation_And", Rewriter_Complementation_And);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Complementation_Or", Rewriter_Complementation_Or);
-   --
-   --  Name_To_Rewriter_Map.Include ("Not_Not", Rewriter_Not_Not);
-   --  Name_To_Rewriter_Map.Include ("Not_Equal", Rewriter_Not_Equal);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Not_Different", Rewriter_Not_Different);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Not_Greater_Than", Rewriter_Not_Greater_Than);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Not_Greater_Equal", Rewriter_Not_Greater_Equal);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Not_Less_Than", Rewriter_Not_Less_Than);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Not_Less_Equal", Rewriter_Not_Less_Equal);
-   --  Name_To_Rewriter_Map.Include ("Not_In", Rewriter_Not_In);
-   --  Name_To_Rewriter_Map.Include ("Not_Not_In", Rewriter_Not_Not_In);
-   --  Name_To_Rewriter_Map.Include ("And_Then", Rewriter_And_Then);
-   --  Name_To_Rewriter_Map.Include ("Or_Else", Rewriter_Or_Else);
-   --  Name_To_Rewriter_Map.Include ("Equal_True", Rewriter_Equal_True);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Equal_False", Rewriter_Equal_False);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Different_True", Rewriter_Different_True);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Different_False", Rewriter_Different_False);
-   --  Name_To_Rewriter_Map.Include
-   --    ("De_Morgan_Not_And", Rewrite_De_Morgan_Not_And);
-   --  Name_To_Rewriter_Map.Include
-   --    ("De_Morgan_Not_Or", Rewrite_De_Morgan_Not_Or);
-   --  Name_To_Rewriter_Map.Include
-   --    ("De_Morgan_Not_All_Range", Rewrite_De_Morgan_Not_All_Range);
-   --  Name_To_Rewriter_Map.Include
-   --    ("De_Morgan_Not_All_Elements",
-   --     Rewrite_De_Morgan_Not_All_Elements);
-   --  Name_To_Rewriter_Map.Include
-   --    ("De_Morgan_Not_Some_Range", Rewrite_De_Morgan_Not_Some_Range);
-   --  Name_To_Rewriter_Map.Include
-   --    ("De_Morgan_Not_Some_Elements",
-   --     Rewrite_De_Morgan_Not_Some_Elements);
-   --
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_True_Expression",
-   --     Rewriter_If_True_Expression);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_False_Expression",
-   --     Rewriter_If_False_Expression);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_Identical_Expression",
-   --     Rewriter_If_Identical_Expression);
-   --
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_Different_Expression", Rewriter_If_Different_Expression);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_Not_Condition_Expression",
-   --     Rewriter_If_Not_Condition_Expression);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_Not_In_Expression", Rewriter_If_Not_In_Expression);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Boolean_If_Condition_Expression",
-   --     Rewriter_Boolean_If_Condition_Expression);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Boolean_If_Not_Condition_Expression",
-   --     Rewriter_Boolean_If_Not_Condition_Expression);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Integer_Max_Greater_Than",
-   --     Rewriter_Integer_Max_Greater_Than);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Integer_Max_Greater_Equal",
-   --     Rewriter_Integer_Max_Greater_Equal);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Integer_Max_Less_Than",
-   --     Rewriter_Integer_Max_Less_Than);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Integer_Max_Less_Equal",
-   --     Rewriter_Integer_Max_Less_Equal);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Integer_Min_Greater_Than",
-   --     Rewriter_Integer_Min_Greater_Than);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Integer_Min_Greater_Equal",
-   --     Rewriter_Integer_Min_Greater_Equal);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Integer_Min_Less_Than",
-   --     Rewriter_Integer_Min_Less_Than);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Integer_Min_Less_Equal",
-   --     Rewriter_Integer_Min_Less_Equal);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Concat_Before_If_Expression",
-   --     Rewriter_Concat_Before_If_Expression);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Concat_After_If_Expression",
-   --     Rewriter_Concat_After_If_Expression);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Plus_Before_If_Expression",
-   --     Rewriter_Plus_Before_If_Expression);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Plus_After_If_Expression",
-   --     Rewriter_Plus_After_If_Expression);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Case_Expression_Binary_With_Others",
-   --     Rewriter_Case_Expression_Binary_With_Others);
-   --  Name_To_Rewriter_Map.Include ("Double", Rewriter_Double);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Equals_To_In_Range", Rewriter_Equals_To_In_Range);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Combine_In_Range_And_Equal",
-   --     Rewriter_Combine_In_Range_And_Equal);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Combine_In_Ranges", Rewriter_Combine_In_Ranges);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Differents_To_Not_In_Range",
-   --     Rewriter_Differents_To_Not_In_Range);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Combine_Not_In_Range_And_Different",
-   --     Rewriter_Combine_Not_In_Range_And_Different);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Combine_In_Ranges", Rewriter_Combine_In_Ranges);
-   --
-   --  Name_To_Rewriter_Map.Include
-   --    ("Unnecessary_Null_Stmt", Rewriter_Unnecessary_Null_Stmt);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_True_Stmt", Rewriter_If_True_Stmt);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_False_Stmt", Rewriter_If_False_Stmt);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_Different_Stmt", Rewriter_If_Different_Stmt);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_Not_Condition_Stmt", Rewriter_If_Not_Condition_Stmt);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_Not_In_Stmt", Rewriter_If_Not_In_Stmt);
-   --  Name_To_Rewriter_Map.Include ("Use_Elsif", Rewriter_Use_Elsif);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Null_Then_Branch", Rewriter_Null_Then_Branch);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Null_Else_Branch", Rewriter_Null_Else_Branch);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_Identical_Branches_Stmt",
-   --     Rewriter_If_Identical_Branches_Stmt);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_Identical_Tails_Stmt", Rewriter_If_Identical_Tails_Stmt);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_Argument_Stmt", Rewriter_If_Argument_Stmt);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_Assignment_Stmt", Rewriter_If_Assignment_Stmt);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_Return_Stmt", Rewriter_If_Return_Stmt);
-   --  Name_To_Rewriter_Map.Include
-   --    ("If_Return_Stmts", Rewriter_If_Return_Stmts);
-   --
-   --  Name_To_Rewriter_Map.Include
-   --    ("Case_Single", Rewriter_Case_Single);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Case_Binary_With_Others", Rewriter_Case_Binary_With_Others);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Case_Identical_Branches", Rewriter_Case_Identical_Branches);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Return_Expression", Rewriter_Return_Expression);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Declare_And_Overwrite", Rewriter_Declare_And_Overwrite);
-   --
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_All_Range_And_Then", Rewriter_For_All_Range_And_Then);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_All_Elements_And_Then",
-   --     Rewriter_For_All_Elements_And_Then);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_Some_Range_Or_Else", Rewriter_For_Some_Range_Or_Else);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_Some_Elements_Or_Else",
-   --     Rewriter_For_Some_Elements_Or_Else);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_All_Range_Exit", Rewriter_For_All_Range_Exit);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_All_Elements_Exit", Rewriter_For_All_Elements_Exit);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_Some_Range_Exit", Rewriter_For_Some_Range_Exit);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_Some_Elements_Exit", Rewriter_For_Some_Elements_Exit);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_All_Range_Return", Rewriter_For_All_Range_Return);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_All_Elements_Return", Rewriter_For_All_Elements_Return);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_Some_Range_Return", Rewriter_For_Some_Range_Return);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_Some_Elements_Return", Rewriter_For_Some_Elements_Return);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_All_Range_All", Rewriter_For_All_Range_All);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_All_Elements_All", Rewriter_For_All_Elements_All);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_Some_Range_All", Rewriter_For_Some_Range_All);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_Some_Elements_All", Rewriter_For_Some_Elements_All);
-   --
-   --  Name_To_Rewriter_Map.Include
-   --    ("Append_To_Unbounded_String",
-   --     Rewriter_Append_To_Unbounded_String);
-   --  Name_To_Rewriter_Map.Include
-   --    ("Append", Rewriter_Append);
-   --
-   --  Name_To_Rewriter_Map.Include
-   --    ("Declarations_Combine", Rewriter_Declarations_Combine);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_Attribute_Use", Rewriter_For_Attribute_Use);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_Attribute_Use_Aliased",
-   --     Rewriter_For_Attribute_Use_Aliased);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_Attribute_Use_Array", Rewriter_For_Attribute_Use_Array);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_Attribute_Use_Pragma_Var",
-   --     Rewriter_For_Attribute_Use_Pragma_Var);
-   --  Name_To_Rewriter_Map.Include
-   --    ("For_Attribute_Use_Pragma_All",
-   --     Rewriter_For_Attribute_Use_Pragma_All);
-
    Units : constant Analysis_Units.Vector := Get_Units;
-   Patchers : constant Patchers_Vectors.Vector := Get_Patchers;
+   Patchers : constant Patchers_Vectors.Vector := Patchers_Predefined;
 begin
    V_C.Rewind_Not_Committed_Changes;
    Create_Patches (Units, Patchers);
