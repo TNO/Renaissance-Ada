@@ -4,7 +4,8 @@ with Libadalang.Common;             use Libadalang.Common;
 with Rejuvenation;                  use Rejuvenation;
 with Rejuvenation.Finder;           use Rejuvenation.Finder;
 with Rejuvenation.Simple_Factory;   use Rejuvenation.Simple_Factory;
-with Rewriters_Minimal_Parentheses; use Rewriters_Minimal_Parentheses;
+with Predefined_Rewriters_Minimal_Parentheses;
+use Predefined_Rewriters_Minimal_Parentheses;
 
 package body Test_Minimal_Parenthesis is
 
