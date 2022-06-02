@@ -70,7 +70,10 @@ package Predefined_Patchers is
        ("Quantified_Expressions",
         Make_Post_Processing_Context_Function_Access
           (Quantified_Expressions_Rewrite_Context'Access),
-        Rewriter_Quantified_Expressions);
+        Rewriter_Quantified_Expressions,
+        Make_Rewriter_Sequence
+          (Rewriter_Not &
+           Rewriter_Minimal_Parentheses));
 
    Patcher_Representation_Clauses : aliased constant Patcher :=
      Make_Patcher
@@ -85,7 +88,12 @@ package Predefined_Patchers is
    use Patchers_Vectors;
 
    Patchers_Predefined : constant Patchers_Vectors.Vector :=
-     Patcher_Append & Patcher_Declarations_Combine &
-     Patcher_Declare_And_Overwrite & Patcher_Membership_Test;
+     Patcher_Append &
+     Patcher_De_Morgan &
+     Patcher_Declarations_Combine &
+     Patcher_Declare_And_Overwrite &
+     Patcher_Membership_Test &
+     Patcher_Quantified_Expressions &
+     Patcher_Representation_Clauses;
 
 end Predefined_Patchers;

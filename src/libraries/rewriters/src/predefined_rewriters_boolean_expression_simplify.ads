@@ -15,6 +15,50 @@ package Predefined_Rewriters_Boolean_Expression_Simplify is
    is
      (not Has_Side_Effect (Match, "$S_Expr"));
 
+   Rewriter_True_Or_Else : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("true or else $S_Expr", Expr_Rule),
+        Make_Pattern ("true", Expr_Rule));
+
+   Rewriter_False_Or_Else : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("false or else $S_Expr", Expr_Rule),
+        Make_Pattern ("$S_Expr", Expr_Rule));
+
+   Rewriter_True_And_Then : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("true and then $S_Expr", Expr_Rule),
+        Make_Pattern ("$S_Expr", Expr_Rule));
+
+   Rewriter_False_And_Then : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("false and then $S_Expr", Expr_Rule),
+        Make_Pattern ("false", Expr_Rule));
+
+   Rewriter_Or_Else_True : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr or else true", Expr_Rule),
+        Make_Pattern ("true", Expr_Rule),
+        Make_Match_Accepter_Function_Access
+          (Accept_Expr_No_Side_Effects'Access));
+
+   Rewriter_Or_Else_False : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr or else false", Expr_Rule),
+        Make_Pattern ("$S_Expr", Expr_Rule));
+
+   Rewriter_And_Then_True : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr and then true", Expr_Rule),
+        Make_Pattern ("$S_Expr", Expr_Rule));
+
+   Rewriter_And_Then_False : aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("$S_Expr and then false", Expr_Rule),
+        Make_Pattern ("false", Expr_Rule),
+        Make_Match_Accepter_Function_Access
+          (Accept_Expr_No_Side_Effects'Access));
+
    Rewriter_Idempotence_And : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("$S_Expr and then $S_Expr", Expr_Rule),
@@ -82,20 +126,17 @@ package Predefined_Rewriters_Boolean_Expression_Simplify is
         Make_Match_Accepter_Function_Access (Accept_Expr_Boolean'Access));
    --  TODO: do we also need the symmetric variant: false /= $S_Expr?
 
-   --  TODO: simplification of `and then` and `or else` with constant values
-   --  false or else $S_Cond => $S_Cond
-   --  false and then $S_Cond => false
-   --  true or else $S_Cond => true
-   --  true and then $S_Cond => $S_Cond
-   --
-   --  $S_Cond or else false => $S_Cond
-   --  $S_Cond and then false + No_Side_Effects ($S_Cond) => false
-   --  $S_Cond or else true + No_Side_Effects ($S_Cond) => true
-   --  $S_Cond and then true => $S_Cond
-
    --  TODO: simplification of distribution
    --  distribution or    (a or else b) and then (a or else c) =
    --                     (a or else (b and then c))
    --  distribution and   (a and then b) or else (a and then c) =
    --                     (a and then (b or else c))
+
+   --  TODO: simplification of absorption law
+   --  A or else (A and then B) = A
+   --  A and then (A or else B) = A
+   --  Variants needed?
+   --  A or else (B and then A) = A  [ no side effects in B ]
+   --  A and then (B or else A) = A  [ no side effects in B ]
+
 end Predefined_Rewriters_Boolean_Expression_Simplify;

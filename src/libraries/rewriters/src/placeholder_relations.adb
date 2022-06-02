@@ -1,4 +1,5 @@
 with Ada.Assertions;            use Ada.Assertions;
+with Ada.Containers;            use Ada.Containers;
 with Ada.Text_IO;               use Ada.Text_IO;
 with Langkit_Support.Text;      use Langkit_Support.Text;
 with Libadalang.Common;         use Libadalang.Common;
@@ -336,7 +337,60 @@ package body Placeholder_Relations is
              Raw_Signature (Parent.As_Base_Subp_Body.F_Subp_Spec.F_Subp_Name));
    end Is_Within_Base_Subp_Body;
 
-      --  Localize Ada Nodes in defining files
+   function Is_Negation_Expression
+     (E : Expr) return Boolean;
+   function Is_Negation_Expression
+     (E : Expr) return Boolean
+   is
+   begin
+      if E.Is_Null then
+         return False;
+      else
+         case E.Kind is
+            when Ada_Paren_Expr =>
+               declare
+                  P_E : constant Paren_Expr := E.As_Paren_Expr;
+               begin
+                  return Is_Negation_Expression (P_E.F_Expr);
+               end;
+            when Ada_Un_Op =>
+               declare
+                  U_O : constant Un_Op := E.As_Un_Op;
+               begin
+                  return U_O.F_Op.Kind = Ada_Op_Not;
+               end;
+            when Ada_Bin_Op =>
+               declare
+                  B_O : constant Bin_Op := E.As_Bin_Op;
+               begin
+                  return
+                    B_O.F_Op.Kind in Ada_Op_Neq | Ada_Op_Not_In
+                    or else
+                    (B_O.F_Op.Kind in Ada_Op_And_Then | Ada_Op_Or_Else
+                     and then Is_Negation_Expression (B_O.F_Left)
+                     and then Is_Negation_Expression (B_O.F_Right));
+               end;
+            when Ada_Quantified_Expr =>
+               declare
+                  Q_E : constant Quantified_Expr := E.As_Quantified_Expr;
+               begin
+                  return Is_Negation_Expression (Q_E.F_Expr);
+               end;
+            when others =>
+               return False;
+         end case;
+      end if;
+   end Is_Negation_Expression;
+
+   function Is_Negation_Expression
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean
+   is
+      E : constant Expr := Match.Get_Single_As_Node (Placeholder_Name).As_Expr;
+   begin
+      return Is_Negation_Expression (E);
+   end Is_Negation_Expression;
+
+   --  Localize Ada Nodes in defining files
 
    Standard_Unit_Filename : constant String := "__standard";
    --  libadalang uses the standard unit for the standard type
@@ -358,14 +412,12 @@ package body Placeholder_Relations is
    --  Is Standard Ada Type checks
 
    function Is_Standard_Type_Expression
-     (Match : Match_Pattern; Placeholder_Name, Standard_Type_Name : String)
+     (T : Base_Type_Decl; Standard_Type_Name : String)
       return Boolean;
    function Is_Standard_Type_Expression
-     (Match : Match_Pattern; Placeholder_Name, Standard_Type_Name : String)
+     (T : Base_Type_Decl; Standard_Type_Name : String)
       return Boolean
    is
-      T : constant Base_Type_Decl :=
-        Get_Expression_Type (Match, Placeholder_Name);
    begin
       Assert (Check => not T.Is_Null,
               Message => "Is_Standard_Type_Expression - "
@@ -376,20 +428,34 @@ package body Placeholder_Relations is
    end Is_Standard_Type_Expression;
 
    function Is_Boolean_Expression
+     (Match : Match_Pattern) return Boolean
+   is
+      Nodes : constant Node_List.Vector := Match.Get_Nodes;
+   begin
+      return Nodes.Length = 1
+        and then Is_Standard_Type_Expression
+          (Nodes.First_Element.As_Expr.P_Expression_Type, "Boolean");
+   end Is_Boolean_Expression;
+
+   function Is_Boolean_Expression
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean is
-     (Is_Standard_Type_Expression (Match, Placeholder_Name, "Boolean"));
+     (Is_Standard_Type_Expression
+        (Get_Expression_Type (Match, Placeholder_Name), "Boolean"));
 
    function Is_Integer_Expression
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean is
-     (Is_Standard_Type_Expression (Match, Placeholder_Name, "Integer"));
+     (Is_Standard_Type_Expression
+        (Get_Expression_Type (Match, Placeholder_Name), "Integer"));
 
    function Is_Float_Expression
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean is
-     (Is_Standard_Type_Expression (Match, Placeholder_Name, "Float"));
+     (Is_Standard_Type_Expression
+        (Get_Expression_Type (Match, Placeholder_Name), "Float"));
 
    function Is_String_Expression
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean is
-     (Is_Standard_Type_Expression (Match, Placeholder_Name, "String"));
+     (Is_Standard_Type_Expression
+        (Get_Expression_Type (Match, Placeholder_Name), "String"));
 
    function Is_Unbounded_String
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean

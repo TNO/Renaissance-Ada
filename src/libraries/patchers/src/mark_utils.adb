@@ -5,6 +5,7 @@ with Libadalang.Common;               use Libadalang.Common;
 with Rejuvenation.File_Utils;         use Rejuvenation.File_Utils;
 with Rejuvenation.Match_Patterns;     use Rejuvenation.Match_Patterns;
 with Rejuvenation.Node_Locations;     use Rejuvenation.Node_Locations;
+with Rejuvenation.Pretty_Print;       use Rejuvenation.Pretty_Print;
 with Rejuvenation.String_Utils;       use Rejuvenation.String_Utils;
 with Rejuvenation.Text_Rewrites;      use Rejuvenation.Text_Rewrites;
 with Rewriters_Find_And_Replace;      use Rewriters_Find_And_Replace;
@@ -29,27 +30,43 @@ package body Mark_Utils is
      ASCII.LF & Mark_Close_Comment_Text & Comment_Close;
    --  for readability Mark Open and Close are placed on a new line
 
-   procedure Mark (Unit : in out Analysis_Unit; Nodes : Node_List.Vector) is
+   function Add_Marks_And_Pretty_Print_Sections
+     (Unit : in out Analysis_Unit; Nodes : Node_List.Vector)
+           return Boolean
+   is
       --  Since rewriters will only make changes to marked nodes
       --  including their children / descendants,
       --  we could remove children / descendants from
       --  the vector of nodes to be marked.
       --  Currently, unclear whether that is beneficial, so not done.
-      T_R : Text_Rewrite_Unit := Make_Text_Rewrite_Unit (Unit);
-   begin
-      for Node of Nodes loop
-         T_R.Prepend (Node, Mark_Open, All_Trivia);
-         T_R.Append (Node, Mark_Close, All_Trivia);
-      end loop;
-      T_R.Apply;
-      Unit.Reparse;
-   end Mark;
 
-   procedure Remove_Marks (Filename : String)
-   is
+      --  Since Marks and Pretty Print Sections interact
+      --  e.g. Marks places nodes on separate lines
+      --  they must be added together.
+   begin
+      if Nodes.Is_Empty then
+         return False;
+      else
+         declare
+            T_R : Text_Rewrite_Unit := Make_Text_Rewrite_Unit (Unit);
+         begin
+            Turn_Pretty_Printing_Initially_Off (T_R);
+            for Node of Nodes loop
+               T_R.Prepend (Node, Mark_Open);
+               T_R.Append (Node, Mark_Close);
+               Surround_Node_By_Pretty_Print_Section (T_R, Node);
+            end loop;
+            T_R.Apply;
+            Unit.Reparse;
+            return True;
+         end;
+      end if;
+   end Add_Marks_And_Pretty_Print_Sections;
+
+   procedure Remove_Marks (Filename : String) is
       Contents     : constant String := Get_String_From_File (Filename);
       New_Contents : constant String :=
-         Replace_All (Replace_All (Contents, Mark_Open, ""),  Mark_Close, "");
+        Replace_All (Replace_All (Contents, Mark_Open, ""), Mark_Close, "");
    begin
       Write_String_To_File (New_Contents, Filename);
    end Remove_Marks;

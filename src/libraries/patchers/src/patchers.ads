@@ -13,12 +13,14 @@ package Patchers is
 
    function Name (P : Patcher) return String;
 
-   function Mark
+   function Prepare_Unit
      (P         :        Patcher;
       Unit      : in out Analysis_Unit)
    return Boolean;
-   --  Mark relevant nodes within the unit
-   --  Return value signals whether any mark was added.
+   --  Prepare Unit for rewrite by
+   --  1. Adding Pretty Print sections for line-based pretty printing
+   --  2. Mark relevant nodes within the unit for post processing
+   --  Return value signals whether any preparation was made.
 
    procedure Rewrite
      (P         :        Patcher;

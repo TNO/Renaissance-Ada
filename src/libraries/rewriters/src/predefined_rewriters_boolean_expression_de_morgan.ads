@@ -2,9 +2,9 @@ with Libadalang.Analysis;         use Libadalang.Analysis;
 with Libadalang.Common;           use Libadalang.Common;
 with Rejuvenation;                use Rejuvenation;
 with Rejuvenation.Patterns;       use Rejuvenation.Patterns;
-with Rewriters_Sequence;          use Rewriters_Sequence;
-
 with Rewriters_Find_And_Replace;  use Rewriters_Find_And_Replace;
+with Rewriters_Repeat;            use Rewriters_Repeat;
+with Rewriters_Sequence;          use Rewriters_Sequence;
 with Rewriters_Vectors;           use Rewriters_Vectors;
 
 package Predefined_Rewriters_Boolean_Expression_De_Morgan is
@@ -53,7 +53,7 @@ package Predefined_Rewriters_Boolean_Expression_De_Morgan is
         Make_Pattern
           ("(for all $S_E of $S_Elements => not ($S_Cond))", Expr_Rule));
 
-   Rewrite_De_Morgan : constant Rewriter_Sequence :=
+   Rewrite_De_Morgan_Step : constant Rewriter_Sequence :=
      Make_Rewriter_Sequence
        (Rewrite_De_Morgan_Not_And
         & Rewrite_De_Morgan_Not_Or
@@ -62,6 +62,9 @@ package Predefined_Rewriters_Boolean_Expression_De_Morgan is
         & Rewrite_De_Morgan_Not_Some_Range
         & Rewrite_De_Morgan_Not_Some_Elements
        );
+
+   Rewrite_De_Morgan : constant Rewriter_Repeat :=
+     Make_Rewriter_Repeat (Rewrite_De_Morgan_Step);
    --  Rewriter for patterns that can be rewriting using DeMorgan's laws
    --  https://en.wikipedia.org/wiki/De_Morgan%27s_laws
    --

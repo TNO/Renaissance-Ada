@@ -8,8 +8,12 @@ with Rewriters;                     use Rewriters;
 --  not overwrite, remove, change marks.
 package Mark_Utils is
 
-   procedure Mark (Unit : in out Analysis_Unit; Nodes : Node_List.Vector) with
-     Pre => (for all Node of Nodes => Node.Unit = Unit);
+   function Add_Marks_And_Pretty_Print_Sections
+     (Unit : in out Analysis_Unit; Nodes : Node_List.Vector)
+      return Boolean
+     with
+       Pre => (for all Node of Nodes => Node.Unit = Unit);
+   --  Add (line based) Pretty Print Sections to Nodes
    --  Add Mark to Nodes
    --  Rewriters will only make changes to marked nodes (and their children).
    --  Note the file associated with the Unit of the Nodes will be changed.
