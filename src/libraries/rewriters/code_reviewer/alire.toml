@@ -13,7 +13,6 @@ libadalang = "^22.0.0"
 rejuvenation = "*"
 rewriters = "*"
 patchers = "*"
-aunit = "*"                    # remove - included to analyse project that need aunit, since we have problems changing the project environment
 
 [[pins]]
 rewriters = { path = ".." }

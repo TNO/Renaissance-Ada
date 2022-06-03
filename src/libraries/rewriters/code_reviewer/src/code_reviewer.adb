@@ -2,42 +2,85 @@
 --  Performance can be limited by speed of virus scanner ;-(
 --                         running in a single thread...
 
-with Ada.Directories;             use Ada.Directories;
-with Ada.Exceptions;              use Ada.Exceptions;
-with Ada.Strings;                 use Ada.Strings;
-with Ada.Strings.Fixed;           use Ada.Strings.Fixed;
-with Ada.Text_IO;                 use Ada.Text_IO;
-with Libadalang.Analysis;         use Libadalang.Analysis;
-with Rejuvenation;                use Rejuvenation;
+with Ada.Directories;     use Ada.Directories;
+with Ada.Exceptions;      use Ada.Exceptions;
+with Ada.Strings;         use Ada.Strings;
+with Ada.Strings.Fixed;   use Ada.Strings.Fixed;
+with Ada.Text_IO;         use Ada.Text_IO;
+with Libadalang.Analysis; use Libadalang.Analysis;
+with Rejuvenation;        use Rejuvenation;
+with Rejuvenation.Environment_Variables;
+use Rejuvenation.Environment_Variables;
 with Rejuvenation.File_Utils;     use Rejuvenation.File_Utils;
 with Rejuvenation.Pretty_Print;   use Rejuvenation.Pretty_Print;
 with Rejuvenation.Simple_Factory; use Rejuvenation.Simple_Factory;
 with Patchers;                    use Patchers;
 with Predefined_Patchers;         use Predefined_Patchers;
-
-with Commands;             use Commands;
-with Version_Controls;     use Version_Controls;
-with SVN_Version_Controls; use SVN_Version_Controls;
---  with Git_Version_Controls; use Git_Version_Controls;
-with Mark_Utils;     use Mark_Utils;
-with String_Vectors; use String_Vectors;
+with Commands;                    use Commands;
+with Version_Controls;            use Version_Controls;
+with Git_Version_Controls;        use Git_Version_Controls;
+with Mark_Utils;                  use Mark_Utils;
+with String_Vectors;              use String_Vectors;
+with String_Maps;                 use String_Maps;
 
 procedure Code_Reviewer is
+   -----------------------------------------------------------
+   --  Configuration
+   -----------------------------------------------------------
 
-   Error_Count : Natural := 0;
-
-   Source_Directory : constant String :=
+   Source_Directory : constant String := "C:\path\to\json-ada";
    --  "C:\path\to\Dependency_Graph_Extractor-Ada";
-   "C:\bright\itecembed";
    --  Example to review the code within Dependency_Graph_Extractor-Ada
 
    V_C : constant Version_Control'Class :=
-     Make_SVN_Version_Control (Source_Directory);
-   --  Make_Git_Version_Control (Source_Directory);
+     Make_Git_Version_Control (Source_Directory);
 
-   Project_Filename : constant String := Source_Directory & "\Source\itec.gpr";
+   Project_Filename : constant String := Source_Directory & "\json\json.gpr";
    --  "\dependency_graph_extractor.gpr";
    --  Example to review the Dependency_Graph_Extractor project
+
+   --  TODO: extract environment variables of alire projects automatically
+   --        using `alr printenv` and regular expression matching
+   function Get_Environment_Variables return String_Maps.Map;
+   function Get_Environment_Variables return String_Maps.Map is
+      Return_Value : String_Maps.Map := String_Maps.Empty;
+   begin
+      Return_Value.Include ("ALIRE", "True");
+      Return_Value.Include
+        ("C_INCLUDE_PATH",
+         "C:\Users\laarpjljvd\.cache\alire\msys64\mingw64\include");
+      Return_Value.Include ("GPR_PROJECT_PATH", "C:\path\to\json-ada\json");
+      Return_Value.Include
+        ("LIBRARY_PATH",
+         "C:\Users\laarpjljvd\.cache\alire\msys64\mingw64\lib");
+      Return_Value.Include
+        ("PATH",
+         "C:\Users\laarpjljvd\.cache\alire\msys64\usr\bin;" &
+         "C:\Users\laarpjljvd\.cache\alire\msys64\usr\local\bin;" &
+         "C:\Program Files\Common Files\Oracle\Java\javapath;" &
+         "C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;" &
+         "C:\WINDOWS\System32\WindowsPowerShell\v1.0\;" &
+         "C:\WINDOWS\System32\OpenSSH\;C:\Program Files\TortoiseSVN\bin;" &
+         "C:\Program Files\Git\cmd;C:\Program Files (x86)\dotnet\;" &
+         "C:\Program Files\TortoiseGit\bin;" &
+         "C:\Program Files\Alire\bin;C:\GNATPRO\23.0w\bin;" &
+         "C:\Users\laarpjljvd\AppData\Roaming\local\bin;" &
+         "C:\Users\laarpjljvd\AppData\Local\Microsoft\WindowsApps;" &
+         "C:\Program Files\Java\jdk1.8.0_171\bin;" &
+         "C:\Program Files (x86)\GnuWin32\bin;" &
+         "C:\Program Files\Alire\bin;" &
+         "C:\Users\laarpjljvd\.cache\alire\msys64\mingw64\bin");
+      return Return_Value;
+   end Get_Environment_Variables;
+
+   Patchers : constant Patchers_Vectors.Vector := Patchers_Predefined;
+   --  Patchers_Vectors.To_Vector (Patcher_Declarations_Combine, 1);
+
+   -----------------------------------------------------------
+   --  Implementation
+   -----------------------------------------------------------
+
+   Error_Count : Natural := 0;
 
    procedure Change_Files
      (Filenames : String_Vectors.Vector; P : Patcher'Class);
@@ -49,7 +92,6 @@ procedure Code_Reviewer is
    --  and pretty printing
 
    is
-
    begin
       for Filename of Filenames loop
          declare
@@ -64,11 +106,7 @@ procedure Code_Reviewer is
                   Put_Line ("--- " & Filename & " ---");
                   P.Rewrite (Unit);
                   Remove_Marks (Filename);
-                  Pretty_Print_Sections (Filename);
-                  --  , Project_Filename);
-                  --  TODO: have gnatpp use the correct project environment
-                  --        currently, we get the environment of the
-                  --        analysing i.s.o. analysed project
+                  Pretty_Print_Sections (Filename, Project_Filename);
                   Remove_Pretty_Print_Flags (Filename);
                end if;
             end;
@@ -126,12 +164,14 @@ procedure Code_Reviewer is
       return Return_Value;
    end Get_Filenames;
 
-   Filenames : constant String_Vectors.Vector   := Get_Filenames;
-   Patchers  : constant Patchers_Vectors.Vector := Patchers_Predefined;
-   --  Patchers_Vectors.To_Vector (Patcher_Declarations_Combine, 1);
 begin
-   V_C.Rewind_Not_Committed_Changes;
-   Create_Patches (Filenames, Patchers);
+   Set (Get_Environment_Variables);
+   declare
+      Filenames : constant String_Vectors.Vector := Get_Filenames;
+   begin
+      V_C.Rewind_Not_Committed_Changes;
+      Create_Patches (Filenames, Patchers);
+   end;
 exception
    when Error : others =>
       Put_Line (Exception_Message (Error));
