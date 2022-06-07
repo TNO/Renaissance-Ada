@@ -1,10 +1,13 @@
+with Libadalang.Analysis;             use Libadalang.Analysis;
 with Libadalang.Common;               use Libadalang.Common;
+with Match_Accepters_Function_Access; use Match_Accepters_Function_Access;
 with Placeholder_Relations;           use Placeholder_Relations;
 with Rejuvenation;                    use Rejuvenation;
 with Rejuvenation.Match_Patterns;     use Rejuvenation.Match_Patterns;
 with Rejuvenation.Patterns;           use Rejuvenation.Patterns;
 with Rewriters_Find_And_Replace;      use Rewriters_Find_And_Replace;
-with Match_Accepters_Function_Access; use Match_Accepters_Function_Access;
+with Rewriters_Sequence;              use Rewriters_Sequence;
+with Rewriters_Vectors;               use Rewriters_Vectors;
 
 package Predefined_Rewriters_Prefer_Quantified_Expressions is
 
@@ -239,5 +242,30 @@ package Predefined_Rewriters_Prefer_Quantified_Expressions is
            Block_Stmt_Rule),
         Make_Match_Accepter_Function_Access
           (Accept_Expr_No_Side_Effects'Access));
+
+   Rewriter_Quantified_Expressions :
+   aliased constant Rewriter_Sequence :=
+     Make_Rewriter_Sequence
+       (Rewriter_For_All_Range_And_Then &
+          Rewriter_For_All_Elements_And_Then &
+          Rewriter_For_Some_Range_Or_Else &
+          Rewriter_For_Some_Elements_Or_Else &
+          Rewriter_For_All_Range_Exit &
+          Rewriter_For_All_Elements_Exit &
+          Rewriter_For_Some_Range_Exit &
+          Rewriter_For_Some_Elements_Exit &
+          Rewriter_For_All_Range_Return &
+          Rewriter_For_All_Elements_Return &
+          Rewriter_For_Some_Range_Return &
+          Rewriter_For_Some_Elements_Return &
+          Rewriter_For_All_Range_All &
+          Rewriter_For_All_Elements_All &
+          Rewriter_For_Some_Range_All &
+          Rewriter_For_Some_Elements_All
+       );
+
+   function Quantified_Expressions_Rewrite_Context
+     (Unit : Analysis_Unit)
+      return Node_List.Vector;
 
 end Predefined_Rewriters_Prefer_Quantified_Expressions;

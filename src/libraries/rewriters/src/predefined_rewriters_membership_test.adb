@@ -30,7 +30,7 @@ package body Predefined_Rewriters_Membership_Test is
       return Return_Value;
    end Context;
 
-   function Matching_Membership_Test_Nodes
+   function Membership_Rewrite_Context
      (Unit : Analysis_Unit) return Node_List.Vector
    is
       Result : Node_List.Vector;
@@ -69,6 +69,6 @@ package body Predefined_Rewriters_Membership_Test is
             .Matching_Nodes (Unit)));
 
       return Result;
-   end Matching_Membership_Test_Nodes;
+   end Membership_Rewrite_Context;
 
 end Predefined_Rewriters_Membership_Test;

@@ -1,6 +1,6 @@
 name = "code_reviewer"
 description = "Automatic Code Reviewer of Ada Code"
-version = "0.0.0"
+version = "22.0.0"
 
 authors = ["Pierre van de Laar"]
 maintainers = ["Pierre van de Laar <pierre.van.de.laar@gmail.com>"]
@@ -10,10 +10,6 @@ executables = ["code_reviewer"]
 
 [[depends-on]]
 libadalang = "^22.0.0"
-rejuvenation = "*"
-rewriters = "*"
-
-[[pins]]
-rewriters = { path = ".." }
-rejuvenation = { path = "../../rejuvenation" }     # remove before release
+rejuvenation = "^22.0.0"
+rewriters = "^22.0.0"
 

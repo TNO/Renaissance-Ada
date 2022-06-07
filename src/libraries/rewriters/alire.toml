@@ -11,7 +11,4 @@ maintainers-logins = ["pjljvandelaar"]
 
 [[depends-on]]
 libadalang = "^22.0.0"
-rejuvenation = "*"
-
-[[pins]]
-rejuvenation = { path = "../rejuvenation" }     # remove before release
+rejuvenation = "^22.0.0"

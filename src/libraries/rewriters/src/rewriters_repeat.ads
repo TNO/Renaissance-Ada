@@ -5,8 +5,9 @@ package Rewriters_Repeat is
 
    type Rewriter_Repeat is new Rewriter with private;
 
-   overriding procedure Rewrite
-     (R_R : Rewriter_Repeat; Unit : in out Analysis_Unit);
+   overriding function Rewrite
+     (R_R : Rewriter_Repeat; Unit : in out Analysis_Unit)
+   return Boolean;
 
    function Get_Rewriter (R_R : Rewriter_Repeat) return Rewriter'Class;
 

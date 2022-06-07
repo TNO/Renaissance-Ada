@@ -1,7 +1,10 @@
+with Libadalang.Analysis;         use Libadalang.Analysis;
 with Libadalang.Common;           use Libadalang.Common;
 with Rejuvenation;                use Rejuvenation;
 with Rejuvenation.Patterns;       use Rejuvenation.Patterns;
 with Rewriters_Find_And_Replace;  use Rewriters_Find_And_Replace;
+with Rewriters_Sequence;          use Rewriters_Sequence;
+with Rewriters_Vectors;           use Rewriters_Vectors;
 
 package Predefined_Rewriters_Representation_Clauses is
    --  TODO:
@@ -75,5 +78,19 @@ package Predefined_Rewriters_Representation_Clauses is
            "with $M_Aspects, $S_Attribute => $S_Expr;" &
            "pragma Warnings (Off);",
            Basic_Decls_Rule));
+
+   Rewriter_Representation_Clauses :
+   aliased constant Rewriter_Sequence :=
+     Make_Rewriter_Sequence
+       (Rewriter_For_Attribute_Use &
+        Rewriter_For_Attribute_Use_Aliased &
+        Rewriter_For_Attribute_Use_Array &
+        Rewriter_For_Attribute_Use_Pragma_Var &
+        Rewriter_For_Attribute_Use_Pragma_All
+       );
+
+   function Representation_Clauses_Rewrite_Context
+     (Unit : Analysis_Unit)
+      return Node_List.Vector;
 
 end Predefined_Rewriters_Representation_Clauses;

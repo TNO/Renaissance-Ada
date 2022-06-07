@@ -37,49 +37,67 @@ package Predefined_Rewriters_If_Expression_Simplify is
         Make_Match_Accepter_Function_Access
           (Accept_Cond_No_Side_Effects'Access));
 
+   function Accept_Cond_Is_Negation
+     (Match : Match_Pattern) return Boolean is
+     (Is_Negation_Expression  (Match, "$S_Cond"));
+
+   Rewriter_If_Negation_Condition_Expression :
+     aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern
+          ("if $S_Cond then $S_Val_True else $S_Val_False", Expr_Rule),
+        Make_Pattern
+          ("if not ($S_Cond) then $S_Val_False else $S_Val_True", Expr_Rule),
+       Make_Match_Accepter_Function_Access
+          (Accept_Cond_Is_Negation'Access));
+
    Rewriter_Boolean_If_Condition_Expression :
      aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_Cond then true else false", Expr_Rule),
-        Make_Pattern ("$S_Cond", Expr_Rule));
-   --  TODO: check expression is boolean (true and/or false are booleans)
+        Make_Pattern ("$S_Cond", Expr_Rule),
+        Make_Match_Accepter_Function_Access
+          (Is_Boolean_Expression'Access));
 
    Rewriter_Boolean_If_Not_Condition_Expression :
      aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern ("if $S_Cond then false else true", Expr_Rule),
-        Make_Pattern ("not ($S_Cond)", Expr_Rule));
-   --  TODO: check expression is boolean (true and/or false are booleans)
+        Make_Pattern ("not ($S_Cond)", Expr_Rule),
+        Make_Match_Accepter_Function_Access
+          (Is_Boolean_Expression'Access));
 
-   --  TODO: if $S_Cond then true else $S_Y => $S_Cond or else $S_Y
-   --  TODO: if $S_Cond then false else $S_Y => (not ($S_Cond)) and then $S_Y
-   --  TODO: variants of the previous two cases
-
-   Rewriter_If_Different_Expression :
+   Rewriter_Boolean_If_Then_True_Expression :
      aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern
-          ("if $S_A /= $S_B then $S_Val_True else $S_Val_False", Expr_Rule),
-        Make_Pattern
-          ("if $S_A = $S_B then $S_Val_False else $S_Val_True", Expr_Rule));
+       (Make_Pattern ("if $S_Cond then true else $S_Y", Expr_Rule),
+        Make_Pattern ("$S_Cond or else $S_Y", Expr_Rule),
+        Make_Match_Accepter_Function_Access
+          (Is_Boolean_Expression'Access));
 
-   Rewriter_If_Not_Condition_Expression :
+   Rewriter_Boolean_If_Then_False_Expression :
      aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern
-          ("if not $S_Cond then $S_Val_True else $S_Val_False", Expr_Rule),
-        Make_Pattern
-          ("if $S_Cond then $S_Val_False else $S_Val_True", Expr_Rule));
+       (Make_Pattern ("if $S_Cond then false else $S_Y", Expr_Rule),
+        Make_Pattern ("not ($S_Cond) and then $S_Y", Expr_Rule),
+        Make_Match_Accepter_Function_Access
+          (Is_Boolean_Expression'Access));
 
-   Rewriter_If_Not_In_Expression :
+   Rewriter_Boolean_If_Else_True_Expression :
      aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
-       (Make_Pattern
-          ("if $S_Expr not in $M_Values then $S_Val_True else $S_Val_False",
-           Expr_Rule),
-        Make_Pattern
-          ("if $S_Expr in $M_Values then $S_Val_False else $S_Val_True",
-           Expr_Rule));
+       (Make_Pattern ("if $S_Cond then $S_Y else true", Expr_Rule),
+        Make_Pattern ("not ($S_Cond) or else $S_Y", Expr_Rule),
+        Make_Match_Accepter_Function_Access
+          (Is_Boolean_Expression'Access));
+
+   Rewriter_Boolean_If_Else_False_Expression :
+     aliased constant Rewriter_Find_And_Replace :=
+     Make_Rewriter_Find_And_Replace
+       (Make_Pattern ("if $S_Cond then $S_Y else false", Expr_Rule),
+        Make_Pattern ("$S_Cond and then $S_Y", Expr_Rule),
+        Make_Match_Accepter_Function_Access
+          (Is_Boolean_Expression'Access));
 
    function Accept_Extreme (Match : Match_Pattern) return Boolean is
      (Is_Integer_Expression (Match, "$S_X")
@@ -146,16 +164,19 @@ package Predefined_Rewriters_If_Expression_Simplify is
    Rewriter_If_Expression_Simplify : constant Rewriter_Sequence :=
      Make_Rewriter_Sequence
        (Rewriter_If_True_Expression & Rewriter_If_False_Expression &
-        Rewriter_If_Identical_Expression &
-        Rewriter_Boolean_If_Condition_Expression &
-        Rewriter_Boolean_If_Not_Condition_Expression &
-        Rewriter_If_Different_Expression &
-        Rewriter_If_Not_Condition_Expression & Rewriter_If_Not_In_Expression &
-        Rewriter_Integer_Max_Greater_Than &
-        Rewriter_Integer_Max_Greater_Equal & Rewriter_Integer_Max_Less_Than &
-        Rewriter_Integer_Max_Less_Equal & Rewriter_Integer_Min_Greater_Than &
-        Rewriter_Integer_Min_Greater_Equal & Rewriter_Integer_Min_Less_Than &
-        Rewriter_Integer_Min_Less_Equal);
+          Rewriter_If_Identical_Expression &
+          Rewriter_If_Negation_Condition_Expression &
+          Rewriter_Boolean_If_Condition_Expression &
+          Rewriter_Boolean_If_Not_Condition_Expression &
+          Rewriter_Boolean_If_Then_True_Expression &
+          Rewriter_Boolean_If_Then_False_Expression &
+          Rewriter_Boolean_If_Else_True_Expression &
+          Rewriter_Boolean_If_Else_False_Expression &
+          Rewriter_Integer_Max_Greater_Than &
+          Rewriter_Integer_Max_Greater_Equal & Rewriter_Integer_Max_Less_Than &
+          Rewriter_Integer_Max_Less_Equal & Rewriter_Integer_Min_Greater_Than &
+          Rewriter_Integer_Min_Greater_Equal & Rewriter_Integer_Min_Less_Than &
+          Rewriter_Integer_Min_Less_Equal);
    --  Rewriter for patterns involving the if expression
    --  that can be simplified.
    --

@@ -6,7 +6,7 @@ package Placeholder_Relations is
    function Get_Expression_Type
      (Match : Match_Pattern; Expression : String) return Base_Type_Decl with
       Pre => Match.Has_Single (Expression);
-      --  Return Base_Decl_type of Expression in Match
+      --  Return Base_Decl_Type of Expression in Match
 
    function Is_Referenced_In
      (Match : Match_Pattern; Definition, Context : String) return Boolean;
@@ -49,8 +49,16 @@ package Placeholder_Relations is
    function Is_Within_Base_Subp_Body
      (Match : Match_Pattern; Subp_Name : String) return Boolean;
 
+   function Is_Negation_Expression
+     (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
+
+   function Is_Boolean_Expression
+     (Match : Match_Pattern) return Boolean;
+   --  Is the complete match a boolean expression?
+
    function Is_Boolean_Expression
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean;
+   --  Is the placeholder a boolean expression?
 
    function Is_Integer_Expression
      (Match : Match_Pattern; Placeholder_Name : String) return Boolean;

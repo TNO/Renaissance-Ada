@@ -12,6 +12,14 @@ with Match_Accepters_Function_Access; use Match_Accepters_Function_Access;
 
 package Predefined_Rewriters_Membership_Test is
 
+   --  TODO: Should we ensure that $S_Var is really a variable?
+   --  Currently return value checking code,
+   --  like
+   --  0 /= f (x) and then 0 /= g (y)
+   --  is transformed to
+   --  0 not in f (x) | g (y)
+   --  although correct Ada, return value checking is not a membership test
+
    function Accept_Var_No_Side_Effects
      (Match : Match_Pattern) return Boolean is
      (not Has_Side_Effect (Match, "$S_Var"));
@@ -117,10 +125,10 @@ package Predefined_Rewriters_Membership_Test is
    --  Rewriter for patterns involving membership tests
    --  that can be simplified.
 
-   function Matching_Membership_Test_Nodes
+   function Membership_Rewrite_Context
      (Unit : Analysis_Unit)
       return Node_List.Vector;
-   --  Nodes within the unit that are marked as membership test nodes
+   --  Nodes within the unit that are rewriten based on the membership rewrite
    --  Note: overestimation since repeating rewriters are involved
 
 end Predefined_Rewriters_Membership_Test;

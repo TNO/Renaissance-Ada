@@ -32,47 +32,28 @@ package Predefined_Rewriters_If_Statement_Simplify is
    --           might become obsolete and the compiler will
    --           produce warnings!
 
-   Rewriter_If_Different_Stmt :
-     aliased constant Rewriter_Find_And_Replace :=
-     Make_Rewriter_Find_And_Replace
-       (Make_Pattern
-          ("if $S_A /= $S_B then $M_Stmts_True; " &
-           "else $S_Stmt_False; $M_Stmts_False; end if;",
-           If_Stmt_Rule),
-        Make_Pattern
-          ("if $S_A = $S_B then $S_Stmt_False; $M_Stmts_False; " &
-           "else $M_Stmts_True; end if;",
-           If_Stmt_Rule));
-   --  Rewrite only when else branch is NOT empty
+   function Accept_Cond_Is_Negation
+     (Match : Match_Pattern) return Boolean is
+     (Is_Negation_Expression  (Match, "$S_Cond"));
 
-   Rewriter_If_Not_Condition_Stmt :
+   Rewriter_If_Negation_Condition_Stmt :
      aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
        (Make_Pattern
-          ("if not $S_Cond then $M_Stmts_True; " &
+          ("if $S_Cond then $M_Stmts_True; " &
            "else $S_Stmt_False; $M_Stmts_False; end if;",
            If_Stmt_Rule),
         Make_Pattern
-          ("if $S_Cond then $S_Stmt_False; $M_Stmts_False; " &
+          ("if not ($S_Cond) then $S_Stmt_False; $M_Stmts_False; " &
            "else $M_Stmts_True; end if;",
-           If_Stmt_Rule));
+           If_Stmt_Rule),
+        Make_Match_Accepter_Function_Access
+          (Accept_Cond_Is_Negation'Access));
    --  Rewrite only when else branch is NOT empty
    --
    --  The resulting code might still be simplified using
+   --  * Not
    --  * Minimal Parenthesis
-
-   Rewriter_If_Not_In_Stmt : aliased constant Rewriter_Find_And_Replace :=
-     Make_Rewriter_Find_And_Replace
-       (Make_Pattern
-          ("if $S_Expr not in $M_Values " & "then $M_Stmts_True; " &
-           "else $S_Stmt_False; $M_Stmts_False; " & "end if;",
-           If_Stmt_Rule),
-        Make_Pattern
-          ("if $S_Expr in $M_Values " &
-           "then $S_Stmt_False; $M_Stmts_False; " & "else $M_Stmts_True; " &
-           "end if;",
-           If_Stmt_Rule));
-   --  Rewrite only when else branch is NOT empty
 
    Rewriter_Null_Then_Branch : aliased constant Rewriter_Find_And_Replace :=
      Make_Rewriter_Find_And_Replace
