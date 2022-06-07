@@ -28,14 +28,15 @@ procedure Code_Reviewer is
    --  Configuration
    -----------------------------------------------------------
 
-   Source_Directory : constant String := "C:\path\to\json-ada";
+   Source_Directory : constant String := "C:\path\to\semantic_versioning";
    --  "C:\path\to\Dependency_Graph_Extractor-Ada";
    --  Example to review the code within Dependency_Graph_Extractor-Ada
 
    V_C : constant Version_Control'Class :=
      Make_Git_Version_Control (Source_Directory);
 
-   Project_Filename : constant String := Source_Directory & "\json\json.gpr";
+   Project_Filename : constant String :=
+     Source_Directory & "\semantic_versioning.gpr";
    --  "\dependency_graph_extractor.gpr";
    --  Example to review the Dependency_Graph_Extractor project
 
@@ -55,20 +56,20 @@ procedure Code_Reviewer is
       Return_Value.Include
         ("C_INCLUDE_PATH",
          "C:\Users\laarpjljvd\.cache\alire\msys64\mingw64\include");
-      Return_Value.Include ("GPR_PROJECT_PATH", "C:\path\to\json-ada\json");
+      Return_Value.Include
+        ("GPR_PROJECT_PATH",
+         "C:\path\to\semantic_versioning");
       Return_Value.Include
         ("LIBRARY_PATH",
          "C:\Users\laarpjljvd\.cache\alire\msys64\mingw64\lib");
       Return_Value.Include
         ("PATH",
-         "C:\Users\<user>\.cache\alire\msys64\usr\bin;" &
-         "C:\Users\<user>\.cache\alire\msys64\usr\local\bin;" &
-         "C:\Users\<user>\.cache\alire\msys64\mingw64\bin;" &
+         "C:\Users\laarpjljvd\.cache\alire\msys64\usr\bin;" &
+         "C:\Users\laarpjljvd\.cache\alire\msys64\usr\local\bin;" &
+         "C:\Users\laarpjljvd\.cache\alire\msys64\mingw64\bin;" &
          "C:\Program Files\TortoiseSVN\bin;" &
-         "C:\Program Files\TortoiseGit\bin;" &
-         "C:\Program Files\Git\cmd;" &
-         "C:\Program Files\Alire\bin;" &
-         "C:\GNATPRO\23.0w-20220211\bin");
+         "C:\Program Files\TortoiseGit\bin;" & "C:\Program Files\Git\cmd;" &
+         "C:\Program Files\Alire\bin;" & "C:\GNATPRO\23.0w-20220211\bin");
       return Return_Value;
    end Get_Environment_Variables;
 
@@ -88,6 +89,7 @@ procedure Code_Reviewer is
    --  Rewrite contexts can be more precise,
    --  so we have separate marks for (post processing by) rewriters
    --  and pretty printing
+
    is
    begin
       for Filename of Filenames loop
