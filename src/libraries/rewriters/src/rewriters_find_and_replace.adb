@@ -4,6 +4,7 @@ with Rejuvenation.Finder;            use Rejuvenation.Finder;
 with Rejuvenation.Find_And_Replacer; use Rejuvenation.Find_And_Replacer;
 with Rejuvenation.Match_Patterns;    use Rejuvenation.Match_Patterns;
 with Rejuvenation.Text_Rewrites;     use Rejuvenation.Text_Rewrites;
+with Rejuvenation.Utils;             use Rejuvenation.Utils;
 
 package body Rewriters_Find_And_Replace is
 
@@ -14,7 +15,7 @@ package body Rewriters_Find_And_Replace is
       Root    : constant Ada_Node                  := Unit.Root;
       Matches : constant Match_Pattern_List.Vector :=
         (if RFR.F_Find_Pattern.As_Ada_Node.Kind in Ada_Ada_List then
-           Find_Sub_List (Root, RFR.F_Find_Pattern)
+            Find_Sub_List (Root, RFR.F_Find_Pattern)
          else Find_Full (Root, RFR.F_Find_Pattern));
       Return_Value : Node_List.Vector;
    begin

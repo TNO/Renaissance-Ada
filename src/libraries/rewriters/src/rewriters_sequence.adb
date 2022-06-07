@@ -1,11 +1,10 @@
-
 package body Rewriters_Sequence is
 
    overriding function Rewrite
      (R_S : Rewriter_Sequence; Unit : in out Analysis_Unit)
      return Boolean
      --  All rewrites in the sequence must be executed
-     --  When a rewrite in the sequence changes the unit,
+     --  When any rewrite in the sequence changes the unit,
      --  this rewrite changes the unit.
    is
       Return_Value : Boolean := False;

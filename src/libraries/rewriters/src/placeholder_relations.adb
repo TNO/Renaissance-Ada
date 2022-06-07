@@ -99,7 +99,7 @@ package body Placeholder_Relations is
 
    function Has_Side_Effect (E : Expr'Class) return Boolean;
    function Has_Side_Effect (E : Expr'Class) return Boolean is
-   --  conservative implementation, see details in code.
+      --  conservative implementation, see details in code.
    begin
       case E.Kind is
          --  TODO: add Ada_Attribute_Ref when it is clear
@@ -254,7 +254,7 @@ package body Placeholder_Relations is
          when others =>
             Put_Line
               (Image (E.Full_Sloc_Image) &
-               " - Has_Side_Effect: Unhandled kind - " & E.Kind'Image);
+                 " - Has_Side_Effect: Unhandled kind - " & E.Kind'Image);
             --  conservative assumption: unknown kind has a side effect.
             return True;
       end case;
@@ -280,21 +280,21 @@ package body Placeholder_Relations is
                            B : Ada_Node with Unreferenced)
    return Boolean
    is
-   --  Basic implementation:
-   --  When an expression has no side effects,
-   --  it has no effect on B
-   --
-   --  All Nodes A that effect Node B are reported as True.
-   --  Yet, not all nodes A that do not effect node B are reported as False.
-   --
-   --  TODO: use the variables that are written by A and
-   --        read by B to make it more accurate.
-   --
-   --        Note: dependent effects include
-   --       * output parameter of a function
-   --         used in the other AST Node
-   --       * side effect of a function (i.e. state change)
-   --         used in the other AST Node
+      --  Basic implementation:
+      --  When an expression has no side effects,
+      --  it has no effect on B
+      --
+      --  All Nodes A that effect Node B are reported as True.
+      --  Yet, not all nodes A that do not effect node B are reported as False.
+      --
+      --  TODO: use the variables that are written by A and
+      --        read by B to make it more accurate.
+      --
+      --        Note: dependent effects include
+      --       * output parameter of a function
+      --         used in the other AST Node
+      --       * side effect of a function (i.e. state change)
+      --         used in the other AST Node
    begin
       return A.Kind not in Ada_Expr
         or else Has_Side_Effect (A.As_Expr);
@@ -333,8 +333,8 @@ package body Placeholder_Relations is
       return
         (for some Parent of Nodes.First_Element.Parents =>
            Parent.Kind in Ada_Base_Subp_Body
-           and then Subp_Name =
-             Raw_Signature (Parent.As_Base_Subp_Body.F_Subp_Spec.F_Subp_Name));
+         and then Subp_Name =
+           Raw_Signature (Parent.As_Base_Subp_Body.F_Subp_Spec.F_Subp_Name));
    end Is_Within_Base_Subp_Body;
 
    function Is_Negation_Expression
@@ -366,9 +366,9 @@ package body Placeholder_Relations is
                   return
                     B_O.F_Op.Kind in Ada_Op_Neq | Ada_Op_Not_In
                     or else
-                    (B_O.F_Op.Kind in Ada_Op_And_Then | Ada_Op_Or_Else
-                     and then Is_Negation_Expression (B_O.F_Left)
-                     and then Is_Negation_Expression (B_O.F_Right));
+                      (B_O.F_Op.Kind in Ada_Op_And_Then | Ada_Op_Or_Else
+                       and then Is_Negation_Expression (B_O.F_Left)
+                       and then Is_Negation_Expression (B_O.F_Right));
                end;
             when Ada_Quantified_Expr =>
                declare
@@ -421,7 +421,7 @@ package body Placeholder_Relations is
    begin
       Assert (Check => not T.Is_Null,
               Message => "Is_Standard_Type_Expression - "
-                        & "Unexpectedly Base Type Decl is null");
+              & "Unexpectedly Base Type Decl is null");
       return
         Raw_Signature (T.F_Name) = Standard_Type_Name
         and then Is_In_Standard_Unit (T);
@@ -430,11 +430,36 @@ package body Placeholder_Relations is
    function Is_Boolean_Expression
      (Match : Match_Pattern) return Boolean
    is
-      Nodes : constant Node_List.Vector := Match.Get_Nodes;
+      Return_Value : Boolean := False;
    begin
-      return Nodes.Length = 1
-        and then Is_Standard_Type_Expression
-          (Nodes.First_Element.As_Expr.P_Expression_Type, "Boolean");
+      declare
+         Nodes : constant Node_List.Vector := Match.Get_Nodes;
+      begin
+         if Nodes.Length = 1 then
+            declare
+               E : constant Expr := Nodes.First_Element.As_Expr;
+            begin
+               Assert (Check => not E.Is_Null,
+                       Message => "Is_Boolean_Expression - "
+                       & "Unexpectedly Expr is null");
+               --  Put_Line
+               --    ("Before P_Expression_Type - "
+               --     & Image (E.Full_Sloc_Image));
+               declare
+                  --  P_Expression_Type has a bug causing:
+                  --  raised LANGKIT_SUPPORT.ERRORS.PROPERTY_ERROR :
+                  --                                              stack overflow
+                  B_T_D : constant Base_Type_Decl := E.P_Expression_Type;
+               begin
+                  --  Put_Line
+                  --    ("After P_Expression_Type");
+                  Return_Value :=
+                    Is_Standard_Type_Expression (B_T_D, "Boolean");
+               end;
+            end;
+         end if;
+         return Return_Value;
+      end;
    end Is_Boolean_Expression;
 
    function Is_Boolean_Expression
@@ -475,7 +500,7 @@ package body Placeholder_Relations is
    begin
       Assert (Check => not Decl.Is_Null,
               Message => "Is_Referenced_Decl_Defined_In_AStrUnb - "
-                        & "Unexpectedly Decl is null");
+              & "Unexpectedly Decl is null");
       return Is_In_AStrUnb (Decl);
    end Is_Referenced_Decl_Defined_In_AStrUnb;
 

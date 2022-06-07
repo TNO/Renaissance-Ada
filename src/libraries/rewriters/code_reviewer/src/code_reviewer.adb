@@ -39,9 +39,15 @@ procedure Code_Reviewer is
    --  "\dependency_graph_extractor.gpr";
    --  Example to review the Dependency_Graph_Extractor project
 
+   function Get_Environment_Variables return String_Maps.Map;
+   --  Environment Variables for analyzed project
+   --
+   --  Note: PATH environment variable must include
+   --        gnatpp and svn / git for the analysis of code_reviewer
+   --
    --  TODO: extract environment variables of alire projects automatically
    --        using `alr printenv` and regular expression matching
-   function Get_Environment_Variables return String_Maps.Map;
+
    function Get_Environment_Variables return String_Maps.Map is
       Return_Value : String_Maps.Map := String_Maps.Empty;
    begin
@@ -55,26 +61,18 @@ procedure Code_Reviewer is
          "C:\Users\laarpjljvd\.cache\alire\msys64\mingw64\lib");
       Return_Value.Include
         ("PATH",
-         "C:\Users\laarpjljvd\.cache\alire\msys64\usr\bin;" &
-         "C:\Users\laarpjljvd\.cache\alire\msys64\usr\local\bin;" &
-         "C:\Program Files\Common Files\Oracle\Java\javapath;" &
-         "C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;" &
-         "C:\WINDOWS\System32\WindowsPowerShell\v1.0\;" &
-         "C:\WINDOWS\System32\OpenSSH\;C:\Program Files\TortoiseSVN\bin;" &
-         "C:\Program Files\Git\cmd;C:\Program Files (x86)\dotnet\;" &
+         "C:\Users\<user>\.cache\alire\msys64\usr\bin;" &
+         "C:\Users\<user>\.cache\alire\msys64\usr\local\bin;" &
+         "C:\Users\<user>\.cache\alire\msys64\mingw64\bin;" &
+         "C:\Program Files\TortoiseSVN\bin;" &
          "C:\Program Files\TortoiseGit\bin;" &
-         "C:\Program Files\Alire\bin;C:\GNATPRO\23.0w\bin;" &
-         "C:\Users\laarpjljvd\AppData\Roaming\local\bin;" &
-         "C:\Users\laarpjljvd\AppData\Local\Microsoft\WindowsApps;" &
-         "C:\Program Files\Java\jdk1.8.0_171\bin;" &
-         "C:\Program Files (x86)\GnuWin32\bin;" &
+         "C:\Program Files\Git\cmd;" &
          "C:\Program Files\Alire\bin;" &
-         "C:\Users\laarpjljvd\.cache\alire\msys64\mingw64\bin");
+         "C:\GNATPRO\23.0w-20220211\bin");
       return Return_Value;
    end Get_Environment_Variables;
 
    Patchers : constant Patchers_Vectors.Vector := Patchers_Predefined;
-   --  Patchers_Vectors.To_Vector (Patcher_Declarations_Combine, 1);
 
    -----------------------------------------------------------
    --  Implementation
@@ -90,7 +88,6 @@ procedure Code_Reviewer is
    --  Rewrite contexts can be more precise,
    --  so we have separate marks for (post processing by) rewriters
    --  and pretty printing
-
    is
    begin
       for Filename of Filenames loop
@@ -171,6 +168,7 @@ begin
    begin
       V_C.Rewind_Not_Committed_Changes;
       Create_Patches (Filenames, Patchers);
+      Put_Line ("### done ###");
    end;
 exception
    when Error : others =>
