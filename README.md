@@ -47,7 +47,9 @@ Snippets from diff made with [Code Reviewer](https://github.com/TNO/Rewriters-Ad
 + return (for all Acf of Acfs => Acf /= null);
 ```
 
-Example based on [aws](https://github.com/AdaCore/aws/blob/7488c0f6f4c593b51e8b61b94d245e2ff4896e33/config/ssl/aws-net-ssl__openssl.adb#L215) code
+Example based on
+[aws](https://github.com/AdaCore/aws/blob/7488c0f6f4c593b51e8b61b94d245e2ff4896e33/config/ssl/aws-net-ssl__openssl.adb#L215-L216)
+code
 ```diff
 -   Max_Overhead : Stream_Element_Count range 0 .. 2**15 := 81 with Atomic;
 -   for Max_Overhead'Size use 16;
