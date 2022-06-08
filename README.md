@@ -21,7 +21,7 @@ as extracted by the [Dependency Graph Extractor](https://github.com/TNO/Dependen
 queried using [Neo4J](https://neo4j.com/).
 ![Dependencies of Find-related subprograms of the Rejuvenation Library](/doc/Relations_Of_Find.jpg)
 
-Snippets from diff made with [Code Reviewer](https://github.com/TNO/Rewriters-Ada/code_reviewer)
+Snippets from diff made with [Code Reviewer](https://github.com/TNO/Rewriters-Ada/tree/main/code_reviewer)
 ```diff
    function Release_Only (Mode : Operation_Mode) return Boolean is
 -     (case Mode is when Release_Size_Mode | Release_Speed_Mode => True, when others => False);
