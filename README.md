@@ -1,15 +1,17 @@
 # Renaissance-Ada
-The Renaissance-Ada project develops tooling for analysis and manipulation of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software.
-The Renaissance-Ada project builds on top of [LibAdalang](https://adaco.re/libadalang) and includes the following functionality
+The Renaissance-Ada project develops tooling for analysis and manipulation 
+of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software.
+The Renaissance-Ada project builds on top of [LibAdalang](https://adaco.re/libadalang)
+and includes the following functionality
 * [Dependency Graph Extractor](https://github.com/TNO/Dependency_Graph_Extractor-Ada) 
 that produces a [graphml](http://graphml.graphdrawing.org) file for visualization and querying 
 with e.g. [yEd](https://www.yworks.com/products/yed) and [Neo4J](https://neo4j.com/).
 * [Rejuvenation Library](https://github.com/TNO/Rejuvenation-Ada) that 
-allow analysis and manipulation of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language))  code based on concrete syntax.
-* [Rewriters Library](/src/libraries/Rewriters) that
-enables automatic rewriting of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) code based on concrete syntax.
-* [Code Reviewer](/src/tools/Code_Reviewer) that automatically reviews [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) code 
-based on a large list of rewrite rules.
+allow analysis and manipulation of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) 
+code based on concrete syntax.
+* [Rewriters Library](https://github.com/TNO/Rewriters-Ada/) that
+enables automatic rewriting of [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language))
+code based on concrete syntax.
 
 ## Examples
 
@@ -19,7 +21,7 @@ as extracted by the [Dependency Graph Extractor](https://github.com/TNO/Dependen
 queried using [Neo4J](https://neo4j.com/).
 ![Dependencies of Find-related subprograms of the Rejuvenation Library](/doc/Relations_Of_Find.jpg)
 
-Snippets from diff made with [Code Reviewer](/src/tools/Code_Reviewer)
+Snippets from diff made with [Code Reviewer](https://github.com/TNO/Rewriters-Ada/code_reviewer)
 ```diff
    function Release_Only (Mode : Operation_Mode) return Boolean is
 -     (case Mode is when Release_Size_Mode | Release_Speed_Mode => True, when others => False);
@@ -91,6 +93,7 @@ git clone --recurse-submodules https://github.com/TNO/Renaissance-Ada.git
 * [OpenRewrite](https://docs.openrewrite.org) is a semantic code search and transformation ecosystem for Java and other source code.
 * [Rascal MPL](https://www.rascal-mpl.org) is a metaprogramming language that 
 integrates source code analysis, transformation, and generation primitives on the language level.
-Unfortunately, [Rascal MPL](https://www.rascal-mpl.org) still lacks support for [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)).
+The [Ada-Air project](https://github.com/cwi-swat/ada-air) aims to add support for [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language))
+to [Rascal MPL](https://www.rascal-mpl.org).
 * [Spoofax](https://spoofax.dev) is a language designer's workbench. [Spoofax](https://spoofax.dev) supports [concrete syntax](https://www.spoofax.dev/howtos/stratego/concrete-syntax) to specify code transformations.
 Unfortunately, [Spoofax](https://spoofax.dev) still lacks support for [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)).
