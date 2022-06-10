@@ -97,5 +97,5 @@ git clone --recurse-submodules https://github.com/TNO/Renaissance-Ada.git
 integrates source code analysis, transformation, and generation primitives on the language level.
 The [Ada-Air project](https://github.com/cwi-swat/ada-air) aims to add support for [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language))
 to [Rascal MPL](https://www.rascal-mpl.org).
-* [Spoofax](https://spoofax.dev) is a language designer's workbench. [Spoofax](https://spoofax.dev) supports [concrete syntax](https://www.spoofax.dev/howtos/stratego/concrete-syntax) to specify code transformations.
-Unfortunately, [Spoofax](https://spoofax.dev) still lacks support for [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)).
+* [Spoofax](https://www.spoofax.dev) is a language designer's workbench. [Spoofax](https://www.spoofax.dev) supports [concrete syntax](https://www.spoofax.dev/howtos/stratego/concrete-syntax) to specify code transformations.
+Unfortunately, [Spoofax](https://www.spoofax.dev) still lacks support for [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)).
