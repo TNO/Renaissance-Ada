@@ -74,9 +74,10 @@ two steps that strengthen each other
 * enhance insight by analysis and 
 * reduce complexity by manipulation.
 
-For more info, see e.g. this 
-[Bits & Chips article](https://bits-chips.nl/artikel/esi-helps-thermo-fisher-and-philips-grease-their-software-machines)
-and [ESI's research on model-based software transformation](https://esi.nl/research/output/methods/model-based-software-transformation) or listen
+For more info, see e.g. the 
+[Bits & Chips article](https://bits-chips.nl/artikel/esi-helps-thermo-fisher-and-philips-grease-their-software-machines),
+[Ada User Journal article](https://www.ada-europe.org/archive/auj/auj-43-3-withcovers.pdf), and [ESI's research on model-based software transformation](https://esi.nl/research/output/methods/model-based-software-transformation)
+or listen
 to [Tom van de Ven interviewing Pierre van de Laar on Renaissance-Ada](https://open.spotify.com/episode/4jKsjhffi77gcUKiayl8mN?si=8801fec2fbcc4291)
 
 The development of Renaissance tooling to target [Ada](https://en.wikipedia.org/wiki/Ada_(programming_language)) software
